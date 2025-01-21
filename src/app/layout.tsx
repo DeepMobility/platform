@@ -24,10 +24,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <nav className="fixed top-0 w-full h-12 bg-white flex justify-between items-center px-4">
+          <a href="/">logo</a>
+          <a href="/logout">Se déconnecter</a>
+        </nav>
+
+        <div className="mt-12 h-screen bg-gray-100">
+          {children}
+        </div>
       </body>
     </html>
   );
