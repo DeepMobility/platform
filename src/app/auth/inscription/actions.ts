@@ -17,8 +17,6 @@ export async function register(errorState: { message: string }, formData: FormDa
     birthYear: formData.get('birthYear') || null,
   })
 
-  console.log(response)
-
   if (response.statusCode === 422 && response.message === "user already exists") {
     return { message: "Ce compte existe déjà" }
   }

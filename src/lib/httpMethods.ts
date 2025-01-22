@@ -7,17 +7,17 @@ async function get(route: string) {
   return makeRequest('GET', route)
 }
 
-function unauthenticatedPost(route: string, payload: any) {
+function unauthenticatedPost(route: string, payload: unknown) {
   return makeRequest('POST', route, false, payload)
 }
 
-async function post(route: string, payload: any, withAuthentication = true) {
+async function post(route: string, payload: unknown) {
   return makeRequest('POST', route, true, payload)
 }
 
-async function makeRequest(method: string, route: string, withAuthentication: boolean = true, payload: any = {}) {
-  const headers: any = {
-    'Content-Type': 'application/json'
+async function makeRequest(method: string, route: string, withAuthentication: boolean = true, payload: unknown = {}) {
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
   }
 
   if (withAuthentication) {
@@ -27,7 +27,7 @@ async function makeRequest(method: string, route: string, withAuthentication: bo
     headers.Authorization = 'Bearer ' + jwt?.value
   }
 
-  const params: any = {
+  const params: RequestInit = {
     method,
     headers,
   }
@@ -38,7 +38,7 @@ async function makeRequest(method: string, route: string, withAuthentication: bo
 
   const response = await fetch(`${apiUrl}/${route}`, params)
 
-  if (response.status === 401) {
+  if (withAuthentication && response.status === 401) {
     redirect('/logout')
   }
 
