@@ -17,7 +17,7 @@ export default function ConnectedLayout({
               width={139}
               height={69}
               alt="Logo DeepMobility"
-              className="h-8"
+              className="h-8 w-auto"
             />
           </Link>
           <Link href="/logout"><AiOutlineLogout size="25px"/></Link>
