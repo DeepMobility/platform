@@ -10,22 +10,22 @@ export default function ConnectedLayout({
 }>) {
   return (
     <div>
-        <nav className="fixed top-0 w-full h-[50px] bg-white shadow-lg flex justify-between items-center px-4">
-          <Link href="/">
-            <Image
-              src={Logo}
-              width={139}
-              height={69}
-              alt="Logo DeepMobility"
-              className="h-8 w-auto"
-            />
-          </Link>
-          <Link href="/logout"><AiOutlineLogout size="25px"/></Link>
-        </nav>
+      <nav className="fixed top-0 w-full h-[50px] bg-white shadow-lg flex justify-between items-center px-4">
+        <Link href="/">
+          <Image
+            src={Logo}
+            width={139}
+            height={69}
+            alt="Logo DeepMobility"
+            className="h-8 w-auto"
+          />
+        </Link>
+        <Link href="/logout"><AiOutlineLogout size="25px"/></Link>
+      </nav>
 
-        <div className="mt-12 h-[calc(100vh-50px)] max-w-[1366px] m-auto">
-          {children}
-        </div>
+      <div className=" mt-12 min-h-[calc(100vh-50px)] max-w-[1366px] bg-white m-auto p-6">
+        {children}
+      </div>
     </div>
   );
 }

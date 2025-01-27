@@ -44,7 +44,7 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
   }
 
   return (
-    <div className="mt-16">
+    <div>
       <h1 className="text-2xl">Bonjour {name} !</h1>
 
       <section className="mt-4 w-1/2 shadow-lg p-4 rounded-3xl border">
@@ -62,8 +62,8 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
               <p className="mt-2">{dailyVideo.description}</p>
             </div>
 
-            <button
-              className='bg-gray-200 hover:bg-gray-200/70 py-2 px-8 rounded-2xl mr-auto flex gap-2'
+            <button type="button"
+              className='bg-gray-200 py-2 px-8 rounded-2xl mr-auto flex gap-2'
               onClick={() => displayVideo(dailyVideo.url)}
             >
               <span>Commencer</span>
@@ -81,7 +81,7 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
 
         <div className="mt-6 bg-gray-100 rounded-3xl flex gap-4 p-4">
           {courseVideos.map((video, index) => (
-            <div
+            <button type="button"
               key={video.id}
               onClick={() => displayVideo(video.url)}
               className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
@@ -89,7 +89,7 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
               <div className="font-bold">Jour {index}</div>
               <div className="h-[120px] w-[220px] bg-gray-700 rounded-3xl"></div>
               <div>{video.name}</div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -102,14 +102,14 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
 
         <div className="rounded-3xl flex gap-4 p-4">
           {videos.map((video, index) => (
-            <div
+            <button type="button"
               key={video.id}
               onClick={() => displayVideo(video.url)}
               className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
             >
               <div className="h-[100px] w-[160px] bg-gray-700 rounded-3xl"></div>
               <div>{video.name}</div>
-            </div>
+            </button>
           ))}
         </div>
       </section>

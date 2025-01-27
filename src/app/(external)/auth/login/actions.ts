@@ -37,7 +37,7 @@ export async function login(errorState: { message: string }, formData: FormData)
     path: '/',
   })
 
-  cookieStore.set('userJobType', response.userJobType, {
+  cookieStore.set('userJobType', response.jobType, {
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
