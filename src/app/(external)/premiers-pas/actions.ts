@@ -4,12 +4,12 @@ import { redirect } from 'next/navigation'
 import { post } from '@/lib/httpMethods';
 import { cookies } from 'next/headers';
  
-export async function updateUserJobType(formData: FormData) {
+export async function updateMyJobType(formData: FormData) {
   const jobType = formData.get('jobType')
 
   console.log(jobType)
 
-  await post('update-user-job-type', { jobType })
+  await post('update-my-job-type', { jobType })
 
   const cookieStore = await cookies()
 

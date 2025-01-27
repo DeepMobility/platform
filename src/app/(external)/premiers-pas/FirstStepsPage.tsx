@@ -1,7 +1,7 @@
 'use client'
 
 import Form from "next/form"
-import { updateUserJobType } from "./actions"
+import { updateMyJobType } from "./actions"
 import jobTypes from "@/lib/jobTypes"
 
 export default function FirstStepsPage() {
@@ -9,7 +9,7 @@ export default function FirstStepsPage() {
     <div>
       <h1 className="font-bold text-xl">Faisons connaissance !</h1>
 
-      <Form action={updateUserJobType} className="mt-8 flex flex-col gap-6">
+      <Form action={updateMyJobType} className="mt-8 flex flex-col gap-6">
         <p>Quel est votre type de job ?</p>
 
         {jobTypes.map((jobType) => (

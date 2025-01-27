@@ -9,8 +9,8 @@ export default function ConnectedLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="bg-gray-100">
-        <nav className="fixed top-0 w-full h-[50px] bg-white flex justify-between items-center px-4">
+    <div>
+        <nav className="fixed top-0 w-full h-[50px] bg-white shadow-lg flex justify-between items-center px-4">
           <Link href="/">
             <Image
               src={Logo}
