@@ -13,7 +13,7 @@ function VideoPlayer({ url, close }: {
     return null;
   }
 
-  const fullUrl = `${url}?autoplay=true&mute=false`
+  const fullUrl = `${url}?autoplay=true&mute=false&logo=false`
 
   return (
     <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={close}>
