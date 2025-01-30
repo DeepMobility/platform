@@ -2,7 +2,8 @@
 
 import { redirect } from 'next/navigation'
 import { post } from '@/lib/httpMethods';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
+import { setAuthCookies } from '../actions';
  
 export async function register(errorState: { message: string }, formData: FormData) {
   const headersList = await headers()
@@ -21,28 +22,7 @@ export async function register(errorState: { message: string }, formData: FormDa
     return { message: "Ce compte existe déjà" }
   }
 
-  const cookieStore = await cookies()
-
-  cookieStore.set('jwt', response.jwt, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    path: '/',
-  })
-
-  cookieStore.set('userName', response.firstName, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    path: '/',
-  })
-
-  cookieStore.set('userJobType', response.userJobType, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    path: '/',
-  })
+  await setAuthCookies(response);
 
   redirect('/')
 }

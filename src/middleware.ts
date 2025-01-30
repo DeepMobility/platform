@@ -23,8 +23,20 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/login', request.nextUrl))
   }
 
-  if (!cookieStore.get('userJobType')?.value && path !== '/premiers-pas') {
-    return NextResponse.redirect(new URL('/premiers-pas', request.nextUrl))
+  if (path.startsWith('/premiers-pas')) {
+    return NextResponse.next()
+  }
+
+  if (!cookieStore.get('userJobType')?.value) {
+    return NextResponse.redirect(new URL('/premiers-pas/mode-de-travail', request.nextUrl))
+  }
+
+  if (!cookieStore.get('userPainfulBodyPart')?.value) {
+    return NextResponse.redirect(new URL('/premiers-pas/region-douloureuse', request.nextUrl))
+  }
+
+  if (!cookieStore.get('userOtherThematicInterest')?.value) {
+    return NextResponse.redirect(new URL('/premiers-pas/autre-interet', request.nextUrl))
   }
 
   if (path.startsWith('/auth')) {

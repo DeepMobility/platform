@@ -1,5 +1,6 @@
 export default [
-  { value: 'up', label: 'Debout' },
-  { value: 'sit', label: 'Assis' },
-  { value: 'move', label: 'En mouvement' },
+  { value: 'standing', label: 'Travail debout prolongé' },
+  { value: 'repetitive-gestures', label: 'Travail physique avec gestes répétitifs' },
+  { value: 'sitting', label: 'Travail sédentaire (assis la majorité du temps)' },
+  { value: 'remote', label: 'Télétravail ou flex office' },
 ]

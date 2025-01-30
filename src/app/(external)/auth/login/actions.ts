@@ -1,8 +1,9 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-import { headers, cookies } from 'next/headers'
+import { headers } from 'next/headers'
 import { unauthenticatedPost } from '@/lib/httpMethods';
+import { setAuthCookies } from '../actions';
  
 export async function login(errorState: { message: string }, formData: FormData) {
   const headersList = await headers()
@@ -21,28 +22,7 @@ export async function login(errorState: { message: string }, formData: FormData)
     return { message: "Mot de passe incorrect" }
   }
 
-  const cookieStore = await cookies()
-
-  cookieStore.set('jwt', response.jwt, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    path: '/',
-  })
-
-  cookieStore.set('userName', response.firstName, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    path: '/',
-  })
-
-  cookieStore.set('userJobType', response.jobType, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    path: '/',
-  })
+  await setAuthCookies(response);
   
   redirect('/')
 }
