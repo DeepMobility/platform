@@ -1,30 +1,12 @@
 'use client'
 
 import courses from "@/lib/courses";
+import durationFormatter from "@/lib/durationFormatter";
+import Image from 'next/image'
+
 import { useState } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
-import { PiPathFill } from "react-icons/pi";
-
-function VideoPlayer({ url, close }: {
-  url: string | null,
-  close: any
-}) {
-  if (!url) {
-    return null;
-  }
-
-  const fullUrl = `${url}?autoplay=true&mute=false&logo=false`
-
-  return (
-    <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={close}>
-      <iframe width="100%" height="100%"
-        src={fullUrl}
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen={true} className="relative rounded-3xl" referrerPolicy="unsafe-url">
-      </iframe>
-    </div>
-  )
-}
+import { PiClock, PiPathFill } from "react-icons/pi";
 
 export default function HomePage({ name, dailyVideo, course, courseVideos, videos }: {
   name: string,
@@ -54,9 +36,20 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
         </h2>
 
         <div className="flex gap-4 mt-6">
-          <div className="h-[200px] w-[360px] bg-gray-700 rounded-3xl"></div>
+          <div className="flex-1 relative">
+            <Image
+              src={dailyVideo.thumbnailUrl}
+              width={320} height={200}
+              className="brightness-50 rounded-xl w-[320px] h-[200px]"
+              alt="Image de la video du jour"
+            />
+            <div className="flex gap-1 bg-white absolute bottom-2 right-2 rounded-md p-1 text-sm">
+              <PiClock size="16px" className="my-auto"/>
+              <span>{durationFormatter(dailyVideo.duration)}</span>
+            </div>
+          </div>         
 
-          <div className="flex flex-col justify-between">
+          <div className="flex-1 flex flex-col justify-between">
             <div>
               <h3 className="text-lg font-bold">{dailyVideo.name}</h3>
               <p className="mt-2">{dailyVideo.description}</p>
@@ -87,7 +80,12 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
               className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
             >
               <div className="font-bold">Jour {index}</div>
-              <div className="h-[120px] w-[220px] bg-gray-700 rounded-3xl"></div>
+              <Image
+                src={video.thumbnailUrl}
+                width={320} height={200}
+                className="brightness-50 rounded-xl w-[240px] h-[150px]"
+                alt="Image de la video du jour"
+              />
               <div>{video.name}</div>
             </button>
           ))}
@@ -107,14 +105,27 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
               onClick={() => displayVideo(video.url)}
               className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
             >
-              <div className="h-[100px] w-[160px] bg-gray-700 rounded-3xl"></div>
+              <Image
+                src={video.thumbnailUrl}
+                width={320} height={200}
+                className="brightness-50 rounded-xl w-[160px] h-[100px]"
+                alt="Image de la video du jour"
+              />
               <div>{video.name}</div>
             </button>
           ))}
         </div>
       </section>
 
-      <VideoPlayer url={playVideoUrl} close={closeVideo}/>
+      {playVideoUrl && (
+        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeVideo}>
+          <iframe width="100%" height="100%"
+            src={`${playVideoUrl}?autoplay=true&mute=false&logo=false`}
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen={true} className="relative rounded-3xl" referrerPolicy="unsafe-url">
+          </iframe>
+        </div>
+      )}
     </div>
   )
 }
