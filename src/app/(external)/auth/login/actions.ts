@@ -11,7 +11,7 @@ export async function login(errorState: { message: string }, formData: FormData)
   const response = await unauthenticatedPost('login', {
     email: formData.get('email'),
     password: formData.get('password'),
-    host: headersList.get('host')?.split(':')[0],
+    host: headersList.get('host'),
   })
 
   if (response.statusCode === 401) {

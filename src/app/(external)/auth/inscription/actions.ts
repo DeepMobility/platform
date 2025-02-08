@@ -9,7 +9,7 @@ export async function register(errorState: { message: string }, formData: FormDa
   const headersList = await headers()
 
   const response = await post('register', {
-    accountHost: headersList.get('host')?.split(':')[0],
+    accountHost: headersList.get('host'),
     email: formData.get('email'),
     password: formData.get('password'),
     firstName: formData.get('firstName') || null,
