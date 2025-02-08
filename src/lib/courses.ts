@@ -1,6 +1,7 @@
 const courses = [
-  { value: 'pain', label: 'Parcours douleur' },
-  { value: 'mobility', label: 'Parcours mobilité' },
+  { value: 'standing', label: 'Station debout prolongée' },
+  { value: 'repetitive-gestures', label: 'Mouvements répétitifs et port de charges' },
+  { value: 'sitting', label: 'Posture assise prolongée' },
 ]
 
 export default courses

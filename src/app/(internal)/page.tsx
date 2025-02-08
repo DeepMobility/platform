@@ -8,7 +8,7 @@ export default async function Home() {
     videos: Array<Video>
   } = await get('get-my-dashboard')
 
-  const course = jobType === 'standing' ? 'mobility' : 'pain';
+  const course = jobType === 'remote' ? 'sitting' : jobType;
 
   const courseVideos = videos
   .filter((video) => video.course === course)
