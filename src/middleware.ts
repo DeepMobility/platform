@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 
 export default async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
+
   const cookieStore = await cookies()
 
   if (path === "/logout") {
@@ -15,7 +16,7 @@ export default async function middleware(request: NextRequest) {
 
   const jwt = cookieStore.get('jwt')
 
-  if (!jwt) {
+  if (!jwt?.value) {
     if (path.startsWith('/auth')) {
       return NextResponse.next()
     }
