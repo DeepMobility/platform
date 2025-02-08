@@ -1,4 +1,4 @@
-export default function(duration: number) {
+export default function formatDuration(duration: number) {
   const minutes = Math.floor(duration / 60)
   const secondes = duration - minutes * 60
 

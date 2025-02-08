@@ -1,7 +1,7 @@
 'use client'
 
 import courses from "@/lib/courses";
-import durationFormatter from "@/lib/durationFormatter";
+import formatDuration from "@/lib/durationFormatter";
 import Image from 'next/image'
 
 import { useState } from "react";
@@ -45,7 +45,7 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
             />
             <div className="flex gap-1 bg-white absolute bottom-2 right-2 rounded-md p-1 text-sm">
               <PiClock size="16px" className="my-auto"/>
-              <span>{durationFormatter(dailyVideo.duration)}</span>
+              <span>{formatDuration(dailyVideo.duration)}</span>
             </div>
           </div>         
 
@@ -99,7 +99,7 @@ export default function HomePage({ name, dailyVideo, course, courseVideos, video
         </h2>
 
         <div className="rounded-3xl flex gap-4 p-4">
-          {videos.map((video, index) => (
+          {videos.map((video) => (
             <button type="button"
               key={video.id}
               onClick={() => displayVideo(video.url)}
