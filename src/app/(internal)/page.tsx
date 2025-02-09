@@ -1,5 +1,6 @@
 import { get } from '@/lib/httpMethods';
 import HomePage from './HomePage';
+import tips from '@/lib/tips';
 
 export default async function Home() {
   const { name, jobType, videos }: {
@@ -14,9 +15,12 @@ export default async function Home() {
   .filter((video) => video.course === course)
   .sort((v1, v2) => v1.coursePosition - v2.coursePosition)
 
+  const randomTip = tips[Math.floor(Math.random() * tips.length)]
+
   return <HomePage
     name={name}
     dailyVideo={courseVideos[0]}
+    randomTip={randomTip}
     course={course}
     courseVideos={courseVideos}
     videos={videos}
