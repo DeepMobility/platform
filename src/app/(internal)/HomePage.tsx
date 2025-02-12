@@ -6,7 +6,7 @@ import exerciseTypes from "@/lib/exerciseTypes";
 import painfulBodyParts from "@/lib/painfulBodyParts";
 import Image from 'next/image'
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
 
@@ -28,6 +28,58 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
     setPlayVideoUrl(null)
   }
 
+  const [allVideoFilter, setAllVideoFilter] = useState<boolean>(false)
+  const [bodyPartFilters, setBodyPartFilters] = useState<string[]>([])
+  const [exerciseTypeFilters, setExerciseTypeFilters] = useState<string[]>([])
+
+  const toggleAllVideoFilter = function(e: React.ChangeEvent<HTMLInputElement >) {
+    if (e.target.checked) {
+      setBodyPartFilters([])
+      setExerciseTypeFilters([])
+    }
+
+    setAllVideoFilter(e.target.checked)
+  }
+
+  const updateBodyPartFilters = function(e: React.ChangeEvent<HTMLInputElement >) {
+    if (e.target.checked) {
+      setBodyPartFilters(bodyPartFilters.concat([e.target.value]))
+    } else {
+      setBodyPartFilters(bodyPartFilters.filter((bodyPart) => bodyPart !== e.target.value))
+    }
+    setAllVideoFilter(false)
+  }
+
+  const updateExerciseTypeFilters = function(e: React.ChangeEvent<HTMLInputElement >) {
+    if (e.target.checked) {
+      setExerciseTypeFilters(exerciseTypeFilters.concat([e.target.value]))
+    } else {
+      setExerciseTypeFilters(exerciseTypeFilters.filter((type) => type !== e.target.value))
+    }
+    setAllVideoFilter(false)
+  }
+
+  const filteredVideos = useMemo(
+    () => {
+      let filteredVideos = videos
+
+      if (bodyPartFilters.length) {
+        filteredVideos = filteredVideos.filter(
+          video => bodyPartFilters.some(bodyPart => video.bodyParts.includes(bodyPart))
+        )
+      }
+
+      if (exerciseTypeFilters.length) {
+        filteredVideos = filteredVideos.filter(
+          video => exerciseTypeFilters.some(type => video.exerciseTypes.includes(type))
+        )
+      }
+
+      return filteredVideos
+    },
+    [bodyPartFilters, exerciseTypeFilters]
+  );
+  
   return (
     <div>
       <h1 className="text-2xl">Bonjour {name} !</h1>
@@ -120,22 +172,70 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
           <span>Toutes les vidéos</span>
         </h2>
 
-        <div className="rounded-3xl flex gap-4 p-4">
-          {videos.map((video) => (
-            <button type="button"
-              key={video.id}
-              onClick={() => displayVideo(video.url)}
-              className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
-            >
-              <Image
-                src={video.thumbnailUrl}
-                width={320} height={200}
-                className="brightness-50 rounded-xl w-[160px] h-[100px]"
-                alt="Image de la video du jour"
-              />
-              <div>{video.name}</div>
-            </button>
-          ))}
+        <div className="flex gap-4">
+          <div className="basis-1/4 mt-4">
+            <div className="font-bold border-b">Filtrer</div>
+
+            <div className="pl-4">
+              <div className="mt-4 flex gap-2">
+                <input type="checkbox" name="allVideoFilter"
+                  onChange={toggleAllVideoFilter} checked={allVideoFilter}
+                  id="allVideoFilter"
+                />
+                <label htmlFor="allVideoFilter">Toutes les vidéos</label>
+              </div>
+
+              <div className="mt-4">
+                <div className="font-bold">Parties du corps</div>
+                <div className="flex flex-col mt-1">
+                  {painfulBodyParts.map((bodyPart) => (
+                    <div key={bodyPart.value} className="flex gap-2">
+                      <input type="checkbox" name="bodyPartFilters"
+                        onChange={updateBodyPartFilters} value={bodyPart.value}
+                        checked={bodyPartFilters.includes(bodyPart.value)}
+                        id={bodyPart.value}
+                      />
+                      <label htmlFor={bodyPart.value}>{bodyPart.label}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <div className="font-bold">Types d'exercice</div>
+                <div className="flex flex-col mt-1">
+                  {exerciseTypes.map((type) => (
+                    <div key={type.value} className="flex gap-2">
+                      <input type="checkbox" name="exerciseTypeFilters"
+                        onChange={updateExerciseTypeFilters} value={type.value}
+                        checked={exerciseTypeFilters.includes(type.value)}
+                        id={type.value}
+                      />
+                      <label htmlFor={type.value}>{type.label}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="basis-3/4 rounded-3xl flex gap-4 p-4">
+            {filteredVideos.map((video) => (
+              <button type="button"
+                key={video.id}
+                onClick={() => displayVideo(video.url)}
+                className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
+              >
+                <Image
+                  src={video.thumbnailUrl}
+                  width={320} height={200}
+                  className="brightness-50 rounded-xl w-[160px] h-[100px]"
+                  alt="Image de la video du jour"
+                />
+                <div>{video.name}</div>
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
