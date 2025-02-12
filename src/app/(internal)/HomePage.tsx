@@ -2,7 +2,8 @@
 
 import courses from "@/lib/courses";
 import formatDuration from "@/lib/durationFormatter";
-import tips from "@/lib/tips";
+import exerciseTypes from "@/lib/exerciseTypes";
+import painfulBodyParts from "@/lib/painfulBodyParts";
 import Image from 'next/image'
 
 import { useState } from "react";
@@ -39,7 +40,7 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
           </h2>
 
           <div className="flex gap-4 mt-6">
-            <div className="flex-1 relative">
+            <div className="basis-1/2 relative">
               <Image
                 src={dailyVideo.thumbnailUrl}
                 width={320} height={200}
@@ -52,10 +53,22 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
               </div>
             </div>         
 
-            <div className="flex-1 flex flex-col justify-between">
+            <div className="basis-1/2 flex flex-col justify-between">
               <div>
                 <h3 className="text-lg font-bold">{dailyVideo.name}</h3>
                 <p className="mt-2">{dailyVideo.description}</p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {dailyVideo.bodyParts.map((bodyPart) => (
+                    <span key={bodyPart} className="bg-gray-200 text-xs rounded-md px-2">
+                      {painfulBodyParts.find(painfulBodyPart => painfulBodyPart.value === bodyPart)?.label}
+                    </span>
+                  ))}
+                  {dailyVideo.exerciseTypes.map((type) => (
+                    <span key={type} className="bg-gray-200 text-xs rounded-md px-2">
+                      {exerciseTypes.find(exerciseType => exerciseType.value === type)?.label}
+                    </span>
+                  ))}
+                </div>
               </div>
 
               <button type="button"
@@ -88,7 +101,7 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
               onClick={() => displayVideo(video.url)}
               className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
             >
-              <div className="font-bold">Jour {index}</div>
+              <div className="font-bold">Jour {index + 1}</div>
               <Image
                 src={video.thumbnailUrl}
                 width={320} height={200}

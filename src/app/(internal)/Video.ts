@@ -6,5 +6,7 @@ type Video = {
   description: string,
   duration: number,
   course: string,
-  coursePosition: number
+  coursePosition: number,
+  bodyParts: string[],
+  exerciseTypes: string[],
 }
