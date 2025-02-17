@@ -18,14 +18,25 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
   courseVideos: Array<Video>,
   videos: Array<Video>
 }) {
-  const [playVideoUrl, setPlayVideoUrl] = useState<string | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
 
-  const displayVideo = function(url: string) {
-    setPlayVideoUrl(url)
+  const [displayVideoDescription, setDisplayVideoDescription] = useState(false)
+  const [displayVideo, setDisplayVideo] = useState(false)
+
+  const showVideoDescription = function(video: Video) {
+    setDisplayVideoDescription(true)
+    setSelectedVideo(video)
+  }
+
+  const playVideo = function() {
+    setDisplayVideoDescription(false)
+    setDisplayVideo(true)
   }
 
   const closeVideo = function() {
-    setPlayVideoUrl(null)
+    setDisplayVideoDescription(false)
+    setDisplayVideo(false)
+    setSelectedVideo(null)
   }
 
   const [allVideoFilter, setAllVideoFilter] = useState<boolean>(false)
@@ -85,7 +96,7 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
       <h1 className="text-2xl">Bonjour {name} !</h1>
 
       <section className="mt-4 flex gap-8">
-        <div className="shadow-lg p-4 rounded-3xl border">
+        <div className="flex-1 shadow-lg p-4 rounded-3xl border">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Vidéo du jour</span>
@@ -125,7 +136,7 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
 
               <button type="button"
                 className='bg-gray-200 py-2 px-8 rounded-2xl mr-auto flex gap-2'
-                onClick={() => displayVideo(dailyVideo.url)}
+                onClick={() => showVideoDescription(dailyVideo)}
               >
                 <span>Commencer</span>
                 <MdArrowForward size="24px" className="my-auto"/>
@@ -134,7 +145,7 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
           </div>
         </div>
 
-        <div className="shadow-lg p-4 rounded-3xl border content-center">
+        <div className="flex-1 shadow-lg p-4 rounded-3xl border content-center">
           <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} />
           <div className="text-sm italic mt-2">*Source: {randomTip.source}</div>
         </div>
@@ -150,7 +161,7 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
           {courseVideos.map((video, index) => (
             <button type="button"
               key={video.id}
-              onClick={() => displayVideo(video.url)}
+              onClick={() => showVideoDescription(video)}
               className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
             >
               <div className="font-bold">Jour {index + 1}</div>
@@ -223,7 +234,7 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
             {filteredVideos.map((video) => (
               <button type="button"
                 key={video.id}
-                onClick={() => displayVideo(video.url)}
+                onClick={() => showVideoDescription(video)}
                 className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
               >
                 <Image
@@ -239,10 +250,42 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
         </div>
       </section>
 
-      {playVideoUrl && (
+      {displayVideoDescription && (
+        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeVideo}>
+          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={selectedVideo?.thumbnailUrl || ''}
+              width={700} height={500}
+              className="w-full h-[200px] rounded-t-3xl object-cover"
+              alt="Image de la video du jour"
+            />
+            <div className="flex flex-col h-full p-4">
+              <div className="flex gap-8">
+                <span className="text-lg font-bold">{selectedVideo?.name}</span>
+                <div className="flex gap-1">
+                  <PiClock size="16px" className="my-auto"/>
+                  <span>{formatDuration(selectedVideo?.duration || 0)}</span>
+                </div>
+              </div>
+              <p className="mt-4">
+                {selectedVideo?.description}
+              </p>
+              <button type="button"
+                className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'
+                onClick={() => playVideo()}
+              >
+                <span>Démarrer</span>
+                <MdArrowForward size="24px" className="my-auto"/>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {displayVideo && (
         <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeVideo}>
           <iframe width="100%" height="100%"
-            src={`${playVideoUrl}?autoplay=true&mute=false&logo=false`}
+            src={`${selectedVideo?.url}?autoplay=true&mute=false&logo=false`}
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen={true} className="relative rounded-3xl" referrerPolicy="unsafe-url">
           </iframe>
