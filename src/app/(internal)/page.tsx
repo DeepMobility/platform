@@ -1,6 +1,7 @@
 import { get } from '@/lib/httpMethods';
 import HomePage from './HomePage';
 import tips from '@/lib/tips';
+import sessionQuestions from '@/lib/sessionQuestions';
 
 export default async function Home() {
   const { name, jobType, videos }: {
@@ -17,9 +18,12 @@ export default async function Home() {
 
   const randomTip = tips[Math.floor(Math.random() * tips.length)]
 
+  const newSessionQuestion = sessionQuestions[Math.floor(Math.random() * sessionQuestions.length)]
+
   return <HomePage
     name={name}
     dailyVideo={courseVideos[0]}
+    newSessionQuestion={newSessionQuestion}
     randomTip={randomTip}
     course={course}
     courseVideos={courseVideos}

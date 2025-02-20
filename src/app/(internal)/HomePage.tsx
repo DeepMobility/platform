@@ -4,15 +4,18 @@ import courses from "@/lib/courses";
 import formatDuration from "@/lib/durationFormatter";
 import exerciseTypes from "@/lib/exerciseTypes";
 import painfulBodyParts from "@/lib/painfulBodyParts";
+import Form from "next/form";
 import Image from 'next/image'
 
 import { useMemo, useState } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
+import { startSession, endSession } from "./actions";
 
-export default function HomePage({ name, dailyVideo, randomTip, course, courseVideos, videos }: {
+export default function HomePage({ name, dailyVideo, newSessionQuestion, randomTip, course, courseVideos, videos }: {
   name: string,
   dailyVideo: Video,
+  newSessionQuestion: { value: string, beforeLabel: string, afterLabel: string }
   randomTip: { value: string, source: string }
   course: string,
   courseVideos: Array<Video>,
@@ -20,22 +23,59 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
 }) {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
 
+  const [sessionId, setSessionId] = useState<number | null>(null)
+
   const [displayVideoDescription, setDisplayVideoDescription] = useState(false)
+  const [displayNewSession, setDisplayNewSession] = useState(false)
   const [displayVideo, setDisplayVideo] = useState(false)
+  const [displayEndSession, setDisplayEndSession] = useState(false)
 
   const showVideoDescription = function(video: Video) {
     setDisplayVideoDescription(true)
     setSelectedVideo(video)
   }
 
+  const showNewSession = function() {
+    setDisplayVideoDescription(false)
+    setDisplayNewSession(true)
+  }
+
+  const startVideoSession = async function(formData: FormData) {
+    const session = await startSession(formData, selectedVideo?.id || 0, newSessionQuestion.value)
+
+    setSessionId(session.id)
+
+    playVideo()
+  }
+
   const playVideo = function() {
     setDisplayVideoDescription(false)
+    setDisplayNewSession(false)
     setDisplayVideo(true)
   }
 
-  const closeVideo = function() {
-    setDisplayVideoDescription(false)
+  const endVideo = function() {
     setDisplayVideo(false)
+
+    if (sessionId) {
+      setDisplayEndSession(true)
+    } else {
+      setSelectedVideo(null)
+    }
+  }
+
+  const endVideoSession = async function(formData: FormData) {
+    await endSession(formData, sessionId || 0)
+
+    setDisplayEndSession(false)
+    setSelectedVideo(null)
+  }
+
+  const closeModal = function() {
+    setDisplayVideoDescription(false)
+    setDisplayNewSession(false)
+    setDisplayVideo(false)
+    setDisplayEndSession(false)
     setSelectedVideo(null)
   }
 
@@ -251,7 +291,7 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
       </section>
 
       {displayVideoDescription && (
-        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeVideo}>
+        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
           <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
@@ -272,9 +312,9 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
               </p>
               <button type="button"
                 className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'
-                onClick={() => playVideo()}
+                onClick={() => selectedVideo?.id === dailyVideo.id ? showNewSession() : playVideo()}
               >
-                <span>Démarrer</span>
+                <span>{selectedVideo?.id === dailyVideo.id ? 'Démarrer': 'Lancer la vidéo'}</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
             </div>
@@ -282,13 +322,70 @@ export default function HomePage({ name, dailyVideo, randomTip, course, courseVi
         </div>
       )}
 
+      {displayNewSession && (
+        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={selectedVideo?.thumbnailUrl || ''}
+              width={700} height={500}
+              className="w-full h-[200px] rounded-t-3xl object-cover"
+              alt="Image de la video du jour"
+            />
+            <Form action={startVideoSession} className="flex flex-col h-full p-4">
+              <div>{newSessionQuestion.beforeLabel}</div>
+              <div className="flex justify-around mt-4">
+                {[1,2,3,4,5].map((rating) => (
+                  <div className="flex flex-col gap-2" key={rating}>
+                    <label htmlFor={"rating" + rating}>{rating}</label>
+                    <input type="radio" name="beforeRating" id={"rating" + rating} value={rating}/>
+                  </div>
+                ))}
+              </div>
+              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'>
+                <span>Lancer la vidéo</span>
+                <MdArrowForward size="24px" className="my-auto"/>
+              </button>
+            </Form>
+          </div>
+        </div>
+      )}
+
       {displayVideo && (
-        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeVideo}>
-          <iframe width="100%" height="100%"
-            src={`${selectedVideo?.url}?autoplay=true&mute=false&logo=false`}
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen={true} className="relative rounded-3xl" referrerPolicy="unsafe-url">
-          </iframe>
+        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+          <video
+            width="1200px" height="800px"
+            src="https://streamable.com/l/a40td5/mp4.mp4"
+            controls autoPlay
+            onEnded={endVideo}
+            className="mx-auto"
+          />
+        </div>
+      )}
+
+      {displayEndSession && (
+        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={selectedVideo?.thumbnailUrl || ''}
+              width={700} height={500}
+              className="w-full h-[200px] rounded-t-3xl object-cover"
+              alt="Image de la video du jour"
+            />
+            <Form action={endVideoSession} className="flex flex-col h-full p-4">
+              <div>{newSessionQuestion.afterLabel}</div>
+              <div className="flex justify-around mt-4">
+                {[1,2,3,4,5].map((rating) => (
+                  <div className="flex flex-col gap-2" key={rating}>
+                    <label htmlFor={"rating" + rating}>{rating}</label>
+                    <input type="radio" name="afterRating" id={"rating" + rating} value={rating}/>
+                  </div>
+                ))}
+              </div>
+              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'>
+                Terminer
+              </button>
+            </Form>
+          </div>
         </div>
       )}
     </div>
