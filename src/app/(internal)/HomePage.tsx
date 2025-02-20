@@ -11,16 +11,31 @@ import { useMemo, useState } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
 import { startSession, endSession } from "./actions";
+import { FaCheck } from "react-icons/fa";
 
-export default function HomePage({ name, dailyVideo, newSessionQuestion, randomTip, course, courseVideos, videos }: {
+export default function HomePage({
+  name,
+  dailyVideo,
+  dailySessionAlreadyDone,
+  newSessionQuestion,
+  randomTip,
+  course,
+  courseVideos,
+  dailyVideoCourseIndex,
+  videos
+}: {
   name: string,
   dailyVideo: Video,
+  dailySessionAlreadyDone: boolean,
   newSessionQuestion: { value: string, beforeLabel: string, afterLabel: string }
   randomTip: { value: string, source: string }
   course: string,
   courseVideos: Array<Video>,
+  dailyVideoCourseIndex: number,
   videos: Array<Video>
 }) {
+  const [dailySessionDone, setDailySessionDone] = useState(dailySessionAlreadyDone)
+
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
 
   const [sessionId, setSessionId] = useState<number | null>(null)
@@ -44,6 +59,7 @@ export default function HomePage({ name, dailyVideo, newSessionQuestion, randomT
     const session = await startSession(formData, selectedVideo?.id || 0, newSessionQuestion.value)
 
     setSessionId(session.id)
+    setDailySessionDone(true)
 
     playVideo()
   }
@@ -140,6 +156,7 @@ export default function HomePage({ name, dailyVideo, newSessionQuestion, randomT
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Vidéo du jour</span>
+            {dailySessionDone && (<FaCheck size="24px" className="my-auto text-green-600 ml-auto"/>)}
           </h2>
 
           <div className="flex gap-4 mt-6">
@@ -204,7 +221,12 @@ export default function HomePage({ name, dailyVideo, newSessionQuestion, randomT
               onClick={() => showVideoDescription(video)}
               className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
             >
-              <div className="font-bold">Jour {index + 1}</div>
+              <div className="font-bold flex gap-2">
+                <span>Jour {index + 1}</span>
+                {(index < dailyVideoCourseIndex || (dailySessionDone && index === dailyVideoCourseIndex)) && (
+                  <FaCheck size="16px" className="my-auto text-green-600"/>
+                )}
+              </div>
               <Image
                 src={video.thumbnailUrl}
                 width={320} height={200}
@@ -312,9 +334,9 @@ export default function HomePage({ name, dailyVideo, newSessionQuestion, randomT
               </p>
               <button type="button"
                 className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'
-                onClick={() => selectedVideo?.id === dailyVideo.id ? showNewSession() : playVideo()}
+                onClick={() => selectedVideo?.id === dailyVideo.id && !dailySessionDone ? showNewSession() : playVideo()}
               >
-                <span>{selectedVideo?.id === dailyVideo.id ? 'Démarrer': 'Lancer la vidéo'}</span>
+                <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? 'Démarrer': 'Lancer la vidéo'}</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
             </div>
