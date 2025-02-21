@@ -152,7 +152,7 @@ export default function HomePage({
       <h1 className="text-2xl">Bonjour {name} !</h1>
 
       <section className="mt-4 flex gap-8">
-        <div className="flex-1 shadow-lg p-4 rounded-3xl border">
+        <div className="flex-2 shadow-lg p-4 rounded-3xl border">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Vidéo du jour</span>
@@ -164,7 +164,7 @@ export default function HomePage({
               <Image
                 src={dailyVideo.thumbnailUrl}
                 width={320} height={200}
-                className="brightness-50 rounded-xl w-[320px] h-[200px]"
+                className="brightness-50 rounded-xl w-full h-full"
                 alt="Image de la video du jour"
               />
               <div className="flex gap-1 bg-white absolute bottom-2 right-2 rounded-md p-1 text-sm">
@@ -292,12 +292,12 @@ export default function HomePage({
             </div>
           </div>
 
-          <div className="basis-3/4 rounded-3xl flex gap-4 p-4">
+          <div className="basis-3/4 rounded-3xl flex gap-2 p-4 flex-wrap">
             {filteredVideos.map((video) => (
               <button type="button"
                 key={video.id}
                 onClick={() => showVideoDescription(video)}
-                className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
+                className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2 mb-auto"
               >
                 <Image
                   src={video.thumbnailUrl}
@@ -313,7 +313,7 @@ export default function HomePage({
       </section>
 
       {displayVideoDescription && (
-        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
           <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
@@ -345,7 +345,7 @@ export default function HomePage({
       )}
 
       {displayNewSession && (
-        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
           <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
@@ -373,11 +373,12 @@ export default function HomePage({
       )}
 
       {displayVideo && (
-        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
           <video
             width="1200px" height="800px"
             src="https://streamable.com/l/a40td5/mp4.mp4"
-            controls autoPlay
+            autoPlay
+            controls controlsList="nodownload"
             onEnded={endVideo}
             className="mx-auto"
           />
@@ -385,7 +386,7 @@ export default function HomePage({
       )}
 
       {displayEndSession && (
-        <div className="absolute inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
           <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
