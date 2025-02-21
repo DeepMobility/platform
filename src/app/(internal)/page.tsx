@@ -4,10 +4,11 @@ import tips from '@/lib/tips';
 import sessionQuestions from '@/lib/sessionQuestions';
 
 export default async function Home() {
-  const { name, dailyVideo, dailySessionDone, course, courseVideos, videos }: {
+  const { name, dailyVideo, dailySessionDone, weeklySessionsCount, course, courseVideos, videos }: {
     name: string,
     dailyVideo: Video,
     dailySessionDone: boolean,
+    weeklySessionsCount: number,
     course: string,
     courseVideos: Video[],
     videos: Video[]
@@ -23,6 +24,7 @@ export default async function Home() {
     name={name}
     dailyVideo={dailyVideo}
     dailySessionAlreadyDone={dailySessionDone}
+    weeklySessionsCount={weeklySessionsCount}
     newSessionQuestion={newSessionQuestion}
     randomTip={randomTip}
     course={course}

@@ -12,11 +12,13 @@ import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-ic
 import { PiClock, PiPathFill } from "react-icons/pi";
 import { startSession, endSession } from "./actions";
 import { FaCheck } from "react-icons/fa";
+import incentiveSentences from "@/lib/incentiveSentences";
 
 export default function HomePage({
   name,
   dailyVideo,
   dailySessionAlreadyDone,
+  weeklySessionsCount,
   newSessionQuestion,
   randomTip,
   course,
@@ -27,8 +29,9 @@ export default function HomePage({
   name: string,
   dailyVideo: Video,
   dailySessionAlreadyDone: boolean,
+  weeklySessionsCount: number,
   newSessionQuestion: { value: string, beforeLabel: string, afterLabel: string }
-  randomTip: { value: string, source: string }
+  randomTip: { value: string, source: string, highlightedNumber: string }
   course: string,
   courseVideos: Array<Video>,
   dailyVideoCourseIndex: number,
@@ -44,6 +47,7 @@ export default function HomePage({
   const [displayNewSession, setDisplayNewSession] = useState(false)
   const [displayVideo, setDisplayVideo] = useState(false)
   const [displayEndSession, setDisplayEndSession] = useState(false)
+  const [displayCongrats, setDisplayCongrats] = useState(false)
 
   const showVideoDescription = function(video: Video) {
     setDisplayVideoDescription(true)
@@ -85,6 +89,7 @@ export default function HomePage({
 
     setDisplayEndSession(false)
     setSelectedVideo(null)
+    setDisplayCongrats(true)
   }
 
   const closeModal = function() {
@@ -92,6 +97,8 @@ export default function HomePage({
     setDisplayNewSession(false)
     setDisplayVideo(false)
     setDisplayEndSession(false)
+    setDisplayCongrats(false)
+
     setSelectedVideo(null)
   }
 
@@ -152,7 +159,7 @@ export default function HomePage({
       <h1 className="text-2xl">Bonjour {name} !</h1>
 
       <section className="mt-4 flex gap-8">
-        <div className="flex-2 shadow-lg p-4 rounded-3xl border">
+        <div className="basis-[60%] shadow-lg p-4 rounded-3xl border">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Vidéo du jour</span>
@@ -202,9 +209,33 @@ export default function HomePage({
           </div>
         </div>
 
-        <div className="flex-1 shadow-lg p-4 rounded-3xl border content-center">
-          <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} />
-          <div className="text-sm italic mt-2">*Source: {randomTip.source}</div>
+        <div className="basis-[40%] flex flex-col gap-4">
+          <div className="flex-1 shadow-lg p-4 rounded-3xl border flex flex-col gap-2 justify-around">
+            <div className="flex gap-6">
+              <div className="text-5xl my-auto text-gray-600">
+                {randomTip.highlightedNumber}
+              </div>
+              <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} />
+            </div>
+            <div className="text-sm italic">Source: {randomTip.source}</div>
+          </div>
+
+          <div className="flex-1 shadow-lg p-4 rounded-3xl border flex flex-col justify-around">
+            <div className="mx-auto">DeepMobility 5 jours distincts dans la semaine</div>
+            <div className="flex justify-around">
+              {[1,2,3,4,5].map((number) => (
+                <span
+                  key={number}
+                  className={
+                    "border-2 rounded-full p-3 w-12 h-12 text-center font-bold "
+                    + (number <= weeklySessionsCount ? "text-green-600 border-green-600" : "")
+                  }
+                >
+                  {number}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -222,7 +253,7 @@ export default function HomePage({
               className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
             >
               <div className="font-bold flex gap-2">
-                <span>Jour {index + 1}</span>
+                <span>Éxercice {index + 1}</span>
                 {(index < dailyVideoCourseIndex || (dailySessionDone && index === dailyVideoCourseIndex)) && (
                   <FaCheck size="16px" className="my-auto text-green-600"/>
                 )}
@@ -326,19 +357,33 @@ export default function HomePage({
                 <span className="text-lg font-bold">{selectedVideo?.name}</span>
                 <div className="flex gap-1">
                   <PiClock size="16px" className="my-auto"/>
-                  <span>{formatDuration(selectedVideo?.duration || 0)}</span>
+                  <span className="my-auto">{formatDuration(selectedVideo?.duration || 0)}</span>
                 </div>
               </div>
               <p className="mt-4">
                 {selectedVideo?.description}
               </p>
-              <button type="button"
-                className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'
-                onClick={() => selectedVideo?.id === dailyVideo.id && !dailySessionDone ? showNewSession() : playVideo()}
-              >
-                <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? 'Démarrer': 'Lancer la vidéo'}</span>
-                <MdArrowForward size="24px" className="my-auto"/>
-              </button>
+              <div className="flex mt-auto gap-8">
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {selectedVideo?.bodyParts.map((bodyPart) => (
+                    <span key={bodyPart} className="bg-gray-200 text-xs rounded-md px-2 mb-auto">
+                      {painfulBodyParts.find(painfulBodyPart => painfulBodyPart.value === bodyPart)?.label}
+                    </span>
+                  ))}
+                  {selectedVideo?.exerciseTypes.map((type) => (
+                    <span key={type} className="bg-gray-200 text-xs rounded-md px-2 mb-auto">
+                      {exerciseTypes.find(exerciseType => exerciseType.value === type)?.label}
+                    </span>
+                  ))}
+                </div>
+                <button type="button"
+                  className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2'
+                  onClick={() => selectedVideo?.id === dailyVideo.id && !dailySessionDone ? showNewSession() : playVideo()}
+                >
+                  <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? 'Démarrer': 'Lancer la vidéo'}</span>
+                  <MdArrowForward size="24px" className="my-auto"/>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -408,6 +453,17 @@ export default function HomePage({
                 Terminer
               </button>
             </Form>
+          </div>
+        </div>
+      )}
+
+      {displayCongrats && (
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-200/80 content-center" onClick={closeModal}>
+          <div className="flex flex-col gap-12 m-auto text-center">
+            <div className="text-3xl font-bold">Session journalière terminée !</div>
+            <div className="text-xl">
+              {incentiveSentences[Math.floor(Math.random() * incentiveSentences.length)]}
+            </div>
           </div>
         </div>
       )}
