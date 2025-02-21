@@ -1,12 +1,18 @@
 import Welcome1 from "../../../public/welcome1.jpeg"
 import Logo from "../../../public/logo.svg"
 import Image from 'next/image'
+import { unauthenticatedGet } from "@/lib/httpMethods";
+import { headers } from "next/headers";
 
-export default function ConnectedLayout({
+export default async function ConnectedLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers()
+  
+  const { logoUrl: accountLogo }: { logoUrl: string } = await unauthenticatedGet(`get-account-logo-url/${headersList.get('host')}`)
+
   return (
     <div className="flex max-w-[1366px] m-auto">
       <div className="flex-1">
@@ -19,7 +25,16 @@ export default function ConnectedLayout({
       </div>
         
       <div className="flex-1 h-screen p-24 flex flex-col gap-8">
-        <div>
+        <div className="flex gap-8 mx-auto">
+          <Image
+            src={accountLogo}
+            width={139}
+            height={69}
+            alt="Logo Client"
+          />
+
+          <span className="my-auto">X</span>
+
           <Image
             src={Logo}
             width={139}

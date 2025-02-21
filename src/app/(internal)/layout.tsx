@@ -2,16 +2,32 @@ import Link from "next/link";
 import Image from 'next/image'
 import Logo from "../../../public/logo.svg"
 import { AiOutlineLogout } from 'react-icons/ai';
+import { headers } from "next/headers";
+import { unauthenticatedGet } from "@/lib/httpMethods";
 
-export default function ConnectedLayout({
+export default async function ConnectedLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers()
+  
+  const { logoUrl: accountLogo }: { logoUrl: string } = await unauthenticatedGet(`get-account-logo-url/${headersList.get('host')}`)
+
   return (
     <div>
       <nav className="fixed top-0 w-full h-[50px] bg-white shadow-lg flex justify-between items-center px-4">
-        <Link href="/">
+        <Link href="/" className="flex gap-2">
+          <Image
+            src={accountLogo}
+            width={139}
+            height={69}
+            alt="Logo Client"
+            className="h-8 w-auto"
+          />
+
+          <span className="my-auto text-sm">X</span>
+
           <Image
             src={Logo}
             width={139}

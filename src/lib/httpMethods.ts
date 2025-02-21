@@ -3,6 +3,10 @@ import { redirect } from 'next/navigation'
 
 const apiUrl = (process.env.API_URL || 'http://localhost:3000/platform')
 
+async function unauthenticatedGet(route: string) {
+  return makeRequest('GET', route, false)
+}
+
 async function get(route: string) {
   return makeRequest('GET', route)
 }
@@ -46,6 +50,7 @@ async function makeRequest(method: string, route: string, withAuthentication: bo
 }
 
 export {
+  unauthenticatedGet,
   get,
   unauthenticatedPost,
   post,
