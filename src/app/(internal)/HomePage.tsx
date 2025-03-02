@@ -13,6 +13,7 @@ import { PiClock, PiPathFill } from "react-icons/pi";
 import { startSession, endSession } from "./actions";
 import { FaCheck } from "react-icons/fa";
 import incentiveSentences from "@/lib/incentiveSentences";
+import CourseVideo from "./CourseVideo";
 
 export default function HomePage({
   name,
@@ -171,7 +172,7 @@ export default function HomePage({
               <Image
                 src={dailyVideo.thumbnailUrl}
                 width={320} height={200}
-                className="brightness-50 rounded-xl w-full h-full"
+                className="brightness-50 rounded-xl w-[360px] h-[240px] object-cover"
                 alt="Image de la video du jour"
               />
               <div className="flex gap-1 bg-white absolute bottom-2 right-2 rounded-md p-1 text-sm">
@@ -247,25 +248,10 @@ export default function HomePage({
 
         <div className="mt-6 bg-gray-100 rounded-3xl flex gap-4 p-4">
           {courseVideos.map((video, index) => (
-            <button type="button"
-              key={video.id}
+            <CourseVideo video={video} videoIndex={index} key={video.id}
+              dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
               onClick={() => showVideoDescription(video)}
-              className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2"
-            >
-              <div className="font-bold flex gap-2">
-                <span>Éxercice {index + 1}</span>
-                {(index < dailyVideoCourseIndex || (dailySessionDone && index === dailyVideoCourseIndex)) && (
-                  <FaCheck size="16px" className="my-auto text-green-600"/>
-                )}
-              </div>
-              <Image
-                src={video.thumbnailUrl}
-                width={320} height={200}
-                className="brightness-50 rounded-xl w-[240px] h-[150px]"
-                alt="Image de la video du jour"
-              />
-              <div>{video.name}</div>
-            </button>
+            />
           ))}
         </div>
       </section>
@@ -276,8 +262,8 @@ export default function HomePage({
           <span>Toutes les vidéos</span>
         </h2>
 
-        <div className="flex gap-4">
-          <div className="basis-1/4 mt-4">
+        <div className="flex gap-6">
+          <div className="w-60 flex-none mt-4">
             <div className="font-bold border-b">Filtrer</div>
 
             <div className="pl-4">
@@ -323,7 +309,7 @@ export default function HomePage({
             </div>
           </div>
 
-          <div className="basis-3/4 rounded-3xl flex gap-2 p-4 flex-wrap">
+          <div className="flex-1 rounded-3xl flex content-start gap-2 p-4 flex-wrap">
             {filteredVideos.map((video) => (
               <button type="button"
                 key={video.id}
@@ -344,7 +330,7 @@ export default function HomePage({
       </section>
 
       {displayVideoDescription && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={closeModal}>
           <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
@@ -377,7 +363,7 @@ export default function HomePage({
                   ))}
                 </div>
                 <button type="button"
-                  className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2'
+                  className='flex-none bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 my-auto'
                   onClick={() => selectedVideo?.id === dailyVideo.id && !dailySessionDone ? showNewSession() : playVideo()}
                 >
                   <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? 'Démarrer': 'Lancer la vidéo'}</span>
@@ -390,7 +376,7 @@ export default function HomePage({
       )}
 
       {displayNewSession && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={closeModal}>
           <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
@@ -418,7 +404,7 @@ export default function HomePage({
       )}
 
       {displayVideo && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={closeModal}>
           <video
             width="1200px" height="800px"
             src="https://streamable.com/l/a40td5/mp4.mp4"
@@ -431,7 +417,7 @@ export default function HomePage({
       )}
 
       {displayEndSession && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={closeModal}>
           <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
@@ -458,7 +444,7 @@ export default function HomePage({
       )}
 
       {displayCongrats && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-200/80 content-center" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-200/80 content-center z-20" onClick={closeModal}>
           <div className="flex flex-col gap-12 m-auto text-center">
             <div className="text-3xl font-bold">Session journalière terminée !</div>
             <div className="text-xl">
