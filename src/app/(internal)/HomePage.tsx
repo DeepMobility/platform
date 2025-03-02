@@ -7,7 +7,7 @@ import painfulBodyParts from "@/lib/painfulBodyParts";
 import Form from "next/form";
 import Image from 'next/image'
 
-import { useMemo, useState } from "react";
+import { createRef, useMemo, useState } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
 import { startSession, endSession } from "./actions";
@@ -40,9 +40,15 @@ export default function HomePage({
 }) {
   const [dailySessionDone, setDailySessionDone] = useState(dailySessionAlreadyDone)
 
+  const [weekSessionsCount, setWeekSessionsCount] = useState(weeklySessionsCount)
+
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
 
+  const [beforeRating, setBeforeRating] = useState<FormDataEntryValue | null>(null)
+
   const [sessionId, setSessionId] = useState<number | null>(null)
+
+  const videoRef = createRef<HTMLVideoElement>()
 
   const [displayVideoDescription, setDisplayVideoDescription] = useState(false)
   const [displayNewSession, setDisplayNewSession] = useState(false)
@@ -61,10 +67,7 @@ export default function HomePage({
   }
 
   const startVideoSession = async function(formData: FormData) {
-    const session = await startSession(formData, selectedVideo?.id || 0, newSessionQuestion.value)
-
-    setSessionId(session.id)
-    setDailySessionDone(true)
+    setBeforeRating(formData.get('beforeRating'))
 
     playVideo()
   }
@@ -75,14 +78,24 @@ export default function HomePage({
     setDisplayVideo(true)
   }
 
-  const endVideo = function() {
+  const endVideo = async function(videoCompleted = false) {
+    const currentTime = videoRef.current?.currentTime || 0
+    const videoDuration = videoRef.current?.duration || 1000000
+
     setDisplayVideo(false)
 
-    if (sessionId) {
+    if (beforeRating && (videoCompleted || currentTime > videoDuration - 10)) {
+      const session = await startSession(selectedVideo?.id || 0, newSessionQuestion.value, beforeRating)
+
+      setSessionId(session.id)
+      setDailySessionDone(true)
       setDisplayEndSession(true)
+      setWeekSessionsCount(weekSessionsCount + 1)
     } else {
       setSelectedVideo(null)
     }
+
+    setBeforeRating(null)
   }
 
   const endVideoSession = async function(formData: FormData) {
@@ -96,7 +109,6 @@ export default function HomePage({
   const closeModal = function() {
     setDisplayVideoDescription(false)
     setDisplayNewSession(false)
-    setDisplayVideo(false)
     setDisplayEndSession(false)
     setDisplayCongrats(false)
 
@@ -168,7 +180,13 @@ export default function HomePage({
           </h2>
 
           <div className="flex gap-4 mt-6">
-            <div className="basis-1/2 relative">
+            <button type="button"
+              onClick={() => showVideoDescription(dailyVideo)}
+              className={
+                "basis-1/2 relative "
+                + (dailySessionDone ? "opacity-40" : "")
+              }
+            >
               <Image
                 src={dailyVideo.thumbnailUrl}
                 width={320} height={200}
@@ -179,7 +197,7 @@ export default function HomePage({
                 <PiClock size="16px" className="my-auto"/>
                 <span>{formatDuration(dailyVideo.duration)}</span>
               </div>
-            </div>         
+            </button>         
 
             <div className="basis-1/2 flex flex-col justify-between">
               <div>
@@ -200,10 +218,10 @@ export default function HomePage({
               </div>
 
               <button type="button"
-                className='bg-gray-200 py-2 px-8 rounded-2xl mr-auto flex gap-2'
+                className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2'
                 onClick={() => showVideoDescription(dailyVideo)}
               >
-                <span>Commencer</span>
+                <span>{dailySessionDone ? 'Revoir' : 'Commencer' }</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
             </div>
@@ -229,7 +247,7 @@ export default function HomePage({
                   key={number}
                   className={
                     "border-2 rounded-full p-3 w-12 h-12 text-center font-bold "
-                    + (number <= weeklySessionsCount ? "text-green-600 border-green-600" : "")
+                    + (number <= weekSessionsCount ? "text-green-600 border-green-600" : "")
                   }
                 >
                   {number}
@@ -404,13 +422,14 @@ export default function HomePage({
       )}
 
       {displayVideo && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={closeModal}>
+        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={() => endVideo()}>
           <video
+            ref={videoRef}
             width="1200px" height="800px"
             src="https://streamable.com/l/a40td5/mp4.mp4"
             autoPlay
             controls controlsList="nodownload"
-            onEnded={endVideo}
+            onEnded={() => endVideo(true)}
             className="mx-auto"
           />
         </div>

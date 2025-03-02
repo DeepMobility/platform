@@ -2,10 +2,8 @@
 
 import { post } from '@/lib/httpMethods';
  
-async function startSession(formData: FormData, videoId: number, question: string) {
-  const questionRating = formData.get('beforeRating')
-
-  return post('start-session', { videoId, question, questionRating })
+async function startSession(videoId: number, question: string, rating: FormDataEntryValue) {
+  return post('start-session', { videoId, question, questionRating: rating })
 }
 
 async function endSession(formData: FormData, sessionId: number) {
