@@ -1,6 +1,5 @@
 'use server'
 
-import { redirect } from 'next/navigation'
 import { post } from '@/lib/httpMethods';
 import { cookies } from 'next/headers';
 import cookieOptions from '@/lib/cookieOptions';
@@ -14,5 +13,5 @@ export async function updateMyOtherThematicInterest(formData: FormData) {
 
   cookieStore.set('userOtherThematicInterest', thematic?.toString() || '', cookieOptions)
 
-  redirect('/')
+  return;
 }

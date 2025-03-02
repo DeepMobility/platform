@@ -3,14 +3,15 @@ import Logo from "../../../public/logo.svg"
 import Image from 'next/image'
 import { unauthenticatedGet } from "@/lib/httpMethods";
 import { headers } from "next/headers";
+import ClientLogo from "@/components/ClientLogo";
 
 export default async function ConnectedLayout({
-  children,
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   const headersList = await headers()
-  
+
   const { logoUrl: accountLogo }: { logoUrl: string } = await unauthenticatedGet(`get-account-logo-url/${headersList.get('host')}`)
 
   return (
@@ -26,12 +27,7 @@ export default async function ConnectedLayout({
         
       <div className="flex-1 h-screen p-24 flex flex-col gap-8">
         <div className="flex gap-8 mx-auto">
-          <Image
-            src={accountLogo}
-            width={139}
-            height={69}
-            alt="Logo Client"
-          />
+          <ClientLogo logoUrl={accountLogo}/>
 
           <span className="my-auto">X</span>
 

@@ -4,13 +4,22 @@ import Form from "next/form"
 import { updateMyJobType } from "./actions"
 import jobTypes from "@/lib/jobTypes"
 import { MdArrowForward } from "react-icons/md"
+import { useRouter } from "next/navigation"
 
 export default function JobTypePage({ userJobType }: { userJobType: string | undefined }) {
+  const router = useRouter()
+  
+  const updateJob = async (formData: FormData) => {
+    await updateMyJobType(formData);
+
+    router.push('/premiers-pas/regions-douloureuses')
+  }
+
   return (
     <div>
       <h1 className="font-bold text-xl">Faisons connaissance ! 1/3</h1>
 
-      <Form action={updateMyJobType} className="mt-4 flex flex-col gap-6">
+      <Form action={updateJob} className="mt-4 flex flex-col gap-6">
         <p>1. Quelle est votre activité principale au travail ?</p>
 
         <div className="flex flex-col gap-4">

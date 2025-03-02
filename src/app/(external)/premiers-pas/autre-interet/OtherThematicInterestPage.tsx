@@ -7,12 +7,18 @@ import { useRouter } from "next/navigation"
 
 export default function OtherThematicInterestPage({ userOtherThematicInterest }: { userOtherThematicInterest: string | undefined }) {
   const router = useRouter()
+
+  const updateThematic = async (formData: FormData) => {
+    await updateMyOtherThematicInterest(formData);
+
+    router.push('/')
+  }
   
   return (
     <div>
       <h1 className="font-bold text-xl">Faisons connaissance ! 3/3</h1>
 
-      <Form action={updateMyOtherThematicInterest} className="mt-4 flex flex-col gap-6">
+      <Form action={updateThematic} className="mt-4 flex flex-col gap-6">
         <p>3. Quelles thématiques vous intéressent pour explorer d’autres routines à l’avenir ?</p>
 
         <div className="flex flex-col gap-4">

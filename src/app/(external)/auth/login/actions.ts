@@ -1,11 +1,16 @@
 'use server'
 
-import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
 import { unauthenticatedPost } from '@/lib/httpMethods';
 import { setAuthCookies } from '../actions';
  
-export async function login(errorState: { message: string }, formData: FormData) {
+export async function login(
+  _state: {
+    isComplete: boolean,
+    errorMessage: string
+  },
+  formData: FormData
+) {
   const headersList = await headers()
 
   const response = await unauthenticatedPost('login', {
@@ -14,15 +19,26 @@ export async function login(errorState: { message: string }, formData: FormData)
     accountHost: headersList.get('host'),
   })
 
+  console.log(response)
+
   if (response.statusCode === 401) {
-    return { message: "Aucun compte associé à cet email" }
+    return {
+      isComplete: false,
+      errorMessage: "Aucun compte associé à cet email"
+    }
   }
 
   if (response.statusCode === 403) {
-    return { message: "Mot de passe incorrect" }
+    return {
+      isComplete: false,
+      errorMessage: "Mot de passe incorrect"
+    }
   }
 
   await setAuthCookies(response);
-  
-  redirect('/')
+
+  return {
+    isComplete: true,
+    errorMessage: ""
+  }
 }

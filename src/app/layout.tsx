@@ -18,14 +18,13 @@ export const metadata: Metadata = {
   robots: { index: false }
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="fr">
-
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>

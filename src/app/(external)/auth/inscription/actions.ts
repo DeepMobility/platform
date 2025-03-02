@@ -1,11 +1,16 @@
 'use server'
 
-import { redirect } from 'next/navigation'
 import { post } from '@/lib/httpMethods';
 import { headers } from 'next/headers';
 import { setAuthCookies } from '../actions';
  
-export async function register(errorState: { message: string }, formData: FormData) {
+export async function register(
+  _state: {
+    isComplete: boolean,
+    errorMessage: string
+  },
+  formData: FormData
+) {
   const headersList = await headers()
 
   const response = await post('register', {
@@ -19,10 +24,16 @@ export async function register(errorState: { message: string }, formData: FormDa
   })
 
   if (response.statusCode === 422 && response.message === "user already exists") {
-    return { message: "Ce compte existe déjà" }
+    return {
+      isComplete: false,
+      errorMessage: "Ce compte existe déjà"
+    }
   }
 
   await setAuthCookies(response);
 
-  redirect('/')
+  return {
+    isComplete: true,
+    errorMessage: ""
+  }
 }

@@ -1,6 +1,5 @@
 'use server'
 
-import { redirect } from 'next/navigation'
 import { post } from '@/lib/httpMethods';
 import { cookies } from 'next/headers';
 import cookieOptions from '@/lib/cookieOptions';
@@ -14,5 +13,5 @@ export async function updateMyPainfulBodyPart(formData: FormData) {
 
   cookieStore.set('userPainfulBodyParts', JSON.stringify(bodyParts), cookieOptions)
 
-  redirect('/premiers-pas/autre-interet')
+  return;
 }

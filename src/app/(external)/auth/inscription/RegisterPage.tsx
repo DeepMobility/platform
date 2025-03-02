@@ -1,17 +1,26 @@
 'use client'
 
 import Form from 'next/form'
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
 import { register } from './actions'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function RegisterPage({ birthYearOptions, genderOptions }: {
   birthYearOptions: Array<number>
   genderOptions: Array<{ value: string, label: string }>
 }) {
-  const initialErrorState = { message: "" }
+  const router = useRouter()
 
-  const [formState, formAction] = useActionState(register, initialErrorState)
+  const initialState = { isComplete: false, errorMessage: "" }
+
+  const [formState, formAction] = useActionState(register, initialState)
+
+  useEffect(() => {
+    if (formState?.isComplete) {
+      router.push('/')
+    }
+  }, [formState])
 
   return (
     <div>
@@ -65,8 +74,8 @@ export default function RegisterPage({ birthYearOptions, genderOptions }: {
           <input type="password" name="password" required/>
         </div>
 
-        {formState?.message && (
-          <p className='text-red-500'>{formState.message}</p>
+        {formState?.errorMessage && (
+          <p className='text-red-500'>{formState.errorMessage}</p>
         )}
 
         <button type="submit" className='bg-gray-500 text-white p-2 rounded-2xl'>S'inscrire</button>

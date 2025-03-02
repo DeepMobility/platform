@@ -3,12 +3,21 @@
 import Form from 'next/form'
 import { login } from './actions'
 import Link from 'next/link'
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
-  const initialErrorState = { message: "" }
+  const router = useRouter()
 
-  const [formState, formAction] = useActionState(login, initialErrorState)
+  const initialState = { isComplete: false, errorMessage: "" }
+
+  const [formState, formAction] = useActionState(login, initialState)
+
+  useEffect(() => {
+    if (formState?.isComplete) {
+      router.push('/')
+    }
+  }, [formState])
 
   return (
     <div className='flex flex-col'>
@@ -28,10 +37,10 @@ export default function LoginPage() {
           <input type="password" name="password"/>
         </div>
 
-        {formState?.message && (
-          <p className='text-red-500'>{formState.message}</p>
+        {formState?.errorMessage && (
+          <p className='text-red-500'>{formState.errorMessage}</p>
         )}
-        
+
         <button type="submit" className='bg-gray-500 text-white p-2 rounded-2xl'>Se connecter</button>
       </Form>
 

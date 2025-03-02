@@ -9,11 +9,17 @@ import { useRouter } from 'next/navigation'
 export default function PainfulBodyPartPages({ userPainfulBodyParts }: { userPainfulBodyParts: string[] }) {
   const router = useRouter()
 
+  const updateBodyParts = async (formData: FormData) => {
+    await updateMyPainfulBodyPart(formData);
+
+    router.push('/premiers-pas/autre-interet')
+  }
+
   return (
     <div>
       <h1 className="font-bold text-xl">Faisons connaissance ! 2/3</h1>
 
-      <Form action={updateMyPainfulBodyPart} className="mt-4 flex flex-col gap-6">
+      <Form action={updateBodyParts} className="mt-4 flex flex-col gap-6">
         <p>2. Quelle partie de votre corps vous semble la plus tendue ou inconfortable en ce moment ?</p>
 
         <div className="grid grid-cols-2 gap-2">
