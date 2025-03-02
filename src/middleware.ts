@@ -32,8 +32,8 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/premiers-pas/mode-de-travail', request.nextUrl))
   }
 
-  if (!cookieStore.get('userPainfulBodyPart')?.value) {
-    return NextResponse.redirect(new URL('/premiers-pas/region-douloureuse', request.nextUrl))
+  if (!cookieStore.get('userPainfulBodyParts')?.value) {
+    return NextResponse.redirect(new URL('/premiers-pas/regions-douloureuses', request.nextUrl))
   }
 
   if (!cookieStore.get('userOtherThematicInterest')?.value) {

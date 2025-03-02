@@ -14,5 +14,5 @@ export async function updateMyJobType(formData: FormData) {
 
   cookieStore.set('userJobType', jobType?.toString() || '', cookieOptions)
 
-  redirect('/')
+  redirect('/premiers-pas/regions-douloureuses')
 }

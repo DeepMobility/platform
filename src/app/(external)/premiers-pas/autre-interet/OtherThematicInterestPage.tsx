@@ -3,8 +3,11 @@
 import Form from "next/form"
 import { updateMyOtherThematicInterest } from "./actions"
 import otherThematicInterests from "@/lib/otherThematicInterests"
+import { useRouter } from "next/navigation"
 
-export default function OtherThematicInterestPage() {
+export default function OtherThematicInterestPage({ userOtherThematicInterest }: { userOtherThematicInterest: string | undefined }) {
+  const router = useRouter()
+  
   return (
     <div>
       <h1 className="font-bold text-xl">Faisons connaissance ! 3/3</h1>
@@ -15,13 +18,24 @@ export default function OtherThematicInterestPage() {
         <div className="flex flex-col gap-4">
           {otherThematicInterests.map((thematic) => (
             <div className="flex gap-2" key={thematic.value}>
-              <input type="radio" name="thematic" id={thematic.value} value={thematic.value} required/>
+              <input type="radio" name="thematic" id={thematic.value} value={thematic.value} required
+                defaultChecked={userOtherThematicInterest === thematic.value}
+              />
               <label htmlFor={thematic.value}>{thematic.label}</label>
             </div>
           ))}
         </div>
+
+        <div className="flex gap-8 ml-auto">
+          <button type="button" className='p-2 text-gray-500 rounded-2xl'
+            onClick={() => router.push('/premiers-pas/regions-douloureuses')}
+          >
+            Retour
+          </button>
+
+          <button type="submit" className='bg-gray-500 text-white p-2 rounded-2xl ml-auto'>Terminer</button>
+        </div>
         
-        <button type="submit" className='bg-gray-500 text-white p-2 rounded-2xl ml-auto'>Terminer</button>
       </Form>
     </div>
   )

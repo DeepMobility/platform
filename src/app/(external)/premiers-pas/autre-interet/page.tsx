@@ -1,5 +1,10 @@
+import { cookies } from "next/headers"
 import OtherThematicInterestPage from "./OtherThematicInterestPage"
 
 export default async function OtherThematicInterest() {
-  return <OtherThematicInterestPage />
+  const cookieStore = await cookies()
+
+  const userOtherThematicInterest = cookieStore.get('userOtherThematicInterest')?.value
+  
+  return <OtherThematicInterestPage userOtherThematicInterest={userOtherThematicInterest} />
 }

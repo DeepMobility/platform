@@ -5,7 +5,7 @@ import { updateMyJobType } from "./actions"
 import jobTypes from "@/lib/jobTypes"
 import { MdArrowForward } from "react-icons/md"
 
-export default function JobTypePage() {
+export default function JobTypePage({ userJobType }: { userJobType: string | undefined }) {
   return (
     <div>
       <h1 className="font-bold text-xl">Faisons connaissance ! 1/3</h1>
@@ -16,7 +16,9 @@ export default function JobTypePage() {
         <div className="flex flex-col gap-4">
           {jobTypes.map((jobType) => (
             <div className="flex gap-2" key={jobType.value}>
-              <input type="radio" name="jobType" id={jobType.value} value={jobType.value} required/>
+              <input type="radio" name="jobType" id={jobType.value} value={jobType.value} required
+                defaultChecked={userJobType === jobType.value}
+              />
               <label htmlFor={jobType.value}>{jobType.label}</label>
             </div>
           ))}

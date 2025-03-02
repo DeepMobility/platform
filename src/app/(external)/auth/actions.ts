@@ -9,6 +9,6 @@ export async function setAuthCookies(user: any) {
   cookieStore.set('jwt', user.jwt, cookieOptions)
   cookieStore.set('userName', user.firstName, cookieOptions)
   cookieStore.set('userJobType', user.jobType, cookieOptions)
-  cookieStore.set('userPainfulBodyPart', user.painfulBodyPart, cookieOptions)
+  cookieStore.set('userPainfulBodyParts', JSON.stringify(user.painfulBodyParts), cookieOptions)
   cookieStore.set('userOtherThematicInterest', user.otherThematicInterest, cookieOptions)
 }
