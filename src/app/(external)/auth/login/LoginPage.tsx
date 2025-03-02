@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [formState, formAction] = useActionState(login, initialErrorState)
 
   return (
-    <div>
+    <div className='flex flex-col'>
       <div className='flex justify-between bg-gray-200 p-4 rounded-3xl gap-2'>
         <div className='flex-1 bg-gray-500 text-center py-2 rounded-2xl text-white'>Connexion</div>
         <Link href="/auth/inscription" className='flex-1 text-center px-auto py-2 text-gray-700'>Inscription</Link>
@@ -34,6 +34,13 @@ export default function LoginPage() {
         
         <button type="submit" className='bg-gray-500 text-white p-2 rounded-2xl'>Se connecter</button>
       </Form>
+
+      <Link
+        href="/auth/reinitialisation-mot-de-passe"
+        className='mt-4 mx-auto underline'
+      >
+        Mot de passe oublié ?
+      </Link>
     </div>
   )
 }
