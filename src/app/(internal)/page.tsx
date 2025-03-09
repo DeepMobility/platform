@@ -4,8 +4,9 @@ import tips from '@/lib/tips';
 import sessionQuestions from '@/lib/sessionQuestions';
 
 export default async function Home() {
-  const { name, dailyVideo, dailySessionDone, weeklySessionsCount, course, courseVideos, videos }: {
+  const { name, isSurveyDue, dailyVideo, dailySessionDone, weeklySessionsCount, course, courseVideos, videos }: {
     name: string,
+    isSurveyDue: boolean,
     dailyVideo: Video,
     dailySessionDone: boolean,
     weeklySessionsCount: number,
@@ -22,6 +23,7 @@ export default async function Home() {
 
   return <HomePage
     name={name}
+    isSurveyDue={isSurveyDue}
     dailyVideo={dailyVideo}
     dailySessionAlreadyDone={dailySessionDone}
     weeklySessionsCount={weeklySessionsCount}

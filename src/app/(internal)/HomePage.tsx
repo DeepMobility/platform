@@ -6,17 +6,20 @@ import exerciseTypes from "@/lib/exerciseTypes";
 import painfulBodyParts from "@/lib/painfulBodyParts";
 import Form from "next/form";
 import Image from 'next/image'
-
+import { useSearchParams } from 'next/navigation'
 import { createRef, useMemo, useState } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
+import { RiSurveyLine } from "react-icons/ri";
 import { startSession, endSession } from "./actions";
 import { FaCheck } from "react-icons/fa";
 import incentiveSentences from "@/lib/incentiveSentences";
 import CourseVideo from "./CourseVideo";
+import Link from "next/link";
 
 export default function HomePage({
   name,
+  isSurveyDue,
   dailyVideo,
   dailySessionAlreadyDone,
   weeklySessionsCount,
@@ -28,6 +31,7 @@ export default function HomePage({
   videos
 }: {
   name: string,
+  isSurveyDue: boolean,
   dailyVideo: Video,
   dailySessionAlreadyDone: boolean,
   weeklySessionsCount: number,
@@ -38,6 +42,10 @@ export default function HomePage({
   dailyVideoCourseIndex: number,
   videos: Array<Video>
 }) {
+  const searchParams = useSearchParams()
+
+  const surveyAnswered = searchParams.get('surveyAnswered')
+
   const [dailySessionDone, setDailySessionDone] = useState(dailySessionAlreadyDone)
 
   const [weekSessionsCount, setWeekSessionsCount] = useState(weeklySessionsCount)
@@ -166,7 +174,7 @@ export default function HomePage({
     },
     [bodyPartFilters, exerciseTypeFilters]
   );
-  
+
   return (
     <div>
       <h1 className="text-2xl">Bonjour {name} !</h1>
@@ -229,14 +237,27 @@ export default function HomePage({
         </div>
 
         <div className="basis-[40%] flex flex-col gap-4">
-          <div className="flex-1 shadow-lg p-4 rounded-3xl border flex flex-col gap-2 justify-around">
-            <div className="flex gap-6">
-              <div className="text-5xl my-auto text-gray-600">
-                {randomTip.highlightedNumber}
+          <div className="flex-1 shadow-lg p-4 rounded-3xl border">
+            {isSurveyDue ? !!surveyAnswered ? (
+              <div className="h-full flex items-center">Merci d'avoir répondu</div>
+            ):  (
+              <Link href="/questionnaire"
+                className="cursor-pointer hover:underline h-full flex gap-2"
+              >
+                <RiSurveyLine size="30px" className="my-auto"/>
+                <span className="my-auto">Merci de nous aider à améliorer la plateforme</span>
+              </Link>
+            ): (
+              <div className="flex flex-col gap-2 justify-around h-full">
+                <div className="flex gap-6">
+                  <div className="text-5xl my-auto text-gray-600">
+                    {randomTip.highlightedNumber}
+                  </div>
+                  <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} />
+                </div>
+                <div className="text-sm italic">Source: {randomTip.source}</div>
               </div>
-              <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} />
-            </div>
-            <div className="text-sm italic">Source: {randomTip.source}</div>
+            )}
           </div>
 
           <div className="flex-1 shadow-lg p-4 rounded-3xl border flex flex-col justify-around">
