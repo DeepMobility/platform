@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Viewport, Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   description: "Pour vos routines musculaires",
   robots: { index: false }
 };
+
+export const viewport: Viewport = {
+  themeColor: 'only light',
+}
 
 export default async function RootLayout({
   children,
