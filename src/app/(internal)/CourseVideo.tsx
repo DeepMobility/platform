@@ -1,9 +1,8 @@
 'use client'
 
+import VideoCourseDone from '@/components/VideoCourseDone';
 import Image from 'next/image'
-
 import { useMemo } from "react";
-import { FaCheck } from "react-icons/fa";
 
 export default function CourseVideo({
   video,
@@ -41,11 +40,8 @@ export default function CourseVideo({
           className="brightness-50 rounded-xl w-[240px] h-[150px]"
           alt="Image de la video du jour"
         />
-        {videoCourseDone && (
-          <div className=" bg-gray-400 absolute top-1/2 left-1/2 -mt-[20px] -ml-[20px] rounded-full p-2">
-            <FaCheck size="24px" className="my-auto text-white"/>
-          </div>
-        )}
+
+        <VideoCourseDone isDone={videoCourseDone} />
       </div>
       <div>{video.name}</div>
     </button>

@@ -5,7 +5,7 @@ import { RiCloseLargeFill } from 'react-icons/ri'
 export default function AppModal({
   children,
   closeModal,
-  globalClose = false,
+  globalClose,
 }: {
   children: React.ReactNode,
   closeModal: () => void,

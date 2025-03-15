@@ -12,11 +12,11 @@ import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-ic
 import { PiClock, PiPathFill } from "react-icons/pi";
 import { RiSurveyLine } from "react-icons/ri";
 import { startSession, endSession } from "./actions";
-import { FaCheck } from "react-icons/fa";
 import incentiveSentences from "@/lib/incentiveSentences";
 import CourseVideo from "./CourseVideo";
 import Link from "next/link";
 import AppModal from "@/components/AppModal";
+import VideoCourseDone from "@/components/VideoCourseDone";
 
 export default function HomePage({
   name,
@@ -185,7 +185,6 @@ export default function HomePage({
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Vidéo du jour</span>
-            {dailySessionDone && (<FaCheck size="24px" className="my-auto text-green-600 ml-auto"/>)}
           </h2>
 
           <div className="flex gap-4 mt-6">
@@ -206,6 +205,8 @@ export default function HomePage({
                 <PiClock size="16px" className="my-auto"/>
                 <span>{formatDuration(dailyVideo.duration)}</span>
               </div>
+
+              <VideoCourseDone isDone={dailySessionDone} />
             </button>         
 
             <div className="basis-1/2 flex flex-col justify-between">
