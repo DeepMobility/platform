@@ -36,7 +36,9 @@ export default async function ConnectedLayout({
             className="h-8 w-auto"
           />
         </Link>
-        <Link href="/logout" prefetch={false}><AiOutlineLogout size="25px"/></Link>
+        <Link href="/logout" prefetch={false} className="text-gray-300">
+          <AiOutlineLogout size="25px"/>
+        </Link>
       </nav>
 
       <div className=" mt-12 min-h-[calc(100vh-50px)] max-w-[1366px] bg-white m-auto p-6">

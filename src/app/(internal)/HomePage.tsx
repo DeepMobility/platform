@@ -16,6 +16,7 @@ import { FaCheck } from "react-icons/fa";
 import incentiveSentences from "@/lib/incentiveSentences";
 import CourseVideo from "./CourseVideo";
 import Link from "next/link";
+import AppModal from "@/components/AppModal";
 
 export default function HomePage({
   name,
@@ -369,8 +370,8 @@ export default function HomePage({
       </section>
 
       {displayVideoDescription && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
+        <AppModal closeModal={closeModal}>
+          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={500}
@@ -411,12 +412,12 @@ export default function HomePage({
               </div>
             </div>
           </div>
-        </div>
+        </AppModal>
       )}
 
       {displayNewSession && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
+        <AppModal closeModal={closeModal}>
+          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={500}
@@ -439,11 +440,11 @@ export default function HomePage({
               </button>
             </Form>
           </div>
-        </div>
+        </AppModal>
       )}
 
       {displayVideo && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={() => endVideo()}>
+        <AppModal closeModal={() => endVideo()}>
           <video
             ref={videoRef}
             width="1200px" height="800px"
@@ -453,12 +454,12 @@ export default function HomePage({
             onEnded={() => endVideo(true)}
             className="mx-auto"
           />
-        </div>
+        </AppModal>
       )}
 
       {displayEndSession && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-400/60 z-20" onClick={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20" onClick={(e) => e.stopPropagation()}>
+        <AppModal closeModal={closeModal}>
+          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={500}
@@ -480,18 +481,18 @@ export default function HomePage({
               </button>
             </Form>
           </div>
-        </div>
+        </AppModal>
       )}
 
       {displayCongrats && (
-        <div className="fixed inset-0 w-full h-full p-24 bg-gray-200/80 content-center z-20" onClick={closeModal}>
+        <AppModal closeModal={closeModal} globalClose={true}>
           <div className="flex flex-col gap-12 m-auto text-center">
             <div className="text-3xl font-bold">Session journalière terminée !</div>
             <div className="text-xl">
               {incentiveSentences[Math.floor(Math.random() * incentiveSentences.length)]}
             </div>
           </div>
-        </div>
+        </AppModal>
       )}
     </div>
   )
