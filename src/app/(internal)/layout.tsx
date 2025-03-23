@@ -44,6 +44,12 @@ export default async function ConnectedLayout({
       <div className="md:mt-12 min-h-[calc(100vh-50px)] max-w-[1366px] bg-white m-auto p-6">
         {children}
       </div>
+
+      <div className="border-t flex justify-center p-4">
+        <Link href="/objectifs-pedagogiques" target="_blank" className="text-gray-500 hover:underline">
+          Objectifs pédagogiques
+        </Link>
+      </div>
     </div>
   );
 }
