@@ -405,7 +405,7 @@ export default function HomePage({
 
       {displayVideoDescription && (
         <AppModal closeModal={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] md:h-[400px] rounded-3xl m-6">
+          <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={500}
@@ -436,7 +436,7 @@ export default function HomePage({
                 ))}
               </div>
               <button type="button"
-                className='mt-4 bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 my-auto'
+                className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-auto'
                 onClick={() => selectedVideo?.id === dailyVideo.id && !dailySessionDone ? showNewSession() : playVideo()}
               >
                 <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? 'Démarrer': 'Lancer la vidéo'}</span>
@@ -449,7 +449,7 @@ export default function HomePage({
 
       {displayNewSession && (
         <AppModal closeModal={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] md:h-[400px] rounded-3xl m-6">
+          <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={500}
@@ -466,7 +466,7 @@ export default function HomePage({
                   </div>
                 ))}
               </div>
-              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 ml-auto flex gap-2'>
+              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'>
                 <span>Lancer la vidéo</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
@@ -491,7 +491,7 @@ export default function HomePage({
 
       {displayEndSession && (
         <AppModal closeModal={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] md:h-[400px] rounded-3xl m-6">
+          <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={500}
@@ -508,7 +508,7 @@ export default function HomePage({
                   </div>
                 ))}
               </div>
-              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 ml-auto flex gap-2'>
+              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'>
                 Terminer
               </button>
             </Form>
