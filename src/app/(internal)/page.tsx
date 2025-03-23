@@ -4,7 +4,7 @@ import tips from '@/lib/tips';
 import sessionQuestions from '@/lib/sessionQuestions';
 
 export default async function Home() {
-  const { name, isSurveyDue, dailyVideo, dailySessionDone, weeklySessionsCount, course, courseVideos, videos }: {
+  const { name, isSurveyDue, dailyVideo, dailySessionDone, weeklySessionsCount, course, courseVideos, videos, badges }: {
     name: string,
     isSurveyDue: boolean,
     dailyVideo: Video,
@@ -12,7 +12,8 @@ export default async function Home() {
     weeklySessionsCount: number,
     course: string,
     courseVideos: Video[],
-    videos: Video[]
+    videos: Video[],
+    badges: string[]
   } = await get('get-my-dashboard')
 
   const randomTip = tips[Math.floor(Math.random() * tips.length)]
@@ -33,5 +34,6 @@ export default async function Home() {
     courseVideos={courseVideos}
     dailyVideoCourseIndex={dailyVideoCourseIndex}
     videos={videos}
+    badges={badges}
   />
 }

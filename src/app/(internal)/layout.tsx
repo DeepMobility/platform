@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from 'next/image'
-import Logo from "../../../public/logo.svg"
+import Logo from "@/../public/logo.svg"
 import { AiOutlineLogout } from 'react-icons/ai';
 import { headers } from "next/headers";
 import { unauthenticatedGet } from "@/lib/httpMethods";

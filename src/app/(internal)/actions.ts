@@ -2,7 +2,7 @@
 
 import { post } from '@/lib/httpMethods';
  
-async function startSession(videoId: number, question: string, rating: FormDataEntryValue) {
+async function startSession(videoId: number, question: string, rating: FormDataEntryValue | null) {
   return post('start-session', { videoId, question, questionRating: rating })
 }
 

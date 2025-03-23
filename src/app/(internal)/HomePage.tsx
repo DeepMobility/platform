@@ -17,6 +17,7 @@ import CourseVideo from "./CourseVideo";
 import Link from "next/link";
 import AppModal from "@/components/AppModal";
 import VideoCourseDone from "@/components/VideoCourseDone";
+import badgesList from "@/lib/badgesList";
 
 export default function HomePage({
   name,
@@ -29,7 +30,8 @@ export default function HomePage({
   course,
   courseVideos,
   dailyVideoCourseIndex,
-  videos
+  videos,
+  badges,
 }: {
   name: string,
   isSurveyDue: boolean,
@@ -41,7 +43,8 @@ export default function HomePage({
   course: string,
   courseVideos: Array<Video>,
   dailyVideoCourseIndex: number,
-  videos: Array<Video>
+  videos: Array<Video>,
+  badges: string[],
 }) {
   const searchParams = useSearchParams()
 
@@ -53,9 +56,13 @@ export default function HomePage({
 
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
 
+  const [newBadge, setNewBadge] = useState<string | null>()
+
   const [beforeRating, setBeforeRating] = useState<FormDataEntryValue | null>(null)
 
   const [sessionId, setSessionId] = useState<number | null>(null)
+
+  const [userBadges, setUserBadges] = useState<string[]>(badges)
 
   const videoRef = createRef<HTMLVideoElement>()
 
@@ -93,13 +100,23 @@ export default function HomePage({
 
     setDisplayVideo(false)
 
-    if (beforeRating && (videoCompleted || currentTime > videoDuration - 10)) {
-      const session = await startSession(selectedVideo?.id || 0, newSessionQuestion.value, beforeRating)
+    if ((videoCompleted || currentTime > videoDuration - 10)) {
+      const { session, newBadge } = await startSession(selectedVideo?.id || 0, newSessionQuestion.value, beforeRating)
 
-      setSessionId(session.id)
-      setDailySessionDone(true)
-      setDisplayEndSession(true)
-      setWeekSessionsCount(weekSessionsCount + 1)
+      setNewBadge(newBadge)
+
+      if (newBadge) {
+        setUserBadges([...userBadges, newBadge])
+      }
+
+      if (beforeRating) {
+        setSessionId(session.id)
+        setDailySessionDone(true)
+        setDisplayEndSession(true)
+        setWeekSessionsCount(weekSessionsCount + 1)
+      } else if (newBadge) {
+        setDisplayCongrats(true)
+      }
     } else {
       setSelectedVideo(null)
     }
@@ -120,6 +137,7 @@ export default function HomePage({
     setDisplayNewSession(false)
     setDisplayEndSession(false)
     setDisplayCongrats(false)
+    setNewBadge(null)
 
     setSelectedVideo(null)
   }
@@ -238,7 +256,7 @@ export default function HomePage({
         </div>
 
         <div className="flex-1 md:min-w-[400px] max-w-[800px] flex flex-col gap-4">
-          <div className="flex-1 shadow-lg p-4 rounded-3xl border">
+          <div className="shadow-lg p-4 rounded-3xl border">
             {isSurveyDue ? !!surveyAnswered ? (
               <div className="h-full flex items-center">Merci d'avoir répondu</div>
             ):  (
@@ -261,19 +279,35 @@ export default function HomePage({
             )}
           </div>
 
-          <div className="flex-1 shadow-lg p-4 rounded-3xl border flex flex-col justify-around">
-            <div className="mx-auto">DeepMobility 5 jours distincts dans la semaine</div>
-            <div className="flex justify-around mt-2">
-              {[1,2,3,4,5].map((number) => (
-                <span
-                  key={number}
+          <div className="flex-1 shadow-lg p-4 rounded-3xl border">
+            <div className="flex flex-col justify-around">
+              <div className="mx-auto">DeepMobility 5 jours distincts dans la semaine</div>
+              <div className="flex justify-around mt-2">
+                {[1,2,3,4,5].map((number) => (
+                  <span
+                    key={number}
+                    className={
+                      "border-2 rounded-full p-1 w-8 h-8 text-center font-bold "
+                      + (number <= weekSessionsCount ? "text-green-600 border-green-600" : "")
+                    }
+                  >
+                    {number}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="flex mt-2 border-t pt-2">
+              {badgesList.map(badge => (
+                <Image
+                  key={badge.value}
+                  src={`/badges/${badge.value}.png`}
+                  width={80} height={120}
                   className={
-                    "border-2 rounded-full p-3 w-12 h-12 text-center font-bold "
-                    + (number <= weekSessionsCount ? "text-green-600 border-green-600" : "")
+                    "w-[40px] h-[60px] rounded-t-3xl mx-auto "
+                    + (!userBadges.includes(badge.value) ? "opacity-30" : "")
                   }
-                >
-                  {number}
-                </span>
+                  alt="Nouveau badge"
+                />
               ))}
             </div>
           </div>
@@ -446,7 +480,7 @@ export default function HomePage({
           <video
             ref={videoRef}
             width="1200px" height="800px"
-            src="https://streamable.com/l/a40td5/mp4.mp4"
+            src={selectedVideo?.url}
             autoPlay
             controls controlsList="nodownload"
             onEnded={() => endVideo(true)}
@@ -485,9 +519,22 @@ export default function HomePage({
       {displayCongrats && (
         <AppModal closeModal={closeModal} globalClose={true}>
           <div className="flex flex-col gap-12 m-auto text-center">
-            <div className="text-3xl font-bold">Session journalière terminée !</div>
+            <div className="text-3xl font-bold">
+              {(newBadge ? "Nouveau badge" : "Session journalière terminée !")}
+            </div>
+            {newBadge && (
+              <Image
+                src={`/badges/${newBadge}.png`}
+                width={200} height={300}
+                className="w-[140px] h-[180px] rounded-t-3xl mx-auto"
+                alt="Nouveau badge"
+              />
+            )}
             <div className="text-xl">
-              {incentiveSentences[Math.floor(Math.random() * incentiveSentences.length)]}
+              {(newBadge
+                ? badgesList.find(badge => badge.value === newBadge)?.congrats
+                : incentiveSentences[Math.floor(Math.random() * incentiveSentences.length)]
+              )}
             </div>
           </div>
         </AppModal>
