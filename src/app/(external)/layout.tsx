@@ -1,4 +1,3 @@
-import Welcome1 from "../../../public/welcome1.jpeg"
 import Logo from "../../../public/logo.svg"
 import Image from 'next/image'
 import { unauthenticatedGet } from "@/lib/httpMethods";
@@ -15,33 +14,22 @@ export default async function ConnectedLayout({
   const { logoUrl: accountLogo }: { logoUrl: string } = await unauthenticatedGet(`get-account-logo-url/${headersList.get('host')}`)
 
   return (
-    <div className="flex max-w-[1366px] m-auto">
-      <div className="flex-1">
-        <Image className="m-auto p-16 rounded-[100px]"
-          src={Welcome1}
-          width={565}
-          height={804}
-          alt="Photo exemple de la méthode DeepMobility"
+    <div className="max-w-[600px] mx-auto h-screen min-h-[550px] flex flex-col gap-2 md:gap-8 justify-center p-4">
+      <div className="flex gap-4 md:gap-8 mx-auto">
+        <ClientLogo logoUrl={accountLogo}/>
+
+        <span className="my-auto">X</span>
+
+        <Image
+          src={Logo}
+          width={139}
+          height={69}
+          alt="Logo DeepMobility"
         />
       </div>
-        
-      <div className="flex-1 h-screen p-24 flex flex-col gap-8">
-        <div className="flex gap-8 mx-auto">
-          <ClientLogo logoUrl={accountLogo}/>
 
-          <span className="my-auto">X</span>
-
-          <Image
-            src={Logo}
-            width={139}
-            height={69}
-            alt="Logo DeepMobility"
-          />
-        </div>
-
-        <div className="bg-gray-100 rounded-3xl p-6">
-          {children}
-        </div>
+      <div className="bg-gray-100 rounded-3xl p-4 md:p-6">
+        {children}
       </div>
     </div>
   );

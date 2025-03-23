@@ -26,7 +26,7 @@ export default function CourseVideo({
       key={video.id}
       onClick={() => onClick(video)}
       className={
-        "flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2 "
+        "flex flex-col gap-2 items-center w-[244px] cursor-pointer hover:bg-gray-200 rounded-3xl p-2 "
         + (videoCourseDone ? "opacity-40" : "")
       }
     >

@@ -19,8 +19,6 @@ export async function login(
     accountHost: headersList.get('host'),
   })
 
-  console.log(response)
-
   if (response.statusCode === 401) {
     return {
       isComplete: false,

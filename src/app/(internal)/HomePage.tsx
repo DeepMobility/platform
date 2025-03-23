@@ -180,19 +180,18 @@ export default function HomePage({
     <div>
       <h1 className="text-2xl">Bonjour {name} !</h1>
 
-      <section className="mt-4 flex gap-8">
-        <div className="basis-[60%] shadow-lg p-4 rounded-3xl border">
+      <section className="mt-4 flex gap-8 flex-wrap">
+        <div className="max-w-[800px] shadow-lg p-4 rounded-3xl border">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Vidéo du jour</span>
           </h2>
 
-          <div className="flex gap-4 mt-6">
+          <div className="flex flex-wrap gap-4 mt-6">
             <button type="button"
               onClick={() => showVideoDescription(dailyVideo)}
               className={
-                "basis-1/2 relative "
-                + (dailySessionDone ? "opacity-40" : "")
+                "w-[320px] relative " + (dailySessionDone ? "opacity-40" : "")
               }
             >
               <Image
@@ -209,7 +208,7 @@ export default function HomePage({
               <VideoCourseDone isDone={dailySessionDone} />
             </button>         
 
-            <div className="basis-1/2 flex flex-col justify-between">
+            <div className="flex-1 min-w-[290px] flex flex-col justify-between">
               <div>
                 <h3 className="text-lg font-bold">{dailyVideo.name}</h3>
                 <p className="mt-2">{dailyVideo.description}</p>
@@ -228,7 +227,7 @@ export default function HomePage({
               </div>
 
               <button type="button"
-                className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2'
+                className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-2'
                 onClick={() => showVideoDescription(dailyVideo)}
               >
                 <span>{dailySessionDone ? 'Revoir' : 'Commencer' }</span>
@@ -238,7 +237,7 @@ export default function HomePage({
           </div>
         </div>
 
-        <div className="basis-[40%] flex flex-col gap-4">
+        <div className="flex-1 md:min-w-[400px] max-w-[800px] flex flex-col gap-4">
           <div className="flex-1 shadow-lg p-4 rounded-3xl border">
             {isSurveyDue ? !!surveyAnswered ? (
               <div className="h-full flex items-center">Merci d'avoir répondu</div>
@@ -264,7 +263,7 @@ export default function HomePage({
 
           <div className="flex-1 shadow-lg p-4 rounded-3xl border flex flex-col justify-around">
             <div className="mx-auto">DeepMobility 5 jours distincts dans la semaine</div>
-            <div className="flex justify-around">
+            <div className="flex justify-around mt-2">
               {[1,2,3,4,5].map((number) => (
                 <span
                   key={number}
@@ -287,7 +286,7 @@ export default function HomePage({
           <span>Mon parcours | {courses.find((c) => c.value === course)?.label}</span>
         </h2>
 
-        <div className="mt-6 bg-gray-100 rounded-3xl flex gap-4 p-4">
+        <div className="mt-6 bg-gray-100 rounded-3xl flex gap-2 p-4 flex-wrap justify-center">
           {courseVideos.map((video, index) => (
             <CourseVideo video={video} videoIndex={index} key={video.id}
               dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
@@ -304,7 +303,7 @@ export default function HomePage({
         </h2>
 
         <div className="flex gap-6">
-          <div className="w-60 flex-none mt-4">
+          <div className="hidden md:block w-60 flex-none mt-4">
             <div className="font-bold border-b">Filtrer</div>
 
             <div className="pl-4">
@@ -350,7 +349,7 @@ export default function HomePage({
             </div>
           </div>
 
-          <div className="flex-1 rounded-3xl flex content-start gap-2 p-4 flex-wrap">
+          <div className="flex-1 rounded-3xl flex content-start gap-2 p-4 flex-wrap justify-center md:justify-normal">
             {filteredVideos.map((video) => (
               <button type="button"
                 key={video.id}
@@ -372,7 +371,7 @@ export default function HomePage({
 
       {displayVideoDescription && (
         <AppModal closeModal={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl m-6">
+          <div className="bg-white flex flex-col w-[700px] md:h-[400px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={500}
@@ -390,27 +389,25 @@ export default function HomePage({
               <p className="mt-4">
                 {selectedVideo?.description}
               </p>
-              <div className="flex mt-auto gap-8">
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {selectedVideo?.bodyParts.map((bodyPart) => (
-                    <span key={bodyPart} className="bg-gray-200 text-xs rounded-md px-2 mb-auto">
-                      {painfulBodyParts.find(painfulBodyPart => painfulBodyPart.value === bodyPart)?.label}
-                    </span>
-                  ))}
-                  {selectedVideo?.exerciseTypes.map((type) => (
-                    <span key={type} className="bg-gray-200 text-xs rounded-md px-2 mb-auto">
-                      {exerciseTypes.find(exerciseType => exerciseType.value === type)?.label}
-                    </span>
-                  ))}
-                </div>
-                <button type="button"
-                  className='flex-none bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 my-auto'
-                  onClick={() => selectedVideo?.id === dailyVideo.id && !dailySessionDone ? showNewSession() : playVideo()}
-                >
-                  <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? 'Démarrer': 'Lancer la vidéo'}</span>
-                  <MdArrowForward size="24px" className="my-auto"/>
-                </button>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {selectedVideo?.bodyParts.map((bodyPart) => (
+                  <span key={bodyPart} className="bg-gray-200 text-xs rounded-md px-2 mb-auto">
+                    {painfulBodyParts.find(painfulBodyPart => painfulBodyPart.value === bodyPart)?.label}
+                  </span>
+                ))}
+                {selectedVideo?.exerciseTypes.map((type) => (
+                  <span key={type} className="bg-gray-200 text-xs rounded-md px-2 mb-auto">
+                    {exerciseTypes.find(exerciseType => exerciseType.value === type)?.label}
+                  </span>
+                ))}
               </div>
+              <button type="button"
+                className='mt-4 bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 my-auto'
+                onClick={() => selectedVideo?.id === dailyVideo.id && !dailySessionDone ? showNewSession() : playVideo()}
+              >
+                <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? 'Démarrer': 'Lancer la vidéo'}</span>
+                <MdArrowForward size="24px" className="my-auto"/>
+              </button>
             </div>
           </div>
         </AppModal>
@@ -418,14 +415,14 @@ export default function HomePage({
 
       {displayNewSession && (
         <AppModal closeModal={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20">
+          <div className="bg-white flex flex-col w-[700px] md:h-[400px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={500}
               className="w-full h-[200px] rounded-t-3xl object-cover"
               alt="Image de la video du jour"
             />
-            <Form action={startVideoSession} className="flex flex-col h-full p-4">
+            <Form action={startVideoSession} className="flex flex-col justify-between h-full p-4">
               <div>{newSessionQuestion.beforeLabel}</div>
               <div className="flex justify-around mt-4">
                 {[1,2,3,4,5].map((rating) => (
@@ -435,7 +432,7 @@ export default function HomePage({
                   </div>
                 ))}
               </div>
-              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'>
+              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 ml-auto flex gap-2'>
                 <span>Lancer la vidéo</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
@@ -460,14 +457,14 @@ export default function HomePage({
 
       {displayEndSession && (
         <AppModal closeModal={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] h-[400px] rounded-3xl mx-auto mt-20">
+          <div className="bg-white flex flex-col w-[700px] md:h-[400px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={500}
               className="w-full h-[200px] rounded-t-3xl object-cover"
               alt="Image de la video du jour"
             />
-            <Form action={endVideoSession} className="flex flex-col h-full p-4">
+            <Form action={endVideoSession} className="flex flex-col justify-between h-full p-4">
               <div>{newSessionQuestion.afterLabel}</div>
               <div className="flex justify-around mt-4">
                 {[1,2,3,4,5].map((rating) => (
@@ -477,7 +474,7 @@ export default function HomePage({
                   </div>
                 ))}
               </div>
-              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'>
+              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 ml-auto flex gap-2'>
                 Terminer
               </button>
             </Form>

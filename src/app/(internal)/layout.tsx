@@ -16,7 +16,7 @@ export default async function ConnectedLayout({
 
   return (
     <div>
-      <nav className="fixed top-0 w-full h-[50px] bg-white shadow-lg flex justify-between items-center px-4 z-10">
+      <nav className="md:fixed top-0 w-full h-[50px] bg-white shadow-lg flex justify-between items-center px-4 z-10">
         <Link href="/" className="flex gap-2">
           <Image
             src={accountLogo}
@@ -36,12 +36,12 @@ export default async function ConnectedLayout({
             className="h-8 w-auto"
           />
         </Link>
-        <Link href="/logout" prefetch={false} className="text-gray-300">
+        <Link href="/logout" prefetch={false} className="text-gray-300 hover:text-gray-500">
           <AiOutlineLogout size="25px"/>
         </Link>
       </nav>
 
-      <div className=" mt-12 min-h-[calc(100vh-50px)] max-w-[1366px] bg-white m-auto p-6">
+      <div className="md:mt-12 min-h-[calc(100vh-50px)] max-w-[1366px] bg-white m-auto p-6">
         {children}
       </div>
     </div>
