@@ -182,6 +182,107 @@ const courses = [
   {
     value: 'repetitive-gestures',
     label: 'Mouvements répétitifs et port de charges',
+    videos: [{
+      title: 'Libérez vos épaules',
+      objectives: [{
+        title: 'Souplesse et relaxation',
+        description: 'Apprendre des exercices pour relâcher les tensions dans les épaules, le haut du dos et les cervicales.'
+      }, {
+        title: 'Respiration synchronisée',
+        description: 'Maîtriser la coordination entre mouvements et respiration pour optimiser la détente musculaire.'
+      }, {
+        title: 'Posture et équilibre',
+        description: 'Maintenir une bonne posture pendant les exercices pour éviter les tensions inutiles.'
+      }, {
+        title: 'Autonomie',
+        description: 'Intégrer ces exercices dans son quotidien pour prévenir les raideurs et améliorer la mobilité.'
+      }],
+      skills: [
+        'Réaliser des étirements progressifs pour assouplir les épaules et le haut du dos.',
+        'Coordonner la respiration et les mouvements pour détendre les muscles efficacement.',
+        'Identifier les tensions corporelles et appliquer des exercices adaptés pour les soulager.',
+      ],
+    }, {
+      title: 'Poignées mobiles',
+      objectives: [{
+        title: 'Renforcement et souplesse',
+        description: 'Apprendre des exercices pour assouplir et renforcer les poignets et les avant-bras.'
+      }, {
+        title: 'Respiration synchronisée',
+        description: "Intégrer une respiration profonde pour maximiser la détente et l'efficacité des mouvements."
+      }, {
+        title: 'Posture et mobilité',
+        description: 'Améliorer la fluidité des mouvements et prévenir les tensions au niveau des poignets et des coudes.'
+      }, {
+        title: 'Autonomie',
+        description: 'Intégrer ces exercices dans le quotidien pour éviter les douleurs liées aux gestes répétitifs.'
+      }],
+      skills: [
+        'Exécuter des mouvements fluides et progressifs pour assouplir et renforcer les poignets.',
+        'Coordonner la respiration et les mouvements pour améliorer la souplesse.',
+        'Identifier les tensions et appliquer les exercices appropriés pour les soulager.',
+      ],
+    }, {
+      title: 'Dos et bras solides',
+      objectives: [{
+        title: 'Renforcement et posture',
+        description: 'Apprendre des exercices pour renforcer le dos et les bras tout en maintenant une posture équilibrée.'
+      }, {
+        title: 'Mobilité et équilibre',
+        description: 'Travailler l’alignement du corps et la stabilité.'
+      }, {
+        title: 'Respiration synchronisée',
+        description: 'Intégrer une respiration fluide pour maximiser l’efficacité des mouvements.'
+      }, {
+        title: 'Autonomie',
+        description: 'Intégrer ces exercices dans le quotidien pour prévenir les tensions et améliorer la souplesse du dos.'
+      }],
+      skills: [
+        'Exécuter des mouvements de renforcement et d’étirement du dos et des bras.',
+        'Coordonner la respiration et les exercices pour améliorer la posture et la stabilité.',
+        'Identifier les tensions corporelles et appliquer des exercices adaptés pour les soulager.',
+      ],
+    }, {
+      title: 'Détendre son dos',
+      objectives: [{
+        title: 'Étirements et relaxation',
+        description: 'Apprendre des exercices pour relâcher les tensions dans les épaules, le dos et les mollets.'
+      }, {
+        title: 'Mobilité et posture',
+        description: 'Travailler la souplesse et l’alignement du corps.'
+      }, {
+        title: 'Respiration synchronisée',
+        description: 'Associer la respiration aux mouvements pour maximiser la détente.'
+      }, {
+        title: 'Autonomie',
+        description: 'Intégrer ces exercices dans le quotidien pour réduire le stress et améliorer le bien-être.'
+      }],
+      skills: [
+        'Réaliser des exercices d’étirement progressifs pour améliorer la mobilité du dos et des épaules.',
+        'Coordonner respiration et mouvements pour favoriser la détente musculaire.',
+        'Identifier les tensions corporelles et appliquer les exercices adaptés pour les soulager.',
+      ],
+    }, {
+      title: 'Routine haute du corps',
+      objectives: [{
+        title: 'Renforcement et posture',
+        description: 'Apprendre des exercices pour renforcer les épaules, les bras et le haut du dos tout en maintenant un bon alignement corporel.'
+      }, {
+        title: "Mobilité et équilibre",
+        description: "Améliorer la fluidité des mouvements et stabiliser la posture."
+      }, {
+        title: 'Respiration synchronisée',
+        description: 'Intégrer la respiration abdominale pour optimiser les bienfaits des exercices.'
+      }, {
+        title: "Autonomie",
+        description: "Intégrer ces exercices dans le quotidien pour prévenir les tensions et améliorer la souplesse du haut du corps."
+      }],
+      skills: [
+        'Exécuter des mouvements de renforcement et d’étirement des épaules, des bras et du dos.',
+        "Coordonner la respiration avec les exercices pour favoriser la fluidité des mouvements et la stabilité.",
+        'Identifier les tensions corporelles et appliquer les exercices adaptés pour les soulager.',
+      ],
+    }]
   },
   {
     value: 'sitting',
