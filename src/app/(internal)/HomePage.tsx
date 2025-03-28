@@ -199,23 +199,23 @@ export default function HomePage({
       <h1 className="text-2xl">Bonjour {name} !</h1>
 
       <section className="mt-4 flex gap-8 flex-wrap">
-        <div className="max-w-[800px] shadow-lg p-4 rounded-3xl border">
+        <div className="max-w-[800px] shadow-lg p-4 rounded-3xl border flex flex-col">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Vidéo du jour</span>
           </h2>
 
-          <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex-1 flex flex-wrap gap-4 mt-6">
             <button type="button"
               onClick={() => showVideoDescription(dailyVideo)}
               className={
-                "w-[320px] relative " + (dailySessionDone ? "opacity-40" : "")
+                "w-[270px] sm:w-[340px] relative " + (dailySessionDone ? "opacity-40" : "")
               }
             >
               <Image
                 src={dailyVideo.thumbnailUrl}
-                width={320} height={200}
-                className="brightness-50 rounded-xl w-[360px] h-[240px] object-cover"
+                width={270} height={165}
+                className="brightness-50 rounded-xl w-[270px] sm:w-[340px] h-[165px] sm:h-[240px] object-cover"
                 alt="Image de la video du jour"
               />
               <div className="flex gap-1 bg-white absolute bottom-2 right-2 rounded-md p-1 text-sm">
@@ -226,7 +226,7 @@ export default function HomePage({
               <VideoCourseDone isDone={dailySessionDone} />
             </button>         
 
-            <div className="flex-1 min-w-[290px] flex flex-col justify-between">
+            <div className="flex-1 min-w-[270px] flex flex-col justify-between">
               <div>
                 <h3 className="text-lg font-bold">{dailyVideo.name}</h3>
                 <p className="mt-2">{dailyVideo.description}</p>
@@ -245,7 +245,7 @@ export default function HomePage({
               </div>
 
               <button type="button"
-                className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-2'
+                className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-4 sm:mt-2'
                 onClick={() => showVideoDescription(dailyVideo)}
               >
                 <span>{dailySessionDone ? 'Revoir' : 'Commencer' }</span>
@@ -274,7 +274,7 @@ export default function HomePage({
                   </div>
                   <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} />
                 </div>
-                <div className="text-sm italic">Source: {randomTip.source}</div>
+                <div className="text-xs italic">Source: {randomTip.source}</div>
               </div>
             )}
           </div>
@@ -314,13 +314,13 @@ export default function HomePage({
         </div>
       </section>
 
-      <section className="mt-8 shadow-lg p-4 bg-gray-200 rounded-3xl border">
+      <section className="mt-8 shadow-lg p-4 rounded-3xl border">
         <h2 className="text-lg flex gap-2">
           <PiPathFill size="24px" className="my-auto"/>
           <span>Mon parcours | {courses.find((c) => c.value === course)?.label}</span>
         </h2>
 
-        <div className="mt-6 bg-gray-100 rounded-3xl flex gap-2 p-4 flex-wrap justify-center">
+        <div className="rounded-3xl flex gap-2 mt-4 px-4 flex-wrap justify-center">
           {courseVideos.map((video, index) => (
             <CourseVideo video={video} videoIndex={index} key={video.id}
               dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
@@ -392,11 +392,13 @@ export default function HomePage({
               >
                 <Image
                   src={video.thumbnailUrl}
-                  width={320} height={200}
-                  className="brightness-50 rounded-xl w-[160px] h-[100px]"
+                  width={160} height={100}
+                  className="brightness-50 rounded-xl w-[180px] sm:w-[160px] h-[115px] sm:h-[100px]"
                   alt="Image de la video du jour"
                 />
-                <div>{video.name}</div>
+                <div className="w-[160px] whitespace-nowrap overflow-hidden text-ellipsis">
+                  {video.name}
+                </div>
               </button>
             ))}
           </div>
@@ -436,7 +438,7 @@ export default function HomePage({
                 ))}
               </div>
               <button type="button"
-                className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-auto'
+                className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-4 sm:mt-auto'
                 onClick={() => selectedVideo?.id === dailyVideo.id && !dailySessionDone ? showNewSession() : playVideo()}
               >
                 <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? 'Démarrer': 'Lancer la vidéo'}</span>
@@ -466,7 +468,7 @@ export default function HomePage({
                   </div>
                 ))}
               </div>
-              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'>
+              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 sm:mt-auto ml-auto flex gap-2'>
                 <span>Lancer la vidéo</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
@@ -508,7 +510,7 @@ export default function HomePage({
                   </div>
                 ))}
               </div>
-              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-auto ml-auto flex gap-2'>
+              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 sm:mt-auto ml-auto flex gap-2'>
                 Terminer
               </button>
             </Form>

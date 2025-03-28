@@ -36,7 +36,7 @@ export default function CourseVideo({
       <div className='relative'>
         <Image
           src={video.thumbnailUrl}
-          width={320} height={200}
+          width={240} height={150}
           className="brightness-50 rounded-xl w-[240px] h-[150px]"
           alt="Image de la video du jour"
         />

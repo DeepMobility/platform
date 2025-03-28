@@ -35,7 +35,7 @@ export default function RegisterPage({ birthYearOptions, genderOptions }: {
           <input type="text" name="email" required/>
         </div>
 
-        <div className='flex gap-4'>
+        <div className='flex gap-4 flex-wrap'>
           <div className="flex-1 flex flex-col gap-2">
             <label htmlFor="name">Prénom</label>
             <input type="text" name="firstName" />
@@ -47,8 +47,8 @@ export default function RegisterPage({ birthYearOptions, genderOptions }: {
           </div>
         </div>
 
-        <div className='flex gap-4'>
-          <div className="flex-1 flex flex-col gap-2">
+        <div className='flex gap-4 flex-wrap'>
+          <div className="flex-1 flex flex-col gap-2 min-w-[170px]">
             <label htmlFor="birthYear">Année de naissance</label>
             <select name="birthYear">
               <option value=""></option>
@@ -58,7 +58,7 @@ export default function RegisterPage({ birthYearOptions, genderOptions }: {
             </select>
           </div>
 
-          <div className="flex-1 flex flex-col gap-2">
+          <div className="flex-1 flex flex-col gap-2 min-w-[170px]">
             <label htmlFor="gender">Genre</label>
             <select name="gender">
               <option value=""></option>

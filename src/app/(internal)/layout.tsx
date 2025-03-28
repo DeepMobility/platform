@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from 'next/image'
 import Logo from "@/../public/logo.svg"
-import { AiOutlineLogout } from 'react-icons/ai';
 import { headers } from "next/headers";
 import { unauthenticatedGet } from "@/lib/httpMethods";
+import { FiLogOut } from "react-icons/fi";
 
 export default async function ConnectedLayout({
   children,
@@ -37,7 +37,7 @@ export default async function ConnectedLayout({
           />
         </Link>
         <Link href="/logout" prefetch={false} className="text-gray-300 hover:text-gray-500">
-          <AiOutlineLogout size="25px"/>
+          <FiLogOut size="25px"/>
         </Link>
       </nav>
 
