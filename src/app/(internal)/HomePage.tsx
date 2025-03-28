@@ -209,7 +209,7 @@ export default function HomePage({
             <button type="button"
               onClick={() => showVideoDescription(dailyVideo)}
               className={
-                "w-[270px] sm:w-[340px] relative " + (dailySessionDone ? "opacity-40" : "")
+                "w-[270px] sm:w-[340px] h-[165px] sm:h-[240px] relative " + (dailySessionDone ? "opacity-40" : "")
               }
             >
               <Image
@@ -257,15 +257,33 @@ export default function HomePage({
 
         <div className="flex-1 md:min-w-[400px] max-w-[800px] flex flex-col gap-4">
           <div className="shadow-lg p-4 rounded-3xl border">
-            {isSurveyDue ? !!surveyAnswered ? (
-              <div className="h-full flex items-center">Merci d'avoir répondu</div>
-            ):  (
-              <Link href="/questionnaire"
-                className="cursor-pointer hover:underline h-full flex gap-2"
-              >
-                <RiSurveyLine size="30px" className="my-auto"/>
-                <span className="my-auto">Merci de nous aider à améliorer la plateforme</span>
-              </Link>
+            {isSurveyDue ? (
+              <div className="flex gap-3">
+                <Image
+                  src="/questionnaire.png"
+                  width={80} height={80}
+                  className="w-[80px] h-[80px] grayscale my-auto"
+                  alt="Questionnaire"
+                />
+                {!!surveyAnswered ? (
+                  <p>
+                    Merci d'avoir répondu à notre questionnaire, vos réponses nous aident à toujours
+                    enrichir nos vidéos et nous permettent d'améliorer vos parcours.
+                  </p>
+                ): (
+                  <div>
+                    <span>
+                      Aidez nous à adapter votre parcours à vos besoins : c’est l’heure de compléter quelques questions sur vous ! 
+                    </span>
+                    <Link href="/questionnaire"
+                      className="bg-gray-200 py-2 justify-center rounded-2xl flex gap-2 mt-2 hover:opacity-70"
+                    >
+                      <span>Compléter</span>
+                      <MdArrowForward size="24px" className="my-auto"/>
+                    </Link>
+                  </div>
+                )}  
+              </div>
             ): (
               <div className="flex flex-col gap-2 justify-around h-full">
                 <div className="flex gap-6">
