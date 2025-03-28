@@ -10,7 +10,6 @@ import { useSearchParams } from 'next/navigation'
 import { createRef, useMemo, useState } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
-import { RiSurveyLine } from "react-icons/ri";
 import { startSession, endSession } from "./actions";
 import incentiveSentences from "@/lib/incentiveSentences";
 import CourseVideo from "./CourseVideo";

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Logo from "@/../public/logo.svg"
 import { headers } from "next/headers";
 import { unauthenticatedGet } from "@/lib/httpMethods";
-import { FiLogOut } from "react-icons/fi";
+import { FiExternalLink, FiLogOut } from "react-icons/fi";
 
 export default async function ConnectedLayout({
   children,
@@ -45,10 +45,30 @@ export default async function ConnectedLayout({
         {children}
       </div>
 
-      <div className="border-t flex justify-center p-4">
-        <Link href="/objectifs-pedagogiques" target="_blank" className="text-gray-500 hover:underline">
-          Objectifs pédagogiques
-        </Link>
+      <div className="border-t justify-center p-4">
+        <div className="flex flex-col gap-2 justify-self-center">
+          <Link
+            href="/objectifs-pedagogiques" target="_blank"
+            className="text-gray-500 hover:underline flex gap-2"
+          >
+            <span>Objectifs pédagogiques</span>
+            <span className="my-auto"><FiExternalLink /></span>
+          </Link>
+          <Link
+            href="/mentions-legales" target="_blank"
+            className="text-gray-500 hover:underline flex gap-2"
+          >
+            <span>Mentions légales</span>
+            <span className="my-auto"><FiExternalLink /></span>
+          </Link>
+          <Link
+            href="/politique-de-confidentialite" target="_blank"
+            className="text-gray-500 hover:underline flex gap-2"
+          >
+            <span>Politique de confidentialité</span>
+            <span className="my-auto"><FiExternalLink /></span>
+          </Link>
+        </div>
       </div>
     </div>
   );

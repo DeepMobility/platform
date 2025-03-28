@@ -1,9 +1,9 @@
 import courses from "@/lib/courses";
 
 
-export default function Objectives() {
+export default function() {
   return (
-    <div className="max-w-[800px] mx-auto">
+    <div>
       <h1 className="font-bold text-3xl">Contenu des parcours</h1>
 
       <ul className="flex flex-col gap-6 mt-8">
