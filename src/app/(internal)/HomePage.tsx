@@ -296,10 +296,10 @@ export default function HomePage({
             )}
           </div>
 
-          <div className="flex-1 shadow-lg p-4 rounded-3xl border">
+          <div className="flex-1 shadow-lg p-4 rounded-3xl border flex gap-2 flex-col sm:flex-row">
             <div className="flex flex-col justify-around">
-              <div className="mx-auto">DeepMobility 5 jours distincts dans la semaine</div>
-              <div className="flex justify-around mt-2">
+              <div>DeepMobility 5 jours distincts dans la semaine</div>
+              <div className="flex gap-2 mt-2 mx-auto">
                 {[1,2,3,4,5].map((number) => (
                   <span
                     key={number}
@@ -313,18 +313,25 @@ export default function HomePage({
                 ))}
               </div>
             </div>
-            <div className="flex mt-2 border-t pt-2">
+            <div className="flex border-t pt-2 sm:border-t-0 sm:pt-0 sm:max-w-[170px] sm:flex-wrap sm:border-l sm:pl-2">
               {badgesList.map(badge => (
-                <Image
-                  key={badge.value}
-                  src={`/badges/${badge.value}.png`}
-                  width={80} height={120}
-                  className={
-                    "w-[40px] h-[60px] rounded-t-3xl mx-auto "
-                    + (!userBadges.includes(badge.value) ? "opacity-30" : "")
-                  }
-                  alt="Nouveau badge"
-                />
+                <div key={badge.value}>
+                  {userBadges.includes(badge.value) ? (
+                    <Image
+                      src={`/badges/${badge.value}.svg`}
+                      width={70} height={70}
+                      className="w-[70px] h-[70px] rounded-t-3xl mx-auto"
+                      alt="Badge débloqué"
+                    />
+                  ): (
+                    <Image
+                      src={`/badges/${badge.value}-disabled.svg`}
+                      width={70} height={70}
+                      className="w-[70px] h-[70px] rounded-t-3xl mx-auto"
+                      alt="Badge à débloquer"
+                    />
+                  )}
+                </div>
               ))}
             </div>
           </div>
@@ -537,19 +544,26 @@ export default function HomePage({
 
       {displayCongrats && (
         <AppModal closeModal={closeModal} globalClose={true}>
-          <div className="flex flex-col gap-12 m-auto text-center">
+          <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6 px-4 py-8 items-center justify-between">
             <div className="text-3xl font-bold">
-              {(newBadge ? "Nouveau badge" : "Session journalière terminée !")}
+              {(newBadge ? "Nouveau badge débloqué !" : "Session journalière terminée !")}
             </div>
-            {newBadge && (
+            {newBadge ? (
               <Image
-                src={`/badges/${newBadge}.png`}
-                width={200} height={300}
-                className="w-[140px] h-[180px] rounded-t-3xl mx-auto"
-                alt="Nouveau badge"
+                src={`/badges/${newBadge}-new.svg`}
+                width={300} height={180}
+                className="w-full h-[180px]"
+                alt="Badge débloqué"
+              />
+            ): (
+              <Image
+                src={`/congrats.svg`}
+                width={300} height={180}
+                className="w-full h-[180px]"
+                alt="Bravo"
               />
             )}
-            <div className="text-xl">
+            <div className="text-xl text-center">
               {(newBadge
                 ? badgesList.find(badge => badge.value === newBadge)?.congrats
                 : incentiveSentences[Math.floor(Math.random() * incentiveSentences.length)]
