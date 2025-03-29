@@ -286,7 +286,108 @@ const courses = [
   },
   {
     value: 'sitting',
-    label: 'Posture assise prolongée'
+    label: 'Posture assise prolongée',
+    videos: [{
+      title: 'Relâcher ses cervicales',
+      objectives: [{
+        title: 'Assouplir et détendre les cervicales',
+        description: 'Apprendre des exercices pour relâcher les tensions dans le cou et améliorer la mobilité.'
+      }, {
+        title: 'Améliorer la posture',
+        description: 'Prévenir les douleurs liées aux postures prolongées en maintenant un bon alignement cervical.'
+      }, {
+        title: 'Respiration synchronisée',
+        description: 'Intégrer la respiration pour accompagner les mouvements et favoriser la relaxation.'
+      }, {
+        title: 'Autonomie',
+        description: 'Pouvoir reproduire ces exercices au quotidien pour prévenir les raideurs et soulager les tensions.'
+      }],
+      skills: [
+        'Exécuter des exercices progressifs pour mobiliser et étirer les cervicales en douceur.',
+        'Coordonner les mouvements avec la respiration pour maximiser la détente musculaire.',
+        'Identifier les tensions cervicales et appliquer les exercices adaptés pour les soulager.',
+      ],
+    }, {
+      title: 'Mobiliser le haut du dos',
+      objectives: [{
+        title: 'Mobilité et posture',
+        description: 'Améliorer l’amplitude des mouvements du haut du dos et des épaules.'
+      }, {
+        title: 'Assouplissement et renforcement',
+        description: "Renforcer les muscles posturaux et assouplir les structures thoraciques."
+      }, {
+        title: 'Respiration synchronisée',
+        description: 'Coordonner les exercices avec une respiration fluide pour maximiser la détente musculaire.'
+      }, {
+        title: 'Autonomie',
+        description: 'Intégrer ces mouvements dans le quotidien pour améliorer le confort postural et éviter les douleurs dorsales.'
+      }],
+      skills: [
+        'Exécuter des exercices de mobilisation et d’ouverture du haut du dos.',
+        'Coordonner la respiration et les mouvements pour optimiser la fluidité articulaire.',
+        'Identifier les tensions dans la région thoracique et appliquer les exercices adaptés pour les soulager.',
+      ],
+    }, {
+      title: 'Postures tonique',
+      objectives: [{
+        title: 'Stabilité et posture',
+        description: 'Renforcer les muscles stabilisateurs du dos et améliorer l’alignement corporel.'
+      }, {
+        title: 'Mobilité et équilibre',
+        description: 'Développer la coordination et la proprioception pour un meilleur maintien.'
+      }, {
+        title: 'Respiration synchronisée',
+        description: 'Associer la respiration aux exercices pour optimiser le relâchement musculaire et la fluidité des mouvements.'
+      }, {
+        title: 'Autonomie',
+        description: 'Intégrer ces exercices dans le quotidien pour prévenir les douleurs posturales et améliorer la posture sur le long terme.'
+      }],
+      skills: [
+        'Exécuter des exercices de renforcement postural ciblés pour le haut du corps.',
+        'Coordonner les mouvements et la respiration pour stabiliser la posture.',
+        'Identifier les tensions musculaires et appliquer les exercices adaptés pour les relâcher.',
+      ],
+    }, {
+      title: 'Stretching complet',
+      objectives: [{
+        title: 'Assouplissement global',
+        description: 'Apprendre des exercices pour améliorer la mobilité du cou, du dos, des hanches et des jambes.'
+      }, {
+        title: 'Renforcement de la posture',
+        description: 'Travailler l’alignement corporel à travers des étirements contrôlés.'
+      }, {
+        title: 'Respiration synchronisée',
+        description: 'Associer la respiration aux mouvements pour maximiser la relaxation et l’efficacité des exercices.'
+      }, {
+        title: 'Autonomie',
+        description: 'Intégrer ces exercices dans le quotidien pour réduire les tensions et favoriser une meilleure posture.'
+      }],
+      skills: [
+        'Exécuter des étirements progressifs pour mobiliser l’ensemble du corps.',
+        'Coordonner la respiration avec les exercices pour optimiser l’assouplissement.',
+        'Identifier les tensions musculaires et appliquer les exercices adaptés pour les soulager.',
+      ],
+    }, {
+      title: 'Routine anti-raideurs',
+      objectives: [{
+        title: 'Libération des tensions',
+        description: 'Apprendre des exercices pour réduire la raideur musculaire et améliorer la souplesse.'
+      }, {
+        title: "Équilibre et proprioception",
+        description: "Renforcer la stabilité et la coordination du corps."
+      }, {
+        title: 'Respiration synchronisée',
+        description: "Associer la respiration aux mouvements pour favoriser la détente et l'efficacité des exercices."
+      }, {
+        title: "Autonomie",
+        description: "Intégrer ces exercices dans son quotidien pour maintenir une posture saine et éviter les douleurs articulaires."
+      }],
+      skills: [
+        'Réaliser des étirements actifs pour améliorer la mobilité articulaire et musculaire.',
+        "Développer l’équilibre et la coordination grâce à des postures stabilisatrices.",
+        'Identifier les zones de tension et appliquer des exercices ciblés pour les relâcher.',
+      ],
+    }]
   },
 ]
 
