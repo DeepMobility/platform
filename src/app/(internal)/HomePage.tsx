@@ -484,15 +484,21 @@ export default function HomePage({
             />
             <Form action={startVideoSession} className="flex flex-col justify-between h-full p-4">
               <div>{newSessionQuestion.beforeLabel}</div>
-              <div className="flex justify-around mt-4">
-                {[1,2,3,4,5].map((rating) => (
-                  <div className="flex flex-col gap-2" key={rating}>
-                    <label htmlFor={"rating" + rating}>{rating}</label>
-                    <input type="radio" name="beforeRating" id={"rating" + rating} value={rating}/>
-                  </div>
-                ))}
+              <div className="mt-4 mx-auto">
+                <datalist id="values" className="flex justify-between w-[250px] sm:w-[400px]">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </datalist>
+                
+                <input
+                  type="range" name="beforeRating" min="1" max="5" list="values"
+                  className="w-[250px] sm:w-[400px] m-0 p-0 accent-gray-500"
+                />
               </div>
-              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 sm:mt-auto ml-auto flex gap-2'>
+              <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 ml-auto flex gap-2'>
                 <span>Lancer la vidéo</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
@@ -526,13 +532,19 @@ export default function HomePage({
             />
             <Form action={endVideoSession} className="flex flex-col justify-between h-full p-4">
               <div>{newSessionQuestion.afterLabel}</div>
-              <div className="flex justify-around mt-4">
-                {[1,2,3,4,5].map((rating) => (
-                  <div className="flex flex-col gap-2" key={rating}>
-                    <label htmlFor={"rating" + rating}>{rating}</label>
-                    <input type="radio" name="afterRating" id={"rating" + rating} value={rating}/>
-                  </div>
-                ))}
+              <div className="mt-4 mx-auto">
+                <datalist id="values" className="flex justify-between w-[250px] sm:w-[400px]">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </datalist>
+                
+                <input
+                  type="range" name="afterRating" min="1" max="5" list="values"
+                  className="w-[250px] sm:w-[400px] m-0 p-0 accent-gray-500"
+                />
               </div>
               <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 sm:mt-auto ml-auto flex gap-2'>
                 Terminer
