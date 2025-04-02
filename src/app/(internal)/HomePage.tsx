@@ -214,6 +214,7 @@ export default function HomePage({
               <Image
                 src={dailyVideo.thumbnailUrl}
                 width={270} height={165}
+                unoptimized={true}
                 className="brightness-50 rounded-xl w-[270px] sm:w-[340px] h-[165px] sm:h-[240px] object-cover"
                 alt="Image de la video du jour"
               />
@@ -416,7 +417,8 @@ export default function HomePage({
               >
                 <Image
                   src={video.thumbnailUrl}
-                  width={160} height={100}
+                  width={180} height={100}
+                  unoptimized={true}
                   className="brightness-50 rounded-xl w-[180px] sm:w-[160px] h-[115px] sm:h-[100px]"
                   alt="Image de la video du jour"
                 />
@@ -434,7 +436,8 @@ export default function HomePage({
           <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
-              width={700} height={500}
+              unoptimized={true}
+              width={700} height={200}
               className="w-full h-[200px] rounded-t-3xl object-cover"
               alt="Image de la video du jour"
             />
@@ -478,7 +481,8 @@ export default function HomePage({
           <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
-              width={700} height={500}
+              unoptimized={true}
+              width={700} height={200}
               className="w-full h-[200px] rounded-t-3xl object-cover"
               alt="Image de la video du jour"
             />
@@ -526,7 +530,8 @@ export default function HomePage({
           <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
-              width={700} height={500}
+              width={700} height={200}
+              unoptimized={true}
               className="w-full h-[200px] rounded-t-3xl object-cover"
               alt="Image de la video du jour"
             />
@@ -564,6 +569,7 @@ export default function HomePage({
               <Image
                 src={`/badges/${newBadge}-new.svg`}
                 width={300} height={180}
+                unoptimized={true}
                 className="w-full h-[180px]"
                 alt="Badge débloqué"
               />
@@ -571,6 +577,7 @@ export default function HomePage({
               <Image
                 src={`/congrats.svg`}
                 width={300} height={180}
+                unoptimized={true}
                 className="w-full h-[180px]"
                 alt="Bravo"
               />
