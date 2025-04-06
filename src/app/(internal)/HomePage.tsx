@@ -17,13 +17,13 @@ import Link from "next/link";
 import AppModal from "@/components/AppModal";
 import VideoCourseDone from "@/components/VideoCourseDone";
 import badgesList from "@/lib/badgesList";
+import DaysInARow from "./DaysInARow";
 
 export default function HomePage({
   name,
   isSurveyDue,
   dailyVideo,
   dailySessionAlreadyDone,
-  weeklySessionsCount,
   newSessionQuestion,
   randomTip,
   course,
@@ -31,12 +31,14 @@ export default function HomePage({
   dailyVideoCourseIndex,
   videos,
   badges,
+  dailyActivity,
+  yesterdayActivity,
+  currentDaysInArow,
 }: {
   name: string,
   isSurveyDue: boolean,
   dailyVideo: Video,
   dailySessionAlreadyDone: boolean,
-  weeklySessionsCount: number,
   newSessionQuestion: { value: string, beforeLabel: string, afterLabel: string }
   randomTip: { value: string, source: string, highlightedNumber: string }
   course: string,
@@ -44,6 +46,9 @@ export default function HomePage({
   dailyVideoCourseIndex: number,
   videos: Array<Video>,
   badges: string[],
+  dailyActivity: boolean,
+  yesterdayActivity: boolean,
+  currentDaysInArow: number,
 }) {
   const searchParams = useSearchParams()
 
@@ -51,7 +56,9 @@ export default function HomePage({
 
   const [dailySessionDone, setDailySessionDone] = useState(dailySessionAlreadyDone)
 
-  const [weekSessionsCount, setWeekSessionsCount] = useState(weeklySessionsCount)
+  const [dailyActivityDone, setDailyActivityDone] = useState(dailyActivity)
+
+  const [daysInArow, setDaysInARow] = useState(currentDaysInArow)
 
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
 
@@ -100,8 +107,10 @@ export default function HomePage({
     setDisplayVideo(false)
 
     if ((videoCompleted || currentTime > videoDuration - 10)) {
-      const { session, newBadge } = await startSession(selectedVideo?.id || 0, newSessionQuestion.value, beforeRating)
+      const { session, newBadge, updatedDaysInArow } = await startSession(selectedVideo?.id || 0, newSessionQuestion.value, beforeRating)
 
+      setDailyActivityDone(true)
+      setDaysInARow(updatedDaysInArow)
       setNewBadge(newBadge)
 
       if (newBadge) {
@@ -112,7 +121,6 @@ export default function HomePage({
         setSessionId(session.id)
         setDailySessionDone(true)
         setDisplayEndSession(true)
-        setWeekSessionsCount(weekSessionsCount + 1)
       } else if (newBadge) {
         setDisplayCongrats(true)
       }
@@ -298,35 +306,25 @@ export default function HomePage({
           </div>
 
           <div className="flex-1 shadow-lg p-4 rounded-3xl border flex gap-2 flex-col sm:flex-row">
-            <div className="flex flex-col justify-around">
-              <div>DeepMobility 5 jours distincts dans la semaine</div>
-              <div className="flex gap-2 mt-2 mx-auto">
-                {[1,2,3,4,5].map((number) => (
-                  <span
-                    key={number}
-                    className={
-                      "border-2 rounded-full p-1 w-8 h-8 text-center font-bold "
-                      + (number <= weekSessionsCount ? "text-green-600 border-green-600" : "")
-                    }
-                  >
-                    {number}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="flex border-t pt-2 sm:border-t-0 sm:pt-0 sm:max-w-[170px] sm:flex-wrap sm:border-l sm:pl-2">
+            <DaysInARow
+              dailyActivity={dailyActivityDone}
+              yesterdayActivity={yesterdayActivity}
+              daysInARow={daysInArow}
+            />
+
+            <div className="flex border-t pt-2 sm:border-t-0 sm:pt-0 sm:max-w-[170px] min-w-[150px] sm:flex-wrap sm:border-l sm:pl-2">
               {badgesList.map(badge => (
                 <div key={badge.value}>
                   {userBadges.includes(badge.value) ? (
                     <Image
-                      src={`/badges/${badge.value}.svg`}
+                      src={`/badges/${badge.value}.jpg`}
                       width={70} height={70}
                       className="w-[70px] h-[70px] rounded-t-3xl mx-auto"
                       alt="Badge débloqué"
                     />
                   ): (
                     <Image
-                      src={`/badges/${badge.value}-disabled.svg`}
+                      src={`/badges/${badge.value}-disabled.jpg`}
                       width={70} height={70}
                       className="w-[70px] h-[70px] rounded-t-3xl mx-auto"
                       alt="Badge à débloquer"
@@ -567,7 +565,7 @@ export default function HomePage({
             </div>
             {newBadge ? (
               <Image
-                src={`/badges/${newBadge}-new.svg`}
+                src={`/badges/${newBadge}-new.jpg`}
                 width={300} height={180}
                 unoptimized={true}
                 className="w-full h-[180px]"
