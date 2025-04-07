@@ -4,6 +4,16 @@ import { cookies } from 'next/headers'
 export default async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
+  if (
+    request.headers.get("x-forwarded-proto") !== "https" &&
+    !request.headers.get('host')?.startsWith("localhost")
+  ) {
+    return NextResponse.redirect(
+      `https://${request.headers.get('host')}${path}`,
+      301
+    );
+  }
+
   const cookieStore = await cookies()
 
   if (path === "/logout") {
