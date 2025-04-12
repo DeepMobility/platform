@@ -6,7 +6,7 @@ import exerciseTypes from "@/lib/exerciseTypes";
 import painfulBodyParts from "@/lib/painfulBodyParts";
 import Form from "next/form";
 import Image from 'next/image'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { createRef, useMemo, useState } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
@@ -18,6 +18,7 @@ import AppModal from "@/components/AppModal";
 import VideoCourseDone from "@/components/VideoCourseDone";
 import badgesList from "@/lib/badgesList";
 import DaysInARow from "./DaysInARow";
+import Logo from "@/../public/logo.svg";
 
 export default function HomePage({
   name,
@@ -51,8 +52,11 @@ export default function HomePage({
   currentDaysInArow: number,
 }) {
   const searchParams = useSearchParams()
+  const router = useRouter()
 
   const surveyAnswered = searchParams.get('surveyAnswered')
+
+  const [welcome, setWelcome] = useState(searchParams.get('welcome'))
 
   const [dailySessionDone, setDailySessionDone] = useState(dailySessionAlreadyDone)
 
@@ -77,6 +81,11 @@ export default function HomePage({
   const [displayVideo, setDisplayVideo] = useState(false)
   const [displayEndSession, setDisplayEndSession] = useState(false)
   const [displayCongrats, setDisplayCongrats] = useState(false)
+
+  const removeWelcome = () => {
+    router.replace('/');
+    setWelcome(null);
+  }
 
   const showVideoDescription = function(video: Video) {
     setDisplayVideoDescription(true)
@@ -204,6 +213,33 @@ export default function HomePage({
   return (
     <div>
       <h1 className="text-2xl">Bonjour {name} !</h1>
+
+      {welcome && (
+        <AppModal closeModal={closeModal}>
+          <div className="bg-white text-xl flex flex-col items-center justify-around p-4 w-[600px] md:h-[400px] rounded-3xl m-6 text-center">
+            <Image
+              src={Logo}
+              width={150}
+              height={120}
+              alt="Logo DeepMobility"
+              className="w-[150px] h-[120px]"
+            />
+
+            <div>
+              <b>Bravo !</b> Votre parcours sur mesure est maintenant prêt ! 
+              Réalisez chaque jour votre routine pour améliorer votre Bien-Être.
+            </div>
+
+            <button
+              type="button"
+              onClick={removeWelcome}
+              className='bg-gray-500 text-white py-2 px-6 rounded-2xl'
+            >
+              C'est parti !
+            </button>
+          </div>
+        </AppModal>
+      )}
 
       <section className="mt-4 flex gap-8 flex-wrap">
         <div className="max-w-[800px] shadow-lg p-4 rounded-3xl border flex flex-col">

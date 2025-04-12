@@ -19,6 +19,10 @@ export default function JobTypePage({ userJobType }: { userJobType: string | und
     <div>
       <h1 className="font-bold text-xl">Faisons connaissance ! 1/3</h1>
 
+      <p className="bg-slate-200 p-2 rounded-lg mt-2 border shadow-sm">
+        Bienvenue sur DeepMobility. Prenons quelques instants pour faire connaissance et définir ensemble votre <b>parcours sur-mesure</b>.
+      </p>
+
       <Form action={updateJob} className="mt-4 flex flex-col gap-6">
         <p>1. Quelle est votre activité principale au travail ?</p>
 

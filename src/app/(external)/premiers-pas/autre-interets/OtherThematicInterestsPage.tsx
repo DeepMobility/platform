@@ -13,7 +13,7 @@ export default function OtherThematicInterestsPage({ userOtherThematicInterests 
   const updateThematics = async (formData: FormData) => {
     await updateMyOtherThematicInterests(formData);
 
-    router.push('/')
+    router.push('/?welcome=true')
   }
   
   return (
