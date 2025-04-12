@@ -19,6 +19,7 @@ import VideoCourseDone from "@/components/VideoCourseDone";
 import badgesList from "@/lib/badgesList";
 import DaysInARow from "./DaysInARow";
 import Logo from "@/../public/logo.svg";
+import { LuChevronsUpDown } from "react-icons/lu";
 
 export default function HomePage({
   name,
@@ -76,6 +77,8 @@ export default function HomePage({
 
   const videoRef = createRef<HTMLVideoElement>()
 
+  const [displayAllVideos, setDisplayAllVideos] = useState(false)
+
   const [displayVideoDescription, setDisplayVideoDescription] = useState(false)
   const [displayNewSession, setDisplayNewSession] = useState(false)
   const [displayVideo, setDisplayVideo] = useState(false)
@@ -92,7 +95,10 @@ export default function HomePage({
     setSelectedVideo(video)
   }
 
-  const showNewSession = function() {
+  const showNewSession = function(video?: Video) {
+    if (video) {
+      setSelectedVideo(video)
+    }
     setDisplayVideoDescription(false)
     setDisplayNewSession(true)
   }
@@ -242,7 +248,7 @@ export default function HomePage({
       )}
 
       <section className="mt-4 flex gap-8 flex-wrap">
-        <div className="max-w-[800px] shadow-lg p-4 rounded-3xl border flex flex-col">
+        <div className="order-1 max-w-[800px] shadow-lg p-4 rounded-3xl border flex flex-col">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Ma routine du jour</span>
@@ -250,16 +256,16 @@ export default function HomePage({
 
           <div className="flex-1 flex flex-wrap gap-4 mt-6">
             <button type="button"
-              onClick={() => showVideoDescription(dailyVideo)}
+              onClick={() => showNewSession(dailyVideo)}
               className={
-                "w-[270px] sm:w-[340px] h-[165px] sm:h-[240px] relative " + (dailySessionDone ? "opacity-40" : "")
+                "w-full max-w-[340px] h-[180px] sm:h-[240px] relative " + (dailySessionDone ? "opacity-40" : "")
               }
             >
               <Image
                 src={dailyVideo.thumbnailUrl}
                 width={270} height={165}
                 unoptimized={true}
-                className="brightness-50 rounded-xl w-[270px] sm:w-[340px] h-[165px] sm:h-[240px] object-cover"
+                className="brightness-50 rounded-xl w-full max-w-[340px] h-[180px] sm:h-[240px] object-cover"
                 alt="Image de la video du jour"
               />
               <div className="flex gap-1 bg-white absolute bottom-2 right-2 rounded-md p-1 text-sm">
@@ -290,7 +296,7 @@ export default function HomePage({
 
               <button type="button"
                 className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-4 sm:mt-2'
-                onClick={() => showVideoDescription(dailyVideo)}
+                onClick={() => showNewSession(dailyVideo)}
               >
                 <span>{dailySessionDone ? 'Revoir' : 'Commencer' }</span>
                 <MdArrowForward size="24px" className="my-auto"/>
@@ -299,7 +305,7 @@ export default function HomePage({
           </div>
         </div>
 
-        <div className="flex-1 md:min-w-[400px] max-w-[800px] flex flex-col gap-4">
+        <div className="order-3 lg:order-2 flex-1 md:min-w-[400px] max-w-[800px] flex flex-col gap-4">
           <div className="shadow-lg p-4 rounded-3xl border">
             {isSurveyDue ? (
               <div className="flex gap-3">
@@ -375,102 +381,115 @@ export default function HomePage({
             </div>
           </div>
         </div>
-      </section>
 
-      <section className="mt-8 shadow-lg p-4 rounded-3xl border">
-        <h2 className="text-lg flex gap-2">
-          <PiPathFill size="24px" className="my-auto"/>
-          <span>Mon parcours sur mesure | {courses.find((c) => c.value === course)?.label}</span>
-        </h2>
+        <div className="order-2 lg:order-3 shadow-lg p-4 rounded-3xl border w-full">
+          <h2 className="text-lg flex gap-2">
+            <PiPathFill size="24px" className="my-auto"/>
+            <span>Mon parcours sur mesure | {courses.find((c) => c.value === course)?.label}</span>
+          </h2>
 
-        <div className="italic mt-1">
-          Des routines musculaires conçues spécialement pour vous, à réaliser chaque jour au travail.
-        </div>
-
-        <div className="rounded-3xl flex gap-2 mt-4 px-4 flex-wrap justify-center">
-          {courseVideos.map((video, index) => (
-            <CourseVideo video={video} videoIndex={index} key={video.id}
-              dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
-              onClick={() => showVideoDescription(video)}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-8 shadow-lg p-4 rounded-3xl border">
-        <h2 className="text-lg flex gap-2">
-          <MdOutlineVideoLibrary size="24px" className="my-auto"/>
-          <span>Toutes les vidéos</span>
-        </h2>
-
-        <div className="flex gap-6">
-          <div className="hidden md:block w-60 flex-none mt-4">
-            <div className="font-bold border-b">Filtrer</div>
-
-            <div className="pl-4">
-              <div className="mt-4 flex gap-2">
-                <input type="checkbox" name="allVideoFilter"
-                  onChange={toggleAllVideoFilter} checked={allVideoFilter}
-                  id="allVideoFilter"
-                />
-                <label htmlFor="allVideoFilter">Toutes les vidéos</label>
-              </div>
-
-              <div className="mt-4">
-                <div className="font-bold">Parties du corps</div>
-                <div className="flex flex-col mt-1">
-                  {painfulBodyParts.map((bodyPart) => (
-                    <div key={bodyPart.value} className="flex gap-2">
-                      <input type="checkbox" name="bodyPartFilters"
-                        onChange={updateBodyPartFilters} value={bodyPart.value}
-                        checked={bodyPartFilters.includes(bodyPart.value)}
-                        id={bodyPart.value}
-                      />
-                      <label htmlFor={bodyPart.value}>{bodyPart.label}</label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <div className="font-bold">Types d'exercice</div>
-                <div className="flex flex-col mt-1">
-                  {exerciseTypes.map((type) => (
-                    <div key={type.value} className="flex gap-2">
-                      <input type="checkbox" name="exerciseTypeFilters"
-                        onChange={updateExerciseTypeFilters} value={type.value}
-                        checked={exerciseTypeFilters.includes(type.value)}
-                        id={type.value}
-                      />
-                      <label htmlFor={type.value}>{type.label}</label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className="italic mt-1">
+            Des routines musculaires conçues spécialement pour vous, à réaliser chaque jour au travail.
           </div>
 
-          <div className="flex-1 rounded-3xl flex content-start gap-2 p-4 flex-wrap justify-center md:justify-normal">
-            {filteredVideos.map((video) => (
-              <button type="button"
-                key={video.id}
+          <div className="rounded-3xl flex gap-2 mt-4 px-4 flex-wrap justify-center">
+            {courseVideos.map((video, index) => (
+              <CourseVideo video={video} videoIndex={index} key={video.id}
+                dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
                 onClick={() => showVideoDescription(video)}
-                className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2 mb-auto"
-              >
-                <Image
-                  src={video.thumbnailUrl}
-                  width={180} height={100}
-                  unoptimized={true}
-                  className="brightness-50 rounded-xl w-[180px] sm:w-[160px] h-[115px] sm:h-[100px]"
-                  alt="Image de la video du jour"
-                />
-                <div className="w-[160px] whitespace-nowrap overflow-hidden text-ellipsis">
-                  {video.name}
-                </div>
-              </button>
+              />
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="mt-8 shadow-lg p-4 rounded-3xl border">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg flex gap-2">
+            <MdOutlineVideoLibrary size="24px" className="my-auto"/>
+            <span>Toutes les vidéos</span>
+          </h2>
+
+          <button
+            type="button"
+            className="flex gap-2 text-slate-800"
+            onClick={() => setDisplayAllVideos(!displayAllVideos)}
+          >
+            <span>Afficher</span>
+            <LuChevronsUpDown size="20px" className="my-auto"/>
+          </button>
+        </div>
+        
+        {displayAllVideos && (
+          <div className="flex gap-6 mt-2">
+            <div className="hidden md:block w-60 flex-none mt-4">
+              <div className="font-bold border-b">Filtrer</div>
+
+              <div className="pl-4">
+                <div className="mt-4 flex gap-2">
+                  <input type="checkbox" name="allVideoFilter"
+                    onChange={toggleAllVideoFilter} checked={allVideoFilter}
+                    id="allVideoFilter"
+                  />
+                  <label htmlFor="allVideoFilter">Toutes les vidéos</label>
+                </div>
+
+                <div className="mt-4">
+                  <div className="font-bold">Parties du corps</div>
+                  <div className="flex flex-col mt-1">
+                    {painfulBodyParts.map((bodyPart) => (
+                      <div key={bodyPart.value} className="flex gap-2">
+                        <input type="checkbox" name="bodyPartFilters"
+                          onChange={updateBodyPartFilters} value={bodyPart.value}
+                          checked={bodyPartFilters.includes(bodyPart.value)}
+                          id={bodyPart.value}
+                        />
+                        <label htmlFor={bodyPart.value}>{bodyPart.label}</label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <div className="font-bold">Types d'exercice</div>
+                  <div className="flex flex-col mt-1">
+                    {exerciseTypes.map((type) => (
+                      <div key={type.value} className="flex gap-2">
+                        <input type="checkbox" name="exerciseTypeFilters"
+                          onChange={updateExerciseTypeFilters} value={type.value}
+                          checked={exerciseTypeFilters.includes(type.value)}
+                          id={type.value}
+                        />
+                        <label htmlFor={type.value}>{type.label}</label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 rounded-3xl flex content-start gap-2 p-4 flex-wrap justify-center md:justify-normal">
+              {filteredVideos.map((video) => (
+                <button type="button"
+                  key={video.id}
+                  onClick={() => showVideoDescription(video)}
+                  className="flex flex-col gap-2 items-center cursor-pointer hover:bg-gray-200 rounded-3xl p-2 mb-auto"
+                >
+                  <Image
+                    src={video.thumbnailUrl}
+                    width={180} height={100}
+                    unoptimized={true}
+                    className="brightness-50 rounded-xl w-[180px] sm:w-[160px] h-[115px] sm:h-[100px]"
+                    alt="Image de la video du jour"
+                  />
+                  <div className="w-[160px] whitespace-nowrap overflow-hidden text-ellipsis">
+                    {video.name}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {displayVideoDescription && (
