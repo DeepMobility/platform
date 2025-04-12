@@ -209,7 +209,7 @@ export default function HomePage({
         <div className="max-w-[800px] shadow-lg p-4 rounded-3xl border flex flex-col">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
-            <span>Vidéo du jour</span>
+            <span>Ma routine du jour</span>
           </h2>
 
           <div className="flex-1 flex flex-wrap gap-4 mt-6">
@@ -314,7 +314,7 @@ export default function HomePage({
 
             <div className="flex border-t pt-2 sm:border-t-0 sm:pt-0 sm:max-w-[170px] min-w-[150px] sm:flex-wrap sm:border-l sm:pl-2">
               {badgesList.map(badge => (
-                <div key={badge.value}>
+                <div key={badge.value} className="group">
                   {userBadges.includes(badge.value) ? (
                     <Image
                       src={`/badges/${badge.value}.jpg`}
@@ -330,6 +330,10 @@ export default function HomePage({
                       alt="Badge à débloquer"
                     />
                   )}
+
+                  <div className="hidden group-hover:block absolute bg-white rounded-xl border shadow-lg p-2">
+                    {badge.condition}
+                  </div>
                 </div>
               ))}
             </div>
@@ -340,8 +344,12 @@ export default function HomePage({
       <section className="mt-8 shadow-lg p-4 rounded-3xl border">
         <h2 className="text-lg flex gap-2">
           <PiPathFill size="24px" className="my-auto"/>
-          <span>Mon parcours | {courses.find((c) => c.value === course)?.label}</span>
+          <span>Mon parcours sur mesure | {courses.find((c) => c.value === course)?.label}</span>
         </h2>
+
+        <div className="italic mt-1">
+          Des routines musculaires conçues spécialement pour vous, à réaliser chaque jour au travail.
+        </div>
 
         <div className="rounded-3xl flex gap-2 mt-4 px-4 flex-wrap justify-center">
           {courseVideos.map((video, index) => (

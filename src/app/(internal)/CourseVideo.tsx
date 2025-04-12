@@ -31,7 +31,7 @@ export default function CourseVideo({
       }
     >
       <div className="font-bold flex gap-2">
-        <span>Séance {videoIndex + 1}</span>
+        <span>Jour {videoIndex + 1}</span>
       </div>
       <div className='relative'>
         <Image

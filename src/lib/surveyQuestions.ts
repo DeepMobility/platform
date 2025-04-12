@@ -21,7 +21,7 @@ const sessionQuestions = [
   },
   {
     value: 'pain-reduction',
-    label: "Sur une échelle de 1 à 5, dans quelle mesure avez-vous ressenti une diminution des tensions ou douleurs corporelles depuis le début du programme ?",
+    label: "Sur une échelle de 1 à 5, dans quelle mesure avez-vous ressenti une diminution des tensions ou douleurs corporelles depuis le début du parcours ?",
     type: "rating"
   },
   {
