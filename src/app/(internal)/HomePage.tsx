@@ -567,28 +567,28 @@ export default function HomePage({
 
       {displayCongrats && (
         <AppModal closeModal={closeModal} globalClose={true}>
-          <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6 px-4 py-8 items-center justify-between">
+          <div className="bg-white flex flex-col text-center gap-2 w-[700px] md:h-[450px] rounded-3xl m-6 px-4 py-8 items-center justify-between">
             <div className="text-3xl font-bold">
               {(newBadge ? "Nouveau badge débloqué !" : "Session journalière terminée !")}
             </div>
             {newBadge ? (
               <Image
                 src={`/badges/${newBadge}-new.jpg`}
-                width={300} height={180}
+                width={400} height={150}
                 unoptimized={true}
-                className="w-full h-[180px]"
+                className="aspect-3/1 w-full max-w-[500px]"
                 alt="Badge débloqué"
               />
             ): (
               <Image
                 src={`/congrats.svg`}
-                width={300} height={180}
+                width={400} height={150}
                 unoptimized={true}
-                className="w-full h-[180px]"
+                className="aspect-3/1 w-full max-w-[500px]"
                 alt="Bravo"
               />
             )}
-            <div className="text-xl text-center">
+            <div className="text-xl">
               {(newBadge
                 ? badgesList.find(badge => badge.value === newBadge)?.congrats
                 : incentiveSentences[Math.floor(Math.random() * incentiveSentences.length)]
