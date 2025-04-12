@@ -122,21 +122,23 @@ export default function HomePage({
     setDisplayVideo(false)
 
     if ((videoCompleted || currentTime > videoDuration - 10)) {
-      const { session, newBadge, updatedDaysInArow } = await startSession(selectedVideo?.id || 0, newSessionQuestion.value, beforeRating)
+      const { session, newBadges, updatedDaysInArow } = await startSession(selectedVideo?.id || 0, newSessionQuestion.value, beforeRating)
 
       setDailyActivityDone(true)
       setDaysInARow(updatedDaysInArow)
-      setNewBadge(newBadge)
 
-      if (newBadge) {
-        setUserBadges([...userBadges, newBadge])
+      if (newBadges.length > 0) {
+        if (badgesList.includes(newBadges[0])) {
+          setNewBadge(newBadges[0])
+        }
+        setUserBadges([...userBadges, ...newBadges])
       }
 
       if (beforeRating) {
         setSessionId(session.id)
         setDailySessionDone(true)
         setDisplayEndSession(true)
-      } else if (newBadge) {
+      } else if (newBadges.length > 0) {
         setDisplayCongrats(true)
       }
     } else {
