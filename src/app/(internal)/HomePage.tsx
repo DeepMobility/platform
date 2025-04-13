@@ -411,21 +411,20 @@ export default function HomePage({
       </section>
 
       <section className="mt-8 shadow-lg p-4 rounded-3xl border">
-        <div className="flex items-center justify-between">
+        <button
+          className="w-full flex items-center justify-between cursor-pointer hover:opacity-7"
+          onClick={() => setDisplayAllVideos(!displayAllVideos)}
+        >
           <h2 className="text-lg flex gap-2">
             <MdOutlineVideoLibrary size="24px" className="my-auto"/>
-            <span>Toutes les vidéos</span>
+            <span>Toutes les routines</span>
           </h2>
 
-          <button
-            type="button"
-            className="flex gap-2 text-slate-800"
-            onClick={() => setDisplayAllVideos(!displayAllVideos)}
-          >
+          <div className="flex gap-2 text-slate-800 mt-auto">
             <span>Afficher</span>
             <LuChevronsUpDown size="20px" className="my-auto"/>
-          </button>
-        </div>
+          </div>
+        </button>
         
         {displayAllVideos && (
           <div className="flex gap-6 mt-2">
