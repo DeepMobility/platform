@@ -33,7 +33,7 @@ export default function JobTypePage({ userJobType }: { userJobType: string | und
 
       {welcome && (
         <AppModal closeModal={removeWelcome}>
-          <div className="bg-slate-200 gap-4 flex flex-col items-center justify-around p-4 w-[600px] md:h-[400px] rounded-3xl m-6 text-center">
+          <div className="bg-[#A89B93] gap-4 flex flex-col items-center justify-around p-4 w-[600px] md:h-[400px] rounded-3xl m-6 text-center">
             <Image
               src={Logo}
               width={150}
