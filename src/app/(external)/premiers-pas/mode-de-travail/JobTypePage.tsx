@@ -43,7 +43,7 @@ export default function JobTypePage({ userJobType }: { userJobType: string | und
             />
 
             <div className="font-bold text-2xl">
-              Bienvenue sur DeepMobility. 
+              Bienvenue sur DeepMobility
             </div>
 
             <div className="flex flex-col text-lg">

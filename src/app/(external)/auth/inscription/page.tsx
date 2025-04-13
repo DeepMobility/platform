@@ -18,7 +18,7 @@ export default async function Register() {
     label: 'Autre',
   }, {
     value: 'secret',
-    label: 'Ne préfère pas dire',
+    label: 'Ne sait pas',
   }]
 
   return <RegisterPage

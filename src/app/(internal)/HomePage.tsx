@@ -18,7 +18,7 @@ import AppModal from "@/components/AppModal";
 import VideoCourseDone from "@/components/VideoCourseDone";
 import badgesList from "@/lib/badgesList";
 import Logo from "@/../public/logo.svg";
-import { LuChevronsUpDown } from "react-icons/lu";
+import { LuChevronLeft, LuChevronRight, LuChevronsUpDown } from "react-icons/lu";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Fires from "./Fires";
@@ -123,7 +123,7 @@ export default function HomePage({
 
     setDisplayVideo(false)
 
-    if ((videoCompleted || currentTime > videoDuration - 10)) {
+    if ((videoCompleted || currentTime > videoDuration - 25)) {
       const { session, newBadges, updatedDaysInArow } = await startSession(selectedVideo?.id || 0, newSessionQuestion.value, beforeRating)
 
       setDailyActivityDone(true)
@@ -420,14 +420,25 @@ export default function HomePage({
           </div>
 
           <div className="sm:hidden">
-            <Swiper initialSlide={dailyVideoCourseIndex + 1} slidesPerView={1}>
+            <Swiper initialSlide={dailyVideoCourseIndex} slidesPerView={1}>
               {courseVideos.map((video, index) => (
                 <SwiperSlide key={video.id}>
-                  <CourseVideo video={video} videoIndex={index}
-                    dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
-                    onClick={() => showVideoDescription(video)}
-                    className="mx-auto"
-                  />
+                  <div className="flex items-center justify-center">
+                    <div className="w-[16px]">
+                      {index !== 0 && (
+                        <LuChevronLeft />
+                      )} 
+                    </div>
+                    <CourseVideo video={video} videoIndex={index}
+                      dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
+                      onClick={() => showVideoDescription(video)}
+                    />
+                    <div className="w-[16px]">
+                      {index < courseVideos.length - 1 && (
+                        <LuChevronRight />
+                      )}
+                    </div>
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>
