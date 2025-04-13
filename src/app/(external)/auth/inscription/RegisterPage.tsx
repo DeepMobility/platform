@@ -18,7 +18,7 @@ export default function RegisterPage({ birthYearOptions, genderOptions }: {
 
   useEffect(() => {
     if (formState?.isComplete) {
-      router.push('/')
+      router.push('/premiers-pas/mode-de-travail?welcome=true')
     }
   }, [formState])
 

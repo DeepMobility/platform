@@ -223,8 +223,8 @@ export default function HomePage({
       <h1 className="text-2xl">Bonjour {name} !</h1>
 
       {welcome && (
-        <AppModal closeModal={closeModal}>
-          <div className="bg-white text-xl flex flex-col items-center justify-around p-4 w-[600px] md:h-[400px] rounded-3xl m-6 text-center">
+        <AppModal closeModal={removeWelcome}>
+          <div className="bg-slate-200 gap-4 flex flex-col items-center justify-around p-4 w-[600px] md:h-[400px] rounded-3xl m-6 text-center">
             <Image
               src={Logo}
               width={150}
@@ -233,10 +233,15 @@ export default function HomePage({
               className="w-[150px] h-[120px]"
             />
 
-            <div>
-              <b>Bravo !</b> Votre parcours sur mesure est maintenant prêt ! 
-              Réalisez chaque jour votre routine pour améliorer votre Bien-Être.
-            </div>
+            <b className="text-2xl">BRAVO !</b>
+
+            <div className="flex flex-col gap-2">
+              <b className="text-xl">Votre parcours sur mesure est maintenant prêt !</b>
+
+              <div className="text-lg">
+                Réalisez chaque jour votre routine pour améliorer votre bien-être.
+              </div>
+            </div>     
 
             <button
               type="button"

@@ -4,11 +4,23 @@ import Form from "next/form"
 import { updateMyJobType } from "./actions"
 import jobTypes from "@/lib/jobTypes"
 import { MdArrowForward } from "react-icons/md"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useState } from "react"
+import AppModal from "@/components/AppModal"
+import Image from 'next/image'
+import Logo from "@/../public/logo.svg";
 
 export default function JobTypePage({ userJobType }: { userJobType: string | undefined }) {
+  const searchParams = useSearchParams()
   const router = useRouter()
-  
+
+  const [welcome, setWelcome] = useState(searchParams.get('welcome'))
+
+  const removeWelcome = () => {
+    router.replace('/premiers-pas/mode-de-travail');
+    setWelcome(null);
+  }
+
   const updateJob = async (formData: FormData) => {
     await updateMyJobType(formData);
 
@@ -19,9 +31,35 @@ export default function JobTypePage({ userJobType }: { userJobType: string | und
     <div>
       <h1 className="font-bold text-xl">Faisons connaissance ! 1/3</h1>
 
-      <p className="bg-slate-200 p-2 rounded-lg mt-2 border shadow-sm">
-        Bienvenue sur DeepMobility. Prenons quelques instants pour faire connaissance et définir ensemble votre <b>parcours sur-mesure</b>.
-      </p>
+      {welcome && (
+        <AppModal closeModal={removeWelcome}>
+          <div className="bg-slate-200 gap-4 flex flex-col items-center justify-around p-4 w-[600px] md:h-[400px] rounded-3xl m-6 text-center">
+            <Image
+              src={Logo}
+              width={150}
+              height={120}
+              alt="Logo DeepMobility"
+              className="w-[150px] h-[120px]"
+            />
+
+            <div className="font-bold text-2xl">
+              Bienvenue sur DeepMobility. 
+            </div>
+
+            <div className="text-lg">
+              Prenons quelques instants pour faire connaissance et <b>définir ensemble votre parcours sur mesure</b>.
+            </div>
+
+            <button
+              type="button"
+              onClick={removeWelcome}
+              className='bg-gray-500 text-white py-2 px-6 rounded-2xl'
+            >
+              Commencer
+            </button>
+          </div>
+        </AppModal>
+      )}
 
       <Form action={updateJob} className="mt-4 flex flex-col gap-6">
         <p>1. Quelle est votre activité principale au travail ?</p>
