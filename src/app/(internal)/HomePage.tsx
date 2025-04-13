@@ -17,11 +17,11 @@ import Link from "next/link";
 import AppModal from "@/components/AppModal";
 import VideoCourseDone from "@/components/VideoCourseDone";
 import badgesList from "@/lib/badgesList";
-import DaysInARow from "./DaysInARow";
 import Logo from "@/../public/logo.svg";
 import { LuChevronsUpDown } from "react-icons/lu";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import Fires from "./Fires";
 
 export default function HomePage({
   name,
@@ -222,7 +222,29 @@ export default function HomePage({
 
   return (
     <div>
-      <h1 className="text-2xl">Bonjour {name} !</h1>
+      <h1 className="text-2xl flex gap-4 flex-wrap">
+        <span>Bonjour {name} !</span>
+        <div className="flex gap-2">
+          {[1,2,3,4,5].map((fire) => (
+            <div key={fire} className="relative">
+              <Image
+                src={`/fire.svg`}
+                width={25} height={35}
+                className={`w-[25px] h-[35px] ${
+                  (
+                    (dailySessionDone && (dailyVideoCourseIndex + 1 < fire)) ||
+                    (!dailySessionDone && (dailyVideoCourseIndex < fire))
+                  ) ? "brightness-[0.7]" : ""
+                }`}
+                alt="Flamme"
+              />
+              <div className="bg-transparent absolute bottom-0 right-[6px] text-sm">
+                J{fire}
+              </div>              
+            </div>
+          ))}
+        </div> 
+      </h1>
 
       {welcome && (
         <AppModal closeModal={removeWelcome}>
@@ -357,11 +379,7 @@ export default function HomePage({
           </div>
 
           <div className="flex-1 shadow-lg p-4 rounded-3xl border flex gap-2 flex-col sm:flex-row">
-            <DaysInARow
-              dailyActivity={dailyActivityDone}
-              yesterdayActivity={yesterdayActivity}
-              daysInARow={daysInArow}
-            />
+            <Fires dailySessionDone={dailySessionDone} dailyVideoCourseIndex={dailyVideoCourseIndex} />
 
             <div className="flex border-t pt-2 sm:border-t-0 sm:pt-0 sm:max-w-[170px] min-w-[150px] sm:flex-wrap sm:border-l sm:pl-2">
               {badgesList.map(badge => (
@@ -646,7 +664,7 @@ export default function HomePage({
         <AppModal closeModal={closeModal} globalClose={true}>
           <div className="bg-white flex flex-col text-center gap-2 w-[700px] md:h-[450px] rounded-3xl m-6 px-4 py-8 items-center justify-between">
             <div className="text-3xl font-bold">
-              {(newBadge ? "Nouveau badge débloqué !" : "Session journalière terminée !")}
+              {(newBadge ? "Nouveau badge débloqué !" : "Routine journalière terminée !")}
             </div>
             {newBadge ? (
               <Image
@@ -657,18 +675,35 @@ export default function HomePage({
                 alt="Badge débloqué"
               />
             ): (
-              <Image
-                src={`/congrats.svg`}
-                width={400} height={150}
-                unoptimized={true}
-                className="aspect-3/1 w-full max-w-[500px]"
-                alt="Bravo"
-              />
+              <div className="flex gap-2">
+                {[1,2,3,4,5].map((fire) => (
+                  <div key={fire} className="relative">
+                    <Image
+                      src={`/fire.svg`}
+                      width={50} height={70}
+                      className={`w-[50px] h-[70px] ${dailyVideoCourseIndex + 1 < fire ? "brightness-[0.7]" : ""}`}
+                      alt="Flamme"
+                    />
+                    {dailyVideoCourseIndex + 1 >= fire && (
+                      <div className="bg-transparent absolute bottom-[3px] right-[14px] text-lg font-bold">
+                        J{fire}
+                      </div>
+                    )} 
+                  </div>
+                ))}
+              </div> 
+              // <Image
+              //   src={`/congrats.svg`}
+              //   width={400} height={150}
+              //   unoptimized={true}
+              //   className="aspect-3/1 w-full max-w-[500px]"
+              //   alt="Bravo"
+              // />
             )}
             <div className="text-xl">
               {(newBadge
                 ? badgesList.find(badge => badge.value === newBadge)?.congrats
-                : incentiveSentences[Math.floor(Math.random() * incentiveSentences.length)]
+                : `Poursuivez encore ${5 - dailyVideoCourseIndex - 1} jours consécutifs pour réaliser votre parcours complet.`
               )}
             </div>
           </div>
