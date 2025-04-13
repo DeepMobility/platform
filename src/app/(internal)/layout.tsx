@@ -46,7 +46,7 @@ export default async function ConnectedLayout({
       </div>
 
       <div className="border-t justify-center p-4">
-        <div className="flex flex-col gap-2 justify-self-center">
+        <div className="flex gap-4 justify-self-center flex-wrap">
           <Link
             href="/objectifs-pedagogiques" target="_blank"
             className="text-gray-500 hover:underline flex gap-2"
