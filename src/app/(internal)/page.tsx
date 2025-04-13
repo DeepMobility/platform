@@ -11,6 +11,7 @@ export default async function Home() {
     dailySessionDone,
     course,
     courseVideos,
+    courseStartIndex,
     videos,
     badges,
     dailyActivity,
@@ -23,6 +24,7 @@ export default async function Home() {
     dailySessionDone: boolean,
     course: string,
     courseVideos: Video[],
+    courseStartIndex: number,
     videos: Video[],
     badges: string[],
     dailyActivity: boolean,
@@ -34,7 +36,9 @@ export default async function Home() {
 
   const newSessionQuestion = sessionQuestions[Math.floor(Math.random() * sessionQuestions.length)]
 
-  const dailyVideoCourseIndex = courseVideos.findIndex((video) => video.id === dailyVideo.id)
+  const orderedCourseVideos = courseVideos.slice(courseStartIndex).concat(courseVideos.slice(0, courseStartIndex))
+
+  const dailyVideoCourseIndex = orderedCourseVideos.findIndex((video) => video.id === dailyVideo.id)
 
   return <HomePage
     name={name}
@@ -44,7 +48,7 @@ export default async function Home() {
     newSessionQuestion={newSessionQuestion}
     randomTip={randomTip}
     course={course}
-    courseVideos={courseVideos}
+    courseVideos={orderedCourseVideos}
     dailyVideoCourseIndex={dailyVideoCourseIndex}
     videos={videos}
     badges={badges}
