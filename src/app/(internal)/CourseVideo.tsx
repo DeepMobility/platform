@@ -10,12 +10,14 @@ export default function CourseVideo({
   dailyVideoCourseIndex,
   dailySessionDone,
   onClick,
+  className,
 }: {
   video: Video,
   videoIndex: number,
   dailyVideoCourseIndex: number,
   dailySessionDone: boolean,
-  onClick: (v: Video) => void
+  onClick: (v: Video) => void,
+  className?: string,
 }) {
   const videoCourseDone = useMemo(() => {
     return (videoIndex < dailyVideoCourseIndex || (dailySessionDone && videoIndex === dailyVideoCourseIndex))
@@ -27,7 +29,7 @@ export default function CourseVideo({
       onClick={() => onClick(video)}
       className={
         "flex flex-col gap-2 items-center w-[244px] cursor-pointer hover:bg-gray-200 rounded-3xl p-2 "
-        + (videoCourseDone ? "opacity-40" : "")
+        + (videoCourseDone ? "opacity-40 " : "") + className
       }
     >
       <div className="font-bold flex gap-2">

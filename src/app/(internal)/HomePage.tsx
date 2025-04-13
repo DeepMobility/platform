@@ -20,6 +20,8 @@ import badgesList from "@/lib/badgesList";
 import DaysInARow from "./DaysInARow";
 import Logo from "@/../public/logo.svg";
 import { LuChevronsUpDown } from "react-icons/lu";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 export default function HomePage({
   name,
@@ -399,7 +401,21 @@ export default function HomePage({
             Des routines musculaires conçues spécialement pour vous, à réaliser chaque jour au travail.
           </div>
 
-          <div className="rounded-3xl flex gap-2 mt-4 px-4 flex-wrap justify-center">
+          <div className="sm:hidden">
+            <Swiper initialSlide={dailyVideoCourseIndex + 1} slidesPerView={1}>
+              {courseVideos.map((video, index) => (
+                <SwiperSlide key={video.id}>
+                  <CourseVideo video={video} videoIndex={index}
+                    dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
+                    onClick={() => showVideoDescription(video)}
+                    className="mx-auto"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div> 
+
+          <div className="hidden sm:flex rounded-3xl gap-2 mt-4 px-4 flex-wrap justify-center">
             {courseVideos.map((video, index) => (
               <CourseVideo video={video} videoIndex={index} key={video.id}
                 dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
