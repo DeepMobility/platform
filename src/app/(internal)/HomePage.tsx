@@ -437,7 +437,7 @@ export default function HomePage({
                     onChange={toggleAllVideoFilter} checked={allVideoFilter}
                     id="allVideoFilter"
                   />
-                  <label htmlFor="allVideoFilter">Toutes les vidéos</label>
+                  <label htmlFor="allVideoFilter">Toutes les routines</label>
                 </div>
 
                 <div className="mt-4">

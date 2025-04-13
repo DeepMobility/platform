@@ -46,8 +46,9 @@ export default function JobTypePage({ userJobType }: { userJobType: string | und
               Bienvenue sur DeepMobility. 
             </div>
 
-            <div className="text-lg">
-              Prenons quelques instants pour faire connaissance et <b>définir ensemble votre parcours sur mesure</b>.
+            <div className="flex flex-col text-lg">
+              <span>Prenons quelques instants pour faire connaissance</span>
+              <span>et <b>définir ensemble votre parcours sur mesure</b>.</span>
             </div>
 
             <button
