@@ -220,6 +220,16 @@ export default function HomePage({
     [bodyPartFilters, exerciseTypeFilters]
   );
 
+  const getEndSessionIncentive = (videosLeft: number) => {
+    if (videosLeft === 0) {
+      return "Votre parcours de la semaine est validé. Ancrer cette habitude sur tout le trimestre, recommencez dès demain avec la J1"
+    }
+    if (videosLeft === 1) {
+      return `Votre parcours de la semaine est presque validé, revenez demain pour une semaine complète.`
+    }
+    return `Poursuivez encore ${videosLeft} jours consécutifs pour réaliser votre parcours complet.`
+  }
+
   return (
     <div>
       <h1 className="text-2xl flex gap-4 flex-wrap">
@@ -714,7 +724,7 @@ export default function HomePage({
             <div className="text-xl">
               {(newBadge
                 ? badgesList.find(badge => badge.value === newBadge)?.congrats
-                : `Poursuivez encore ${5 - dailyVideoCourseIndex - 1} jours consécutifs pour réaliser votre parcours complet.`
+                : getEndSessionIncentive(5 - dailyVideoCourseIndex - 1)
               )}
             </div>
           </div>
