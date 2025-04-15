@@ -43,7 +43,7 @@ export default function({
         <Image
           src={`/fire.svg`}
           width={35} height={50}
-          className={`w-[35px] h-[50px] ${!dailySessionDone ? "brightness-90" : ""}`}
+          className={`w-[35px] h-[50px] ${!dailySessionDone ? "brightness-[0.7]" : ""}`}
           alt="Série flamme"
         />
         <div className="font-semibold">

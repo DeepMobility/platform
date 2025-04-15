@@ -111,7 +111,10 @@ export default function HomePage({
     playVideo()
   }
 
-  const playVideo = function() {
+  const playVideo = function(video?: Video) {
+    if (video) {
+      setSelectedVideo(video)
+    }
     setDisplayVideoDescription(false)
     setDisplayNewSession(false)
     setDisplayVideo(true)
@@ -297,7 +300,7 @@ export default function HomePage({
 
           <div className="flex-1 flex flex-wrap gap-4 mt-6">
             <button type="button"
-              onClick={() => showNewSession(dailyVideo)}
+              onClick={() => !dailySessionDone ? showNewSession(dailyVideo) : playVideo(dailyVideo)}
               className={
                 "w-full max-w-[340px] h-[180px] sm:h-[240px] relative " + (dailySessionDone ? "opacity-40" : "")
               }
@@ -337,7 +340,7 @@ export default function HomePage({
 
               <button type="button"
                 className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-4 sm:mt-2'
-                onClick={() => showNewSession(dailyVideo)}
+                onClick={() => !dailySessionDone ? showNewSession(dailyVideo) : playVideo(dailyVideo)}
               >
                 <span>{dailySessionDone ? 'Revoir' : 'Commencer' }</span>
                 <MdArrowForward size="24px" className="my-auto"/>
