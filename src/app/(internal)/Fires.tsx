@@ -47,7 +47,7 @@ export default function({
           alt="Série flamme"
         />
         <div className="font-semibold">
-          Routine {dailyVideoCourseIndex + 1} / 5
+          Routine {dailySessionDone ? dailyVideoCourseIndex + 1 : dailyVideoCourseIndex} / 5
         </div>
       </div>
       <div className="font-light">
