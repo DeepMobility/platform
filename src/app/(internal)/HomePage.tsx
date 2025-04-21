@@ -394,7 +394,7 @@ export default function HomePage({
           <div className="flex-1 shadow-lg p-4 rounded-3xl border flex gap-2 flex-col sm:flex-row">
             <Fires dailySessionDone={dailySessionDone} dailyVideoCourseIndex={dailyVideoCourseIndex} />
 
-            <div className="flex border-t pt-2 sm:border-t-0 sm:pt-0 sm:max-w-[170px] min-w-[150px] sm:flex-wrap sm:border-l sm:pl-2">
+            <div className="flex justify-around border-t pt-2 sm:border-t-0 sm:pt-0 sm:max-w-[170px] min-w-[150px] sm:flex-wrap sm:border-l sm:pl-2">
               {badgesList.map(badge => (
                 <div key={badge.value} className="group">
                   {userBadges.includes(badge.value) ? (
@@ -429,7 +429,7 @@ export default function HomePage({
           </h2>
 
           <div className="italic mt-1">
-            Des routines musculaires conçues spécialement pour vous, à réaliser chaque jour au travail.
+            Des routines musculaires conçues spécialement pour vous, à réaliser chaque jour au travail, pendant tout un trimestre.
           </div>
 
           <div className="sm:hidden">
@@ -686,7 +686,7 @@ export default function HomePage({
 
       {displayCongrats && (
         <AppModal closeModal={closeModal} globalClose={true}>
-          <div className="bg-white flex flex-col text-center gap-2 w-[700px] md:h-[450px] rounded-3xl m-6 px-4 py-8 items-center justify-between">
+          <div className="bg-white flex flex-col text-center gap-2 w-[700px] md:h-[450px] rounded-3xl m-6 px-4 py-8 items-center justify-around">
             <div className="text-3xl font-bold">
               {(newBadge ? "Nouveau badge débloqué !" : "Routine journalière terminée !")}
             </div>

@@ -3,7 +3,7 @@
 import Form from 'next/form'
 import { login } from './actions'
 import Link from 'next/link'
-import { useActionState, useEffect } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
@@ -18,6 +18,8 @@ export default function LoginPage() {
       router.push('/')
     }
   }, [formState])
+
+  const [showPassword, setShowPassword] = useState(false)
 
   return (
     <div className='flex flex-col'>
@@ -34,7 +36,11 @@ export default function LoginPage() {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="password">Mot de passe</label>
-          <input type="password" name="password"/>
+          <input type={showPassword ? "text" : "password"} name="password"/>
+          <div className='flex gap-2'>
+            <input id="showPassword" type="checkbox" onChange={() => setShowPassword(!showPassword)} />
+            <label htmlFor="showPassword">Afficher le mot de passe</label>
+          </div>
         </div>
 
         {formState?.errorMessage && (

@@ -1,7 +1,7 @@
 'use client'
 
 import Form from 'next/form'
-import { useActionState, useEffect } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { register } from './actions'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -21,6 +21,8 @@ export default function RegisterPage({ birthYearOptions, genderOptions }: {
       router.push('/premiers-pas/mode-de-travail?welcome=true')
     }
   }, [formState])
+
+  const [showPassword, setShowPassword] = useState(false)
 
   return (
     <div>
@@ -71,7 +73,12 @@ export default function RegisterPage({ birthYearOptions, genderOptions }: {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="password">Mot de passe</label>
-          <input type="password" name="password" required/>
+          <input type={showPassword ? "text" : "password"} name="password" required/>
+
+          <div className='flex gap-2'>
+            <input id="showPassword" type="checkbox" onChange={() => setShowPassword(!showPassword)} />
+            <label htmlFor="showPassword">Afficher le mot de passe</label>
+          </div>
         </div>
 
         {formState?.errorMessage && (
