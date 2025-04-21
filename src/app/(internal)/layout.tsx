@@ -36,9 +36,17 @@ export default async function ConnectedLayout({
             className="h-8 w-auto"
           />
         </Link>
-        <Link href="/logout" prefetch={false} className="text-gray-300 hover:text-gray-500">
-          <FiLogOut size="25px"/>
-        </Link>
+        <div className="flex gap-6">
+          <Link
+            href="/faq"
+            className="text-gray-400 hover:underline hover:text-gray-500"
+          >
+            FAQ
+          </Link>
+          <Link href="/logout" prefetch={false} className="text-gray-300 hover:text-gray-500">
+            <FiLogOut size="25px"/>
+          </Link>
+        </div>
       </nav>
 
       <div className="md:mt-12 min-h-[calc(100vh-50px)] max-w-[1366px] bg-white m-auto p-6">
