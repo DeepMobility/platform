@@ -16,7 +16,8 @@ export default async function Home() {
     badges,
     dailyActivity,
     yesterdayActivity,
-    daysInArow
+    daysInArow,
+    currentChallenge
   }: {
     name: string,
     isSurveyDue: boolean,
@@ -30,6 +31,7 @@ export default async function Home() {
     dailyActivity: boolean,
     yesterdayActivity: boolean,
     daysInArow: number,
+    currentChallenge: Challenge,
   } = await get('get-my-dashboard')
 
   const randomTip = tips[Math.floor(Math.random() * tips.length)]
@@ -55,5 +57,6 @@ export default async function Home() {
     dailyActivity={dailyActivity}
     yesterdayActivity={yesterdayActivity}
     currentDaysInArow={daysInArow}
+    currentChallenge={currentChallenge}
   />
 }
