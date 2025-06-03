@@ -16,7 +16,7 @@ export default async function ConnectedLayout({
 
   return (
     <div>
-      <nav className="md:fixed top-0 w-full h-[50px] bg-white shadow-lg flex justify-between items-center px-4 z-10">
+      <nav className="md:fixed top-0 w-full h-[50px] bg-white shadow-sm flex justify-between items-center px-4 z-10">
         <Link href="/" className="flex gap-2">
           <Image
             src={accountLogo}

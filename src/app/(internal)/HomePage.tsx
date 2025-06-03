@@ -11,7 +11,6 @@ import { createRef, useMemo, useState } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
 import { startSession, endSession } from "./actions";
-import incentiveSentences from "@/lib/incentiveSentences";
 import CourseVideo from "./CourseVideo";
 import Link from "next/link";
 import AppModal from "@/components/AppModal";
@@ -22,6 +21,7 @@ import { LuChevronLeft, LuChevronRight, LuChevronsUpDown } from "react-icons/lu"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Fires from "./Fires";
+import ChallengeWidget from './ChallengeWidget';
 
 export default function HomePage({
   name,
@@ -38,6 +38,7 @@ export default function HomePage({
   dailyActivity,
   yesterdayActivity,
   currentDaysInArow,
+  currentChallenge,
 }: {
   name: string,
   isSurveyDue: boolean,
@@ -53,6 +54,7 @@ export default function HomePage({
   dailyActivity: boolean,
   yesterdayActivity: boolean,
   currentDaysInArow: number,
+  currentChallenge?: Challenge,
 }) {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -292,7 +294,7 @@ export default function HomePage({
       )}
 
       <section className="mt-4 flex gap-8 flex-wrap">
-        <div className="order-1 max-w-[800px] shadow-lg p-4 rounded-3xl border flex flex-col">
+        <div className="order-1 max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Ma routine du jour</span>
@@ -350,7 +352,7 @@ export default function HomePage({
         </div>
 
         <div className="order-3 lg:order-2 flex-1 md:min-w-[400px] max-w-[800px] flex flex-col gap-4">
-          <div className="shadow-lg p-4 rounded-3xl border">
+          <div className="shadow-sm p-4 rounded-3xl border">
             {isSurveyDue ? (
               <div className="flex gap-3">
                 <Image
@@ -367,7 +369,7 @@ export default function HomePage({
                 ): (
                   <div>
                     <span>
-                      Aidez nous à adapter votre parcours à vos besoins : c’est l’heure de compléter quelques questions sur vous ! 
+                      Aidez nous à adapter votre parcours à vos besoins : c'est l'heure de compléter quelques questions sur vous ! 
                     </span>
                     <Link href="/questionnaire"
                       className="bg-gray-200 py-2 justify-center rounded-2xl flex gap-2 mt-2 hover:opacity-70"
@@ -391,7 +393,7 @@ export default function HomePage({
             )}
           </div>
 
-          <div className="flex-1 shadow-lg p-4 rounded-3xl border flex gap-2 flex-col sm:flex-row">
+          <div className="flex-1 shadow-sm p-4 rounded-3xl border flex gap-2 flex-col sm:flex-row">
             <Fires dailySessionDone={dailySessionDone} dailyVideoCourseIndex={dailyVideoCourseIndex} />
 
             <div className="flex justify-around border-t pt-2 sm:border-t-0 sm:pt-0 sm:max-w-[170px] min-w-[150px] sm:flex-wrap sm:border-l sm:pl-2">
@@ -413,7 +415,7 @@ export default function HomePage({
                     />
                   )}
 
-                  <div className="hidden group-hover:block absolute bg-white rounded-xl border shadow-lg p-2">
+                  <div className="hidden group-hover:block absolute bg-white rounded-xl border shadow-sm p-2">
                     {badge.condition}
                   </div>
                 </div>
@@ -422,7 +424,13 @@ export default function HomePage({
           </div>
         </div>
 
-        <div className="order-2 lg:order-3 shadow-lg p-4 rounded-3xl border w-full">
+        {currentChallenge && (
+          <div className="order-3 w-full">
+            <ChallengeWidget challenge={currentChallenge} />
+          </div>
+        )}
+
+        <div className="order-2 lg:order-3 shadow-sm p-4 rounded-3xl border w-full">
           <h2 className="text-lg flex gap-2">
             <PiPathFill size="24px" className="my-auto"/>
             <span>Mon parcours sur mesure | {courses.find((c) => c.value === course)?.label}</span>
@@ -468,7 +476,7 @@ export default function HomePage({
         </div>
       </section>
 
-      <section className="mt-8 shadow-lg p-4 rounded-3xl border">
+      <section className="mt-8 shadow-sm p-4 rounded-3xl border">
         <button
           className="w-full flex items-center justify-between cursor-pointer hover:opacity-7"
           onClick={() => setDisplayAllVideos(!displayAllVideos)}
