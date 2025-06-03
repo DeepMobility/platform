@@ -5,6 +5,7 @@ type Challenge = {
   associationName: string,
   associationLogoUrl: string,
   type: 'individual' | 'team',
+  conversionRate: number,
   status: 'pending' | 'active' | 'completed' | 'cancelled',
   startDate: Date,
   endDate: Date,

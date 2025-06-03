@@ -25,7 +25,7 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
   const userContribution = challenge.progress.totalPoints > 0 ? Math.round((challenge.progress.currentUserInfo.points / challenge.progress.totalPoints) * 100) : 0
 
   const formatEuros = (points: number) => {
-    return `${points} €`
+    return `${(points * challenge.conversionRate).toFixed(2)} €`
   }
 
   const formatPoints = (points: number) => {
