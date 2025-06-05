@@ -8,7 +8,7 @@ import Confetti from "react-confetti"
 import AppModal from "@/components/AppModal"
 
 export default function ChallengeWidget({ challenge }: { challenge: Challenge }) {
-  const [showConfetti, setShowConfetti] = useState(true)
+  const [showConfetti, setShowConfetti] = useState(challenge.status === 'completed')
   const [windowDimensions, setWindowDimensions] = useState({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
@@ -46,12 +46,15 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
 
   useEffect(() => {
     if (challenge.status === 'completed') {
+      setShowConfetti(true)
       const timer = setTimeout(() => {
         setShowConfetti(false)
       }, 5000)
       return () => clearTimeout(timer)
+    } else {
+      setShowConfetti(false)
     }
-  }, [])
+  }, [challenge.status])
 
   return (
     <div className="relative w-full border border-[#a89b93] bg-gradient-to-r from-[#f7f3f0] via-white to-[#f7f3f0] rounded-3xl overflow-hidden shadow-sm">
