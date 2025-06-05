@@ -38,7 +38,7 @@ export default function HomePage({
   dailyActivity,
   yesterdayActivity,
   currentDaysInArow,
-  currentChallenge,
+  currentChallenge: initialCurrentChallenge,
 }: {
   name: string,
   isSurveyDue: boolean,
@@ -88,6 +88,8 @@ export default function HomePage({
   const [displayVideo, setDisplayVideo] = useState(false)
   const [displayEndSession, setDisplayEndSession] = useState(false)
   const [displayCongrats, setDisplayCongrats] = useState(false)
+
+  const [currentChallenge, setCurrentChallenge] = useState<Challenge | undefined>(initialCurrentChallenge);
 
   const removeWelcome = () => {
     router.replace('/');
@@ -147,6 +149,54 @@ export default function HomePage({
         setDisplayEndSession(true)
       } else if (newBadges.length > 0) {
         setDisplayCongrats(true)
+      }
+
+      if (currentChallenge) {
+        const videoDuration = selectedVideo?.duration || 0;
+        const minutesWatched = Math.floor(videoDuration / 60);
+        const pointsEarned = Math.max(1, minutesWatched);
+
+        const updatedTeamsInfo = Object.fromEntries(
+          Object.entries(currentChallenge.progress.teamsInfo).map(([teamId, team], index) => [
+            teamId,
+            team.name === currentChallenge.progress.currentUserTeamInfo.name
+              ? { ...team, points: team.points + pointsEarned, rank: index + 1 }
+              : team
+          ])
+        )
+        const updatedCurrentUserTeamInfo = {
+          ...currentChallenge.progress.currentUserTeamInfo,
+          points: currentChallenge.progress.currentUserTeamInfo.points + pointsEarned,
+          rank: Object.values(updatedTeamsInfo).find(team => team.name === currentChallenge.progress.currentUserTeamInfo.name)?.rank || 1
+        }
+
+        const updatedUsersInfo = Object.fromEntries(
+          Object.entries(currentChallenge.progress.usersInfo).map(([userId, user], index) => [
+            userId,
+            user.name === currentChallenge.progress.currentUserInfo.name
+              ? { ...user, points: user.points + pointsEarned, rank: index + 1 }
+              : user
+          ])
+        )
+        const updatedCurrentUserInfo = {
+          ...currentChallenge.progress.currentUserInfo,
+          points: currentChallenge.progress.currentUserInfo.points + pointsEarned,
+          rank: Object.values(updatedUsersInfo).find(user => user.name === currentChallenge.progress.currentUserInfo.name)?.rank || 1
+        }
+
+        const updatedChallenge = {
+          ...currentChallenge,
+          progress: {
+            ...currentChallenge.progress,
+            totalPoints: currentChallenge.progress.totalPoints + pointsEarned,
+            currentUserInfo: updatedCurrentUserInfo,
+            currentUserTeamInfo: updatedCurrentUserTeamInfo,
+            teamsInfo: updatedTeamsInfo,
+            usersInfo: updatedUsersInfo
+          }
+        };
+
+        setCurrentChallenge(updatedChallenge);
       }
     } else {
       setSelectedVideo(null)
