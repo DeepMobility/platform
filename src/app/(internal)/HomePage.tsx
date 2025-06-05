@@ -351,7 +351,7 @@ export default function HomePage({
           </div>
         </div>
 
-        <div className="order-3 lg:order-2 flex-1 md:min-w-[400px] max-w-[800px] flex flex-col gap-4">
+        <div className="order-4 lg:order-2 flex-1 md:min-w-[400px] max-w-[800px] flex flex-col gap-4">
           <div className="shadow-sm p-4 rounded-3xl border">
             {isSurveyDue ? (
               <div className="flex gap-3">
@@ -425,7 +425,7 @@ export default function HomePage({
         </div>
 
         {currentChallenge && (
-          <div className="order-3 w-full">
+          <div className="order-3 lg:order-3 w-full">
             <ChallengeWidget challenge={currentChallenge} />
           </div>
         )}

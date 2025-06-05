@@ -91,7 +91,7 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
 
         <div className="px-3 py-1.5 text-center border-b border-purple-100">
           <p className="text-xs text-[#7e5d3b] font-medium">
-            Bravo oavotre mobilisation ! Grâce à vos routines,{" "}
+            Bravo pour votre mobilisation ! Grâce à vos routines,{" "}
             <span className="font-medium text-violet-800">{formatEuros(challenge.progress.totalPoints)}</span> ont été récoltés pour
             soutenir <span className="font-medium text-violet-800">{challenge.associationName}</span>.
           </p>
@@ -278,11 +278,11 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
             <div className="text-xs text-[#5a493e]">
               {isTeam ? (
                 <>
-                  <span className="font-semibold text-[#5a493e]">{challenge.progress.currentUserTeamInfo.name}</span> a contribué à hauteur de <span className="font-semibold text-[#a78bfa]">{teamContribution}%</span> du montant total collecté.
+                  <span className="font-semibold text-[#5a493e]">{challenge.progress.currentUserTeamInfo.name}</span> a contribué à hauteur de <span className="font-semibold text-[#a78bfa]">{teamContribution}%</span> du montant total récolté à ce jour.
                 </>
               ) : (
                 <>
-                  <span className="font-semibold text-[#5a493e]">{challenge.progress.currentUserInfo.name}</span> a contribué à hauteur de <span className="font-semibold text-[#a78bfa]">{userContribution}%</span> du montant total collecté.
+                  <span className="font-semibold text-[#5a493e]">{challenge.progress.currentUserInfo.name}</span> a contribué à hauteur de <span className="font-semibold text-[#a78bfa]">{userContribution}%</span> du montant total récolté à ce jour.
                 </>
               )}
             </div>
