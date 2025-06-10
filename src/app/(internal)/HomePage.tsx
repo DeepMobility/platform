@@ -369,7 +369,7 @@ export default function HomePage({
       )}
 
       <section className="mt-4 flex gap-8 flex-wrap">
-        <div className="order-1 max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col">
+        <div className="order-1 w-full xl:max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Ma routine du jour</span>
@@ -426,7 +426,7 @@ export default function HomePage({
           </div>
         </div>
 
-        <div className="order-4 lg:order-2 flex-1 md:min-w-[400px] max-w-[800px] flex flex-col gap-4">
+        <div className="order-4 lg:order-2 flex-1 md:min-w-[400px] w-full xl:max-w-[800px] flex flex-col gap-4">
           <div className="shadow-sm p-4 rounded-3xl border">
             {isSurveyDue ? (
               <div className="flex gap-3">
