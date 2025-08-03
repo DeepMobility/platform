@@ -578,8 +578,8 @@ export default function HomePage({
         </button>
         
         {displayAllVideos && (
-          <div className="flex gap-6 mt-2">
-            <div className="hidden md:block w-60 flex-none mt-4">
+          <div className="flex flex-col sm:flex-row gap-6 mt-2">
+            <div className="sm:w-60 flex-none mt-4">
               <div className="font-bold border-b">Filtrer</div>
 
               <div className="pl-4">
