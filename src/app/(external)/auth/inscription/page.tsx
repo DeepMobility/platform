@@ -3,7 +3,7 @@ import RegisterPage from './RegisterPage';
 export default async function Register() {
   const birthYearOptions = []
 
-  for (let i = 1950; i<= 2010; i++) {
+  for (let i = 1930; i<= 2015; i++) {
     birthYearOptions.push(i)
   }
 
