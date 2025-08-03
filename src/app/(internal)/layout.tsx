@@ -56,21 +56,21 @@ export default async function ConnectedLayout({
       <div className="border-t justify-center p-4">
         <div className="flex gap-4 justify-self-center flex-wrap">
           <Link
-            href="/objectifs-pedagogiques" target="_blank"
+            href="/objectifs-pedagogiques"
             className="text-gray-500 hover:underline flex gap-2"
           >
             <span>Objectifs pédagogiques</span>
             <span className="my-auto"><FiExternalLink /></span>
           </Link>
           <Link
-            href="/mentions-legales" target="_blank"
+            href="/mentions-legales"
             className="text-gray-500 hover:underline flex gap-2"
           >
             <span>Mentions légales</span>
             <span className="my-auto"><FiExternalLink /></span>
           </Link>
           <Link
-            href="/politique-de-confidentialite" target="_blank"
+            href="/politique-de-confidentialite"
             className="text-gray-500 hover:underline flex gap-2"
           >
             <span>Politique de confidentialité</span>
