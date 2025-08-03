@@ -22,6 +22,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Fires from "./Fires";
 import ChallengeWidget from './ChallengeWidget';
+import FullScreenModal from "@/components/FullScreenModal";
 
 export default function HomePage({
   name,
@@ -337,8 +338,8 @@ export default function HomePage({
       </h1>
 
       {welcome && (
-        <AppModal closeModal={removeWelcome}>
-          <div className="bg-[#A89B93] gap-4 flex flex-col items-center justify-around p-4 w-[600px] md:h-[400px] rounded-3xl m-6 text-center">
+        <AppModal closeModal={removeWelcome} size="md">
+          <div className="w-full bg-[#A89B93] gap-4 flex flex-col items-center justify-around p-4 text-center">
             <Image
               src={Logo}
               width={150}
@@ -651,7 +652,7 @@ export default function HomePage({
 
       {displayVideoDescription && (
         <AppModal closeModal={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6">
+          <div className="w-full flex flex-col">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               unoptimized={true}
@@ -696,7 +697,7 @@ export default function HomePage({
 
       {displayNewSession && (
         <AppModal closeModal={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6">
+          <div className="w-full flex flex-col">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               unoptimized={true}
@@ -730,7 +731,7 @@ export default function HomePage({
       )}
 
       {displayVideo && (
-        <AppModal closeModal={() => endVideo()}>
+        <FullScreenModal closeModal={() => endVideo()}>
           <video
             ref={videoRef}
             width="1200px" height="800px"
@@ -740,12 +741,12 @@ export default function HomePage({
             onEnded={() => endVideo(true)}
             className="mx-auto"
           />
-        </AppModal>
+        </FullScreenModal>
       )}
 
       {displayEndSession && (
         <AppModal closeModal={closeModal}>
-          <div className="bg-white flex flex-col w-[700px] md:h-[450px] rounded-3xl m-6">
+          <div className="w-full flex flex-col">
             <Image
               src={selectedVideo?.thumbnailUrl || ''}
               width={700} height={200}
@@ -779,7 +780,7 @@ export default function HomePage({
 
       {displayCongrats && (
         <AppModal closeModal={closeModal} globalClose={true}>
-          <div className="bg-white flex flex-col text-center gap-2 w-[700px] md:h-[450px] rounded-3xl m-6 px-4 py-8 items-center justify-around">
+          <div className="w-full flex flex-col text-center gap-2 px-4 py-8 items-center justify-around">
             <div className="text-3xl font-bold">
               {(newBadge ? "Nouveau badge débloqué !" : "Routine journalière terminée !")}
             </div>

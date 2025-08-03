@@ -5,7 +5,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar"
 import "react-circular-progressbar/dist/styles.css"
 import { MdEmojiEvents, MdFavorite, MdStar, MdCheckCircle, MdPeople, MdArrowForward, MdWorkspacePremium, MdOutlineTimer } from "react-icons/md"
 import Confetti from "react-confetti"
-import AppModal from "@/components/AppModal"
+import FullScreenModal from "@/components/FullScreenModal"
 
 export default function ChallengeWidget({ challenge }: { challenge: Challenge }) {
   const [showConfetti, setShowConfetti] = useState(challenge.status === 'completed')
@@ -323,7 +323,7 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
       </div>
 
       {modalOpen && (
-        <AppModal closeModal={() => setModalOpen(false)}>
+        <FullScreenModal closeModal={() => setModalOpen(false)}>
           <div className="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl relative border border-[#ebe5e0]">
             <div className="flex items-center gap-3 mb-3">
               <span className="inline-flex items-center justify-center bg-[#ebe5e0ab] rounded-full p-2">
@@ -416,7 +416,7 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
               )}
             </div>
           </div>
-        </AppModal>
+        </FullScreenModal>
       )}
     </div>
   )
