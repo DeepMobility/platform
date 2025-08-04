@@ -26,7 +26,7 @@ export default function AppModal({
           onClick={closeModal}
           className='absolute z-30 top-4 right-4 bg-white rounded-lg border border-gay-100 p-1 text-gray-800'
         >
-          <RiCloseLargeFill size="24px"/>
+          <RiCloseLargeFill size="14px"/>
         </button>
 
         <div className='flex h-full'>

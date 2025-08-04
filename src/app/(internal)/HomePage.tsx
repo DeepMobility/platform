@@ -337,7 +337,7 @@ export default function HomePage({
         </div> 
       </h1>
 
-      {welcome && (
+      {!welcome && (
         <AppModal closeModal={removeWelcome} size="md">
           <div className="w-full bg-[#A89B93] gap-4 flex flex-col items-center justify-around p-4 text-center">
             <Image
@@ -438,46 +438,48 @@ export default function HomePage({
         </div>
 
         <div className="order-4 lg:order-2 flex-1 md:min-w-[400px] w-full xl:max-w-[800px] flex flex-col gap-4">
-          <div className="shadow-sm p-4 rounded-3xl border">
-            {isSurveyDue ? (
-              <div className="flex gap-3">
-                <Image
-                  src="/questionnaire.png"
-                  width={80} height={80}
-                  className="w-[80px] h-[80px] grayscale my-auto"
-                  alt="Questionnaire"
-                />
-                {!!surveyAnswered ? (
-                  <p>
-                    Merci d'avoir répondu à notre questionnaire, vos réponses nous aident à toujours
-                    enrichir nos vidéos et nous permettent d'améliorer vos parcours.
-                  </p>
-                ): (
-                  <div>
-                    <span>
-                      Aidez nous à adapter votre parcours à vos besoins : c'est l'heure de compléter quelques questions sur vous ! 
-                    </span>
-                    <Link href="/questionnaire"
-                      className="bg-gray-200 py-2 justify-center rounded-2xl flex gap-2 mt-2 hover:opacity-70"
-                    >
-                      <span>Compléter</span>
-                      <MdArrowForward size="24px" className="my-auto"/>
-                    </Link>
-                  </div>
-                )}  
-              </div>
-            ): (
-              <div className="hidden sm:flex flex-col gap-2 justify-around h-full">
-                <div className="flex gap-6">
-                  <div className="text-5xl my-auto text-gray-600">
-                    {randomTip.highlightedNumber}
-                  </div>
-                  <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} />
+          {isSurveyDue ? (
+            <div className="shadow-sm p-4 rounded-3xl border">
+                <div className="flex gap-3">
+                  <Image
+                    src="/questionnaire.png"
+                    width={80} height={80}
+                    className="w-[80px] h-[80px] grayscale my-auto"
+                    alt="Questionnaire"
+                  />
+                  {!!surveyAnswered ? (
+                    <p>
+                      Merci d'avoir répondu à notre questionnaire, vos réponses nous aident à toujours
+                      enrichir nos vidéos et nous permettent d'améliorer vos parcours.
+                    </p>
+                  ): (
+                    <div>
+                      <span>
+                        Aidez nous à adapter votre parcours à vos besoins : c'est l'heure de compléter quelques questions sur vous ! 
+                      </span>
+                      <Link href="/questionnaire"
+                        className="bg-gray-200 py-2 justify-center rounded-2xl flex gap-2 mt-2 hover:opacity-70"
+                      >
+                        <span>Compléter</span>
+                        <MdArrowForward size="24px" className="my-auto"/>
+                      </Link>
+                    </div>
+                  )}  
                 </div>
-                <div className="text-xs italic">Source: {randomTip.source}</div>
-              </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div className="hidden sm:block shadow-sm p-4 rounded-3xl border">
+                <div className="flex flex-col gap-2 justify-around h-full">
+                  <div className="flex gap-6">
+                    <div className="text-5xl my-auto text-gray-600">
+                      {randomTip.highlightedNumber}
+                    </div>
+                    <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} />
+                  </div>
+                  <div className="text-xs italic">Source: {randomTip.source}</div>
+                </div>
+            </div>
+          )}
 
           <div className="flex-1 shadow-sm p-4 rounded-3xl border flex gap-2 flex-col sm:flex-row">
             <Fires dailySessionDone={dailySessionDone} dailyVideoCourseIndex={dailyVideoCourseIndex} />
