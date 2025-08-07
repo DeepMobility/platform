@@ -337,7 +337,7 @@ export default function HomePage({
         </div> 
       </h1>
 
-      {!welcome && (
+      {welcome && (
         <AppModal closeModal={removeWelcome} size="md">
           <div className="w-full bg-[#A89B93] gap-4 flex flex-col items-center justify-around p-4 text-center">
             <Image
