@@ -525,7 +525,7 @@ export default function HomePage({
           </h2>
 
           <div className="italic mt-1">
-            Des routines musculaires conçues spécialement pour vous, à réaliser chaque jour au travail, pendant tout un trimestre.
+            Des routines musculaires conçues spécialement pour vous, à réaliser chaque jour au travail et/ou à la maison et ça pendant tout un trimestre.
           </div>
 
           <div className="sm:hidden">
