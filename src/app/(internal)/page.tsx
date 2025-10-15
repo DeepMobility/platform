@@ -17,6 +17,7 @@ export default async function Home() {
     dailyActivity,
     yesterdayActivity,
     daysInArow,
+    hasReminderConfigured,
     currentChallenge
   }: {
     name: string,
@@ -31,6 +32,7 @@ export default async function Home() {
     dailyActivity: boolean,
     yesterdayActivity: boolean,
     daysInArow: number,
+    hasReminderConfigured: boolean,
     currentChallenge: Challenge,
   } = await get('get-my-dashboard')
 
@@ -57,6 +59,7 @@ export default async function Home() {
     dailyActivity={dailyActivity}
     yesterdayActivity={yesterdayActivity}
     currentDaysInArow={daysInArow}
+    hasReminderConfigured={hasReminderConfigured}
     currentChallenge={currentChallenge}
   />
 }

@@ -38,6 +38,12 @@ export default async function ConnectedLayout({
         </Link>
         <div className="flex gap-6">
           <Link
+            href="/rappels"
+            className="text-gray-400 hover:underline hover:text-gray-500"
+          >
+            Rappels
+          </Link>
+          <Link
             href="/faq"
             className="text-gray-400 hover:underline hover:text-gray-500"
           >

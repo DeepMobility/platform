@@ -39,6 +39,7 @@ export default function HomePage({
   dailyActivity,
   yesterdayActivity,
   currentDaysInArow,
+  hasReminderConfigured,
   currentChallenge: initialCurrentChallenge,
 }: {
   name: string,
@@ -55,6 +56,7 @@ export default function HomePage({
   dailyActivity: boolean,
   yesterdayActivity: boolean,
   currentDaysInArow: number,
+  hasReminderConfigured: boolean,
   currentChallenge?: Challenge,
 }) {
   const searchParams = useSearchParams()
@@ -478,6 +480,29 @@ export default function HomePage({
                   </div>
                   <div className="text-xs italic">Source: {randomTip.source}</div>
                 </div>
+            </div>
+          )}
+
+          {!hasReminderConfigured && (
+            <div className="shadow-sm p-4 rounded-3xl border bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-100">
+              <div className="flex gap-3 items-center">
+                <div className="text-4xl">🔔</div>
+                <div className="flex-1">
+                  <div className="font-semibold text-gray-800 mb-1">
+                    Ne manquez plus vos routines quotidiennes
+                  </div>
+                  <p className="text-sm text-gray-600 mb-2">
+                    Configurez un rappel pour ancrer votre nouvelle habitude bien-être
+                  </p>
+                  <Link 
+                    href="/rappels"
+                    className="bg-blue-600 text-white py-2 px-4 rounded-2xl inline-flex gap-2 items-center hover:bg-blue-700 transition-colors text-sm"
+                  >
+                    <span>Configurer mes rappels</span>
+                    <MdArrowForward size={18} />
+                  </Link>
+                </div>
+              </div>
             </div>
           )}
 
