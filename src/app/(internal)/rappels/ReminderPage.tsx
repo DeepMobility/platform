@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react';
-import Form from 'next/form';
+import { useState, useRef } from 'react';
 import { MdArrowForward, MdCheck } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 import { FiBell, FiCalendar } from 'react-icons/fi';
@@ -12,25 +11,27 @@ import { updateReminderTime } from './actions';
 export default function ReminderPage({ initialReminderTime }: { initialReminderTime: string | null }) {
   const [selectedTime, setSelectedTime] = useState<string | null>(initialReminderTime);
   const [saved, setSaved] = useState(false);
-  const [calendarAdded, setCalendarAdded] = useState(false);
+  const timeInputRef = useRef<HTMLInputElement>(null);
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedTime(e.target.value);
     setSaved(false);
-    setCalendarAdded(false);
   };
 
-  const handleSave = async (formData: FormData) => {
-    await updateReminderTime(formData);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+  const handleContainerClick = () => {
+    timeInputRef.current?.showPicker();
   };
 
-  const handleAddToCalendar = () => {
+  const handleSaveAndAddToCalendar = async () => {
     if (!selectedTime) return;
     
+    const formData = new FormData();
+    formData.append('reminderTime', selectedTime);
+    await updateReminderTime(formData);
+    
     openGoogleCalendar(selectedTime);
-    setCalendarAdded(true);
+    
+    setSaved(true);
   };
 
   const reminderMessage = selectedTime ? getReminderMessageForTime(selectedTime) : null;
@@ -53,20 +54,26 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
           Sélectionnez l'heure précise à laquelle vous souhaitez recevoir votre rappel quotidien
         </p>
 
-        <Form action={handleSave} className="space-y-4">
+        <div className="space-y-4">
           <div className="flex flex-col gap-3">
             <label htmlFor="reminderTime" className="text-base font-medium text-gray-700">
               Heure du rappel
             </label>
-            <input
-              type="time"
-              id="reminderTime"
-              name="reminderTime"
-              value={selectedTime || ''}
-              onChange={handleTimeChange}
-              className="text-xl sm:text-3xl font-semibold p-3 sm:p-4 rounded-2xl border-2 border-gray-300 focus:border-gray-500 focus:outline-none transition-colors text-center"
-              required
-            />
+            <div 
+              onClick={handleContainerClick}
+              className="cursor-pointer rounded-2xl border-2 border-gray-300 hover:border-gray-400 transition-colors"
+            >
+              <input
+                ref={timeInputRef}
+                type="time"
+                id="reminderTime"
+                name="reminderTime"
+                value={selectedTime || ''}
+                onChange={handleTimeChange}
+                className="w-full text-xl sm:text-3xl font-semibold p-3 sm:p-4 rounded-2xl focus:border-gray-500 focus:outline-none transition-colors text-center bg-transparent cursor-pointer"
+                required
+              />
+            </div>
             
             {reminderMessage && (
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-3 border border-blue-100">
@@ -81,55 +88,42 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
           {selectedTime && (
             <div className="flex gap-3 pt-4 border-t">
               <button
-                type="submit"
-                className="flex-1 bg-gray-500 text-white py-3 px-6 rounded-2xl hover:bg-gray-600 transition-colors flex items-center justify-center gap-2"
+                type="button"
+                onClick={handleSaveAndAddToCalendar}
+                className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-6 rounded-2xl hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center gap-2 shadow-sm"
               >
                 {saved ? (
                   <>
                     <MdCheck size={24} />
-                    <span>Sauvegardé !</span>
+                    <span>Rappel configuré !</span>
                   </>
                 ) : (
                   <>
-                    <span>Sauvegarder ma préférence</span>
+                    <FcGoogle size={24} />
+                    <span>Enregistrer et ajouter à Google Agenda</span>
                     <MdArrowForward size={24} />
                   </>
                 )}
               </button>
             </div>
           )}
-        </Form>
+        </div>
       </div>
 
-      {selectedTime && (
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl shadow-sm border border-blue-100 p-4 sm:p-6">
+      {selectedTime && saved && (
+        <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl shadow-sm border border-green-200 p-4 sm:p-6">
           <div className="flex items-start gap-3 sm:gap-4">
             <div className="p-2 sm:p-3 bg-white rounded-full">
-              <FiCalendar className="text-blue-600" size={20} />
+              <MdCheck className="text-green-600" size={24} />
             </div>
             <div className="flex-1">
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">
-                Ajoutez à votre agenda Google
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-green-800">
+                Rappel configuré avec succès !
               </h3>
-              <p className="text-sm sm:text-base text-gray-700 mb-3">
-                Créez un événement récurrent dans votre agenda Google pour recevoir automatiquement 
-                vos rappels quotidiens à <strong>{selectedTime}</strong>.
+              <p className="text-sm sm:text-base text-gray-700">
+                Votre rappel quotidien a été enregistré pour <strong>{selectedTime}</strong> et l'événement récurrent 
+                a été ajouté à votre agenda Google. Vous recevrez maintenant une notification chaque jour à cette heure.
               </p>
-              <button
-                type="button"
-                onClick={handleAddToCalendar}
-                className="bg-white border-2 border-gray-200 text-gray-700 py-2 px-4 sm:py-3 sm:px-6 rounded-2xl hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center gap-2 sm:gap-3 font-medium text-sm sm:text-base"
-              >
-                <FcGoogle size={20} />
-                <span>Ajouter à Google Agenda</span>
-                <MdArrowForward size={18} className="ml-auto" />
-              </button>
-              {calendarAdded && (
-                <p className="text-green-600 text-sm mt-2 flex items-center gap-2">
-                  <MdCheck size={16} />
-                  Votre rappel a été ajouté à Google Agenda !
-                </p>
-              )}
             </div>
           </div>
         </div>
