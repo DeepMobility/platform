@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 
 const newIncentives = [
   "Commencez votre parcours sur mesure DeepMobility.",
-  "C’est le bon moment pour commencer. Une routine suffit pour lancer votre progression.",
-  "Vous n’avez pas encore bougé cette semaine. Lancez-vous, il suffit de 6 minutes pour faire la différence.",
+  "C'est le bon moment pour commencer. Une routine suffit pour lancer votre progression.",
+  "Vous n'avez pas encore bougé cette semaine. Lancez-vous, il suffit de 6 minutes pour faire la différence.",
   "Tout commence ici. Lancez votre parcours sur mesure DeepMobility avec une première routine simple et efficace.",
 ]
 
@@ -15,6 +15,12 @@ export default function({
   dailySessionDone: boolean,
   dailyVideoCourseIndex: number,
 }) {
+  const [randomIndex, setRandomIndex] = useState(0)
+  
+  useEffect(() => {
+    setRandomIndex(Math.floor(Math.random() * newIncentives.length))
+  }, [])
+
   const incentive = useMemo(() => {
     if (dailySessionDone) {
       if (dailyVideoCourseIndex === 0) {
@@ -31,11 +37,11 @@ export default function({
     }
 
     if (dailyVideoCourseIndex === 0) {
-      return newIncentives[Math.floor(Math.random() * newIncentives.length)]
+      return newIncentives[randomIndex]
     } else {
       return `Poursuivez encore ${5 - dailyVideoCourseIndex} jours consécutifs pour réaliser votre parcours complet.`
     }
-  }, [dailySessionDone, dailyVideoCourseIndex])
+  }, [dailySessionDone, dailyVideoCourseIndex, randomIndex])
 
   return (
     <div className="flex-1 flex flex-col gap-2 justify-around">
