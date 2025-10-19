@@ -372,7 +372,7 @@ export default function HomePage({
       )}
 
       <section className="mt-4 flex gap-8 flex-wrap">
-        <div className="order-1 w-full xl:max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col gap-2 sm:gap-6">
+        <div className="order-2 lg:order-1 w-full xl:max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col gap-2 sm:gap-6">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Ma routine du jour</span>
@@ -439,7 +439,7 @@ export default function HomePage({
           </div>
         </div>
 
-        <div className="order-4 lg:order-2 flex-1 md:min-w-[400px] w-full xl:max-w-[800px] flex flex-col gap-4">
+        <div className="order-1 lg:order-2 flex-1 md:min-w-[400px] w-full xl:max-w-[800px] flex flex-col gap-4">
           {isSurveyDue ? (
             <div className="shadow-sm p-4 rounded-3xl border">
                 <div className="flex gap-3">
@@ -538,12 +538,12 @@ export default function HomePage({
         </div>
 
         {currentChallenge && (
-          <div className="order-3 lg:order-3 w-full">
+          <div className="order-4 lg:order-3 w-full">
             <ChallengeWidget challenge={currentChallenge} />
           </div>
         )}
 
-        <div className="order-2 lg:order-3 shadow-sm p-4 rounded-3xl border w-full">
+        <div className="order-3 lg:order-4 shadow-sm p-4 rounded-3xl border w-full">
           <h2 className="text-lg flex gap-2">
             <PiPathFill size="24px" className="my-auto"/>
             <span>Mon parcours sur mesure | {courses.find((c) => c.value === course)?.label}</span>

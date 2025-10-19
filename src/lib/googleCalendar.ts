@@ -1,10 +1,11 @@
+import { getReminderMessageForTime } from './reminderMessages';
+
 /**
  * Generate a Google Calendar URL for adding a recurring daily reminder
  * @param reminderTime - Time in HH:MM format (e.g., "08:00")
- * @param reminderLabel - Label for the reminder
  * @returns Google Calendar URL
  */
-export function generateGoogleCalendarUrl(reminderTime: string, reminderLabel: string): string {
+export function generateGoogleCalendarUrl(reminderTime: string): string {
   const [hours, minutes] = reminderTime.split(':');
   
   // Create a date for today at the specified time
@@ -23,14 +24,16 @@ export function generateGoogleCalendarUrl(reminderTime: string, reminderLabel: s
 
   const startDateTime = formatDateForGoogle(startDate);
   
-  // Event duration: 5 minutes (just a reminder)
-  const endDate = new Date(startDate.getTime() + 5 * 60000);
+  // Event duration: 6 minutes (for the routine)
+  const endDate = new Date(startDate.getTime() + 6 * 60000);
   const endDateTime = formatDateForGoogle(endDate);
 
-  const title = encodeURIComponent('🧘 Rappel DeepMobility - Votre routine bien-être');
+  // Get personalized message based on time
+  const { emoji, message } = getReminderMessageForTime(reminderTime);
+
+  const title = encodeURIComponent(`${emoji} Rappel DeepMobility - Votre routine bien-être`);
   const description = encodeURIComponent(
-    `C'est l'heure de votre routine bien-être quotidienne !\n\n` +
-    `Prenez quelques minutes pour prendre soin de vous et améliorer votre mobilité.\n\n` +
+    `${message}\n\n` +
     `Rendez-vous sur votre plateforme DeepMobility : ${window.location.origin}`
   );
   const location = encodeURIComponent('DeepMobility');
@@ -53,8 +56,8 @@ export function generateGoogleCalendarUrl(reminderTime: string, reminderLabel: s
 /**
  * Open Google Calendar in a new window to add the reminder
  */
-export function openGoogleCalendar(reminderTime: string, reminderLabel: string): void {
-  const url = generateGoogleCalendarUrl(reminderTime, reminderLabel);
+export function openGoogleCalendar(reminderTime: string): void {
+  const url = generateGoogleCalendarUrl(reminderTime);
   window.open(url, '_blank', 'width=800,height=600');
 }
 
