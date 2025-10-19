@@ -7,7 +7,7 @@ import painfulBodyParts from "@/lib/painfulBodyParts";
 import Form from "next/form";
 import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { createRef, useMemo, useState } from "react";
+import { createRef, useMemo, useState, useEffect } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
 import { startSession, endSession } from "./actions";
@@ -24,6 +24,14 @@ import Fires from "./Fires";
 import ChallengeWidget from './ChallengeWidget';
 import FullScreenModal from "@/components/FullScreenModal";
 
+// Declare the AddToHomeScreen type on window
+declare global {
+  interface Window {
+    AddToHomeScreen: any;
+    AddToHomeScreenInstance: any;
+  }
+}
+
 export default function HomePage({
   name,
   isSurveyDue,
@@ -39,6 +47,7 @@ export default function HomePage({
   dailyActivity,
   yesterdayActivity,
   currentDaysInArow,
+  hasReminderConfigured,
   currentChallenge: initialCurrentChallenge,
 }: {
   name: string,
@@ -55,6 +64,7 @@ export default function HomePage({
   dailyActivity: boolean,
   yesterdayActivity: boolean,
   currentDaysInArow: number,
+  hasReminderConfigured: boolean,
   currentChallenge?: Challenge,
 }) {
   const searchParams = useSearchParams()
@@ -92,9 +102,46 @@ export default function HomePage({
 
   const [currentChallenge, setCurrentChallenge] = useState<Challenge | undefined>(initialCurrentChallenge);
 
+  useEffect(() => {
+    const initAddToHomeScreen = () => {
+      if (typeof window !== 'undefined' && window.AddToHomeScreen) {
+        try {
+          window.AddToHomeScreenInstance = window.AddToHomeScreen({
+            appName: 'DeepMobility',
+            appNameDisplay: 'standalone',
+            appIconUrl: `${window.location.origin}/apple-touch-icon.png`,
+            assetUrl: 'https://cdn.jsdelivr.net/gh/philfung/add-to-homescreen@3.4/dist/assets/img/',
+            maxModalDisplayCount: 20,
+            displayOptions: { showMobile: true, showDesktop: false },
+            allowClose: true,
+            showArrow: true,
+          });
+        } catch (error) {
+          console.error('Error initializing AddToHomeScreen:', error);
+        }
+      } else {
+        setTimeout(initAddToHomeScreen, 100);
+      }
+    };
+
+    initAddToHomeScreen();
+  }, []);
+
   const removeWelcome = () => {
     router.replace('/');
     setWelcome(null);
+    
+    setTimeout(() => {
+      if (typeof window !== 'undefined' && window.AddToHomeScreenInstance) {
+        try {
+          window.AddToHomeScreenInstance.show('fr');
+        } catch (error) {
+          console.error('Error showing AddToHomeScreen:', error);
+        }
+      } else {
+        console.warn('AddToHomeScreenInstance not initialized yet');
+      }
+    }, 500);
   }
 
   const showVideoDescription = function(video: Video) {
@@ -370,7 +417,7 @@ export default function HomePage({
       )}
 
       <section className="mt-4 flex gap-8 flex-wrap">
-        <div className="order-1 w-full xl:max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col gap-2 sm:gap-6">
+        <div className="order-2 lg:order-1 w-full xl:max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col gap-2 sm:gap-6">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Ma routine du jour</span>
@@ -437,7 +484,7 @@ export default function HomePage({
           </div>
         </div>
 
-        <div className="order-4 lg:order-2 flex-1 md:min-w-[400px] w-full xl:max-w-[800px] flex flex-col gap-4">
+        <div className="order-1 lg:order-2 flex-1 md:min-w-[400px] w-full xl:max-w-[800px] flex flex-col gap-4">
           {isSurveyDue ? (
             <div className="shadow-sm p-4 rounded-3xl border">
                 <div className="flex gap-3">
@@ -481,6 +528,29 @@ export default function HomePage({
             </div>
           )}
 
+          {!hasReminderConfigured && (
+            <div className="shadow-sm p-4 rounded-3xl border bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-100">
+              <div className="flex gap-3 items-center">
+                <div className="text-4xl">🔔</div>
+                <div className="flex-1">
+                  <div className="font-semibold text-gray-800 mb-1">
+                    Ne manquez plus vos routines quotidiennes
+                  </div>
+                  <p className="text-sm text-gray-600 mb-2">
+                    Configurez un rappel pour ancrer votre nouvelle habitude bien-être
+                  </p>
+                  <Link 
+                    href="/rappels"
+                    className="bg-blue-600 text-white py-2 px-4 rounded-2xl inline-flex gap-2 items-center hover:bg-blue-700 transition-colors text-sm"
+                  >
+                    <span>Configurer mes rappels</span>
+                    <MdArrowForward size={18} />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="flex-1 shadow-sm p-4 rounded-3xl border flex gap-2 flex-col sm:flex-row">
             <Fires dailySessionDone={dailySessionDone} dailyVideoCourseIndex={dailyVideoCourseIndex} />
 
@@ -513,12 +583,12 @@ export default function HomePage({
         </div>
 
         {currentChallenge && (
-          <div className="order-3 lg:order-3 w-full">
+          <div className="order-4 lg:order-3 w-full">
             <ChallengeWidget challenge={currentChallenge} />
           </div>
         )}
 
-        <div className="order-2 lg:order-3 shadow-sm p-4 rounded-3xl border w-full">
+        <div className="order-3 lg:order-4 shadow-sm p-4 rounded-3xl border w-full">
           <h2 className="text-lg flex gap-2">
             <PiPathFill size="24px" className="my-auto"/>
             <span>Mon parcours sur mesure | {courses.find((c) => c.value === course)?.label}</span>

@@ -1,0 +1,18 @@
+{
+  "short_name": "DeepMobility",
+  "name": "DeepMobility",
+  "description": "Pour vos routines musculaires",
+  "display": "standalone",
+  "theme_color": "#A89B93",
+  "background_color": "#ffffff",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "icons": [
+      {
+          "src": "/apple-touch-icon.png",
+          "sizes": "any",
+          "type": "image/png",
+          "purpose": "any"
+      }
+  ]
+}
