@@ -7,7 +7,7 @@ import painfulBodyParts from "@/lib/painfulBodyParts";
 import Form from "next/form";
 import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { createRef, useMemo, useState } from "react";
+import { createRef, useMemo, useState, useEffect } from "react";
 import { MdOndemandVideo, MdOutlineVideoLibrary, MdArrowForward } from "react-icons/md";
 import { PiClock, PiPathFill } from "react-icons/pi";
 import { startSession, endSession } from "./actions";
@@ -23,6 +23,14 @@ import 'swiper/css';
 import Fires from "./Fires";
 import ChallengeWidget from './ChallengeWidget';
 import FullScreenModal from "@/components/FullScreenModal";
+
+// Declare the AddToHomeScreen type on window
+declare global {
+  interface Window {
+    AddToHomeScreen: any;
+    AddToHomeScreenInstance: any;
+  }
+}
 
 export default function HomePage({
   name,
@@ -92,9 +100,46 @@ export default function HomePage({
 
   const [currentChallenge, setCurrentChallenge] = useState<Challenge | undefined>(initialCurrentChallenge);
 
+  useEffect(() => {
+    const initAddToHomeScreen = () => {
+      if (typeof window !== 'undefined' && window.AddToHomeScreen) {
+        try {
+          window.AddToHomeScreenInstance = window.AddToHomeScreen({
+            appName: 'DeepMobility',
+            appNameDisplay: 'standalone',
+            appIconUrl: `${window.location.origin}/apple-touch-icon.png`,
+            assetUrl: 'https://cdn.jsdelivr.net/gh/philfung/add-to-homescreen@3.4/dist/assets/img/',
+            maxModalDisplayCount: 20,
+            displayOptions: { showMobile: true, showDesktop: false },
+            allowClose: true,
+            showArrow: true,
+          });
+        } catch (error) {
+          console.error('Error initializing AddToHomeScreen:', error);
+        }
+      } else {
+        setTimeout(initAddToHomeScreen, 100);
+      }
+    };
+
+    initAddToHomeScreen();
+  }, []);
+
   const removeWelcome = () => {
     router.replace('/');
     setWelcome(null);
+    
+    setTimeout(() => {
+      if (typeof window !== 'undefined' && window.AddToHomeScreenInstance) {
+        try {
+          window.AddToHomeScreenInstance.show('fr');
+        } catch (error) {
+          console.error('Error showing AddToHomeScreen:', error);
+        }
+      } else {
+        console.warn('AddToHomeScreenInstance not initialized yet');
+      }
+    }, 500);
   }
 
   const showVideoDescription = function(video: Video) {
