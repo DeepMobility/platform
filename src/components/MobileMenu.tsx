@@ -9,12 +9,10 @@ export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
-  // Close menu when route changes
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -28,26 +26,23 @@ export default function MobileMenu() {
 
   return (
     <>
-      {/* Hamburger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden p-2 text-gray-600 hover:text-gray-800 transition-colors"
+        className="sm:hidden p-2 text-gray-600 hover:text-gray-800 transition-colors"
         aria-label="Toggle menu"
       >
         <FiMenu size={24} />
       </button>
 
-      {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity"
+          className="fixed inset-0 bg-black/50 z-40 sm:hidden transition-opacity"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* Slide-out Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out sm:hidden ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -64,7 +59,6 @@ export default function MobileMenu() {
             </button>
           </div>
 
-          {/* Navigation Links */}
           <nav className="flex-1 overflow-y-auto">
             <ul className="py-4">
               <li>
@@ -116,7 +110,6 @@ export default function MobileMenu() {
             </ul>
           </nav>
 
-          {/* Footer - Logout */}
           <div className="border-t">
             <Link
               href="/logout"

@@ -38,8 +38,7 @@ export default async function ConnectedLayout({
           />
         </Link>
         
-        {/* Desktop Menu */}
-        <div className="hidden md:flex gap-6">
+        <div className="hidden sm:flex gap-6">
           <Link
             href="/rappels"
             className="text-gray-400 hover:underline hover:text-gray-500"
@@ -57,7 +56,6 @@ export default async function ConnectedLayout({
           </Link>
         </div>
 
-        {/* Mobile Menu */}
         <MobileMenu />
       </nav>
 
