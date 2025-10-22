@@ -417,20 +417,20 @@ export default function HomePage({
       )}
 
       <section className="mt-4 flex gap-8 flex-wrap">
-        <div className="order-2 lg:order-1 w-full xl:max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col gap-2 sm:gap-6">
+        <div className="order-2 lg:order-1 w-full xl:max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col gap-2 sm:gap-6 overflow-hidden">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
             <span>Ma routine du jour</span>
           </h2>
 
-          <div className="flex sm:hidden flex-col gap-1 rounded-lg bg-gray-100 p-1">
+          <div className="flex sm:hidden flex-col gap-1 rounded-lg bg-gray-100 p-2">
             <div className="flex gap-4">
-              <div className="text-2xl my-auto text-gray-600">
+              <div className="text-2xl my-auto text-gray-600 flex-shrink-0">
                 {randomTip.highlightedNumber}
               </div>
-              <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} className="text-sm"/>
+              <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} className="text-sm flex-1 min-w-0 break-words"/>
             </div>
-            <div className="text-xs italic">Source: {randomTip.source}</div>
+            <div className="text-xs italic break-words">Source: {randomTip.source}</div>
           </div>
 
           <div className="flex-1 flex flex-wrap gap-4">
@@ -457,8 +457,8 @@ export default function HomePage({
 
             <div className="flex-1 min-w-[270px] flex flex-col justify-between">
               <div>
-                <h3 className="text-lg font-bold">{dailyVideo.name}</h3>
-                <p className="mt-2">{dailyVideo.description}</p>
+                <h3 className="text-lg font-bold break-words">{dailyVideo.name}</h3>
+                <p className="mt-2 break-words">{dailyVideo.description}</p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {dailyVideo.bodyParts.map((bodyPart) => (
                     <span key={bodyPart} className="bg-gray-200 text-xs rounded-md px-2">

@@ -4,6 +4,7 @@ import Logo from "@/../public/logo.svg"
 import { headers } from "next/headers";
 import { unauthenticatedGet } from "@/lib/httpMethods";
 import { FiExternalLink, FiLogOut } from "react-icons/fi";
+import MobileMenu from "@/components/MobileMenu";
 
 export default async function ConnectedLayout({
   children,
@@ -36,7 +37,8 @@ export default async function ConnectedLayout({
             className="h-8 w-auto"
           />
         </Link>
-        <div className="flex gap-6">
+        
+        <div className="hidden sm:flex gap-6">
           <Link
             href="/rappels"
             className="text-gray-400 hover:underline hover:text-gray-500"
@@ -53,6 +55,8 @@ export default async function ConnectedLayout({
             <FiLogOut size="25px"/>
           </Link>
         </div>
+
+        <MobileMenu />
       </nav>
 
       <div className="md:mt-12 min-h-[calc(100vh-50px)] max-w-[1366px] bg-white m-auto p-6">
