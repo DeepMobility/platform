@@ -70,7 +70,7 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
                 name="reminderTime"
                 value={selectedTime || ''}
                 onChange={handleTimeChange}
-                className="w-full text-xl sm:text-3xl font-semibold p-3 sm:p-4 rounded-2xl focus:border-gray-500 focus:outline-none transition-colors text-center bg-transparent cursor-pointer"
+                className="w-full text-xl sm:text-3xl font-semibold p-3 sm:p-4 rounded-2xl border-none focus:outline-none transition-colors text-center bg-transparent cursor-pointer"
                 required
               />
             </div>
