@@ -11,6 +11,18 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        deepmobility: {
+          50: '#f5f3ff',
+          100: '#ede9fe',
+          200: '#ddd6fe',
+          300: '#c4b5fd',
+          400: '#a78bfa',
+          500: '#816dfc',
+          600: '#6d5ad6',
+          700: '#5b48b0',
+          800: '#4a3a8a',
+          900: '#3c2e6f',
+        },
       },
       screens: {
         'xs': '450px',

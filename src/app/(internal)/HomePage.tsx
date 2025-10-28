@@ -529,7 +529,7 @@ export default function HomePage({
           )}
 
           {!hasReminderConfigured && (
-            <div className="shadow-sm p-4 rounded-3xl border bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-100">
+            <div className="shadow-sm p-4 rounded-3xl border bg-gradient-to-r from-deepmobility-50 to-deepmobility-100 border-deepmobility-200">
               <div className="flex gap-3 items-center">
                 <div className="text-4xl">🔔</div>
                 <div className="flex-1">
@@ -541,7 +541,7 @@ export default function HomePage({
                   </p>
                   <Link 
                     href="/rappels"
-                    className="bg-blue-600 text-white py-2 px-4 rounded-2xl inline-flex gap-2 items-center hover:bg-blue-700 transition-colors text-sm"
+                    className="bg-deepmobility-500 text-white py-2 px-4 rounded-2xl inline-flex gap-2 items-center hover:bg-deepmobility-600 transition-colors text-sm"
                   >
                     <span>Configurer mes rappels</span>
                     <MdArrowForward size={18} />
