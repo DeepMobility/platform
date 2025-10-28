@@ -76,7 +76,7 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
             </div>
             
             {reminderMessage && (
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-3 border border-blue-100">
+              <div className="bg-gradient-to-br from-deepmobility-50 to-deepmobility-100 rounded-2xl p-3 border border-deepmobility-200">
                 <div className="flex gap-2 items-start">
                   <span className="text-2xl">{reminderMessage.emoji}</span>
                   <p className="text-sm text-gray-700 flex-1">{reminderMessage.message}</p>
@@ -90,7 +90,7 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
               <button
                 type="button"
                 onClick={handleSaveAndAddToCalendar}
-                className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-6 rounded-2xl hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center gap-2 shadow-sm"
+                className="flex-1 bg-deepmobility-500 text-white py-3 px-6 rounded-2xl hover:bg-deepmobility-600 transition-colors flex items-center justify-center gap-2 shadow-sm"
               >
                 {saved ? (
                   <>
