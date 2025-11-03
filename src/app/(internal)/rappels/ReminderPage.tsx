@@ -25,11 +25,11 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
   const handleSaveAndAddToCalendar = async () => {
     if (!selectedTime) return;
     
+    openGoogleCalendar(selectedTime);
+
     const formData = new FormData();
     formData.append('reminderTime', selectedTime);
     await updateReminderTime(formData);
-    
-    openGoogleCalendar(selectedTime);
     
     setSaved(true);
   };
