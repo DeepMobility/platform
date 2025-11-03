@@ -58,6 +58,6 @@ export function generateGoogleCalendarUrl(reminderTime: string): string {
  */
 export function openGoogleCalendar(reminderTime: string): void {
   const url = generateGoogleCalendarUrl(reminderTime);
-  window.open(url, '_blank', 'width=800,height=600');
+  window.open(url, '_blank');
 }
 
