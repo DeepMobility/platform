@@ -3,6 +3,21 @@
 import { headers } from 'next/headers'
 import { unauthenticatedPost } from '@/lib/httpMethods';
 import { setAuthCookies } from '../actions';
+
+export async function resendConfirmation(email: string) {
+  const headersList = await headers()
+
+  try {
+    await unauthenticatedPost('resend-confirmation', {
+      email,
+      accountHost: headersList.get('host'),
+    })
+
+    return { success: true }
+  } catch {
+    return { success: false }
+  }
+}
  
 export async function login(
   _state: {
@@ -27,6 +42,12 @@ export async function login(
   }
 
   if (response.statusCode === 403) {
+    if (response.message === 'email_not_confirmed') {
+      return {
+        isComplete: false,
+        errorMessage: "Email non confirmé"
+      }
+    }
     return {
       isComplete: false,
       errorMessage: "Mot de passe incorrect"
