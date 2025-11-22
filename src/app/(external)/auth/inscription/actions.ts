@@ -2,11 +2,11 @@
 
 import { post } from '@/lib/httpMethods';
 import { headers } from 'next/headers';
-import { setAuthCookies } from '../actions';
  
 export async function register(
   _state: {
     isComplete: boolean,
+    emailSent: boolean,
     errorMessage: string
   },
   formData: FormData
@@ -26,14 +26,30 @@ export async function register(
   if (response.statusCode === 422 && response.message === "user already exists") {
     return {
       isComplete: false,
+      emailSent: false,
       errorMessage: "Ce compte existe déjà"
     }
   }
 
-  await setAuthCookies(response);
+  if (response.statusCode === 403 && response.message === "user not allowed") {
+    return {
+      isComplete: false,
+      emailSent: false,
+      errorMessage: "Vous n'êtes pas autorisé à accéder à cette plateforme. Veuillez contacter votre administrateur."
+    }
+  }
+
+  if (response.emailSent) {
+    return {
+      isComplete: true,
+      emailSent: true,
+      errorMessage: ""
+    }
+  }
 
   return {
-    isComplete: true,
-    errorMessage: ""
+    isComplete: false,
+    emailSent: false,
+    errorMessage: "Une erreur est survenue lors de l'inscription"
   }
 }

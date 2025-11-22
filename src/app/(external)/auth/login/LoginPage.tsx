@@ -1,7 +1,7 @@
 'use client'
 
 import Form from 'next/form'
-import { login } from './actions'
+import { login, resendConfirmation } from './actions'
 import Link from 'next/link'
 import { useActionState, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -12,14 +12,33 @@ export default function LoginPage() {
   const initialState = { isComplete: false, errorMessage: "" }
 
   const [formState, formAction] = useActionState(login, initialState)
+  const [emailForResend, setEmailForResend] = useState('')
+  const [resendStatus, setResendStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
   useEffect(() => {
     if (formState?.isComplete) {
       router.push('/')
     }
-  }, [formState])
+  }, [formState, router])
 
   const [showPassword, setShowPassword] = useState(false)
+
+  const handleResendConfirmation = async () => {
+    setResendStatus('sending')
+    try {
+      const result = await resendConfirmation(emailForResend)
+      if (result.success) {
+        setResendStatus('sent')
+        setTimeout(() => setResendStatus('idle'), 5000)
+      } else {
+        setResendStatus('error')
+        setTimeout(() => setResendStatus('idle'), 3000)
+      }
+    } catch {
+      setResendStatus('error')
+      setTimeout(() => setResendStatus('idle'), 3000)
+    }
+  }
 
   return (
     <div className='flex flex-col'>
@@ -31,7 +50,11 @@ export default function LoginPage() {
       <Form action={formAction} className="mt-8 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
-          <input type="text" name="email"/>
+          <input 
+            type="text" 
+            name="email"
+            onChange={(e) => setEmailForResend(e.target.value)}
+          />
         </div>
 
         <div className="flex flex-col gap-2">
@@ -46,6 +69,20 @@ export default function LoginPage() {
         {formState?.errorMessage && (
           <p className='text-red-500'>{formState.errorMessage}</p>
         )}
+
+        {formState?.errorMessage === 'Email non confirmé' ? (
+          resendStatus === 'sent' ? (
+            <p className='text-gray-600'>✓ Email de confirmation renvoyé avec succès</p>
+          ) : (
+            <button
+              type="button"
+              onClick={handleResendConfirmation}
+              disabled={resendStatus === 'sending'}
+              className='border-2 border-gray-500 text-gray-500 px-4 py-2 rounded-2xl disabled:opacity-50 hover:opacity-70'
+            >
+              {resendStatus === 'sending' ? 'Envoi en cours...' : 'Renvoyer l\'email de confirmation'}
+            </button>
+          )) : null}
 
         <button type="submit" className='bg-gray-500 text-white p-2 rounded-2xl'>Se connecter</button>
       </Form>
