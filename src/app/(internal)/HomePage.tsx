@@ -559,14 +559,14 @@ export default function HomePage({
                 <div key={badge.value} className="group">
                   {userBadges.includes(badge.value) ? (
                     <Image
-                      src={`/badges/${badge.value}.jpg`}
+                      src={`/badges/${badge.value}.png`}
                       width={70} height={70}
                       className="w-[70px] h-[70px] rounded-t-3xl mx-auto"
                       alt="Badge débloqué"
                     />
                   ): (
                     <Image
-                      src={`/badges/${badge.value}-disabled.jpg`}
+                      src={`/badges/${badge.value}-disabled.png`}
                       width={70} height={70}
                       className="w-[70px] h-[70px] rounded-t-3xl mx-auto"
                       alt="Badge à débloquer"
