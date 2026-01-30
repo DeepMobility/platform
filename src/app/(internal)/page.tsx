@@ -2,8 +2,20 @@ import { get } from '@/lib/httpMethods';
 import HomePage from './HomePage';
 import tips from '@/lib/tips';
 import sessionQuestions from '@/lib/sessionQuestions';
+import WebinarBanner from '@/components/WebinarBanner';
+
+interface ActiveWebinar {
+  id: string;
+  title: string;
+  scheduledAt: string;
+  teamsLink: string;
+  registrationLink: string | null;
+  status: 'upcoming' | 'ongoing' | 'soon';
+}
 
 export default async function Home() {
+  const dashboardData = await get('get-my-dashboard');
+
   const {
     name,
     isSurveyDue,
@@ -18,7 +30,8 @@ export default async function Home() {
     yesterdayActivity,
     daysInArow,
     hasReminderConfigured,
-    currentChallenge
+    currentChallenge,
+    activeWebinar,
   }: {
     name: string,
     isSurveyDue: boolean,
@@ -34,7 +47,8 @@ export default async function Home() {
     daysInArow: number,
     hasReminderConfigured: boolean,
     currentChallenge: Challenge,
-  } = await get('get-my-dashboard')
+    activeWebinar?: ActiveWebinar,
+  } = dashboardData
 
   const randomTip = tips[Math.floor(Math.random() * tips.length)]
 
@@ -44,22 +58,31 @@ export default async function Home() {
 
   const dailyVideoCourseIndex = orderedCourseVideos.findIndex((video) => video.id === dailyVideo.id)
 
-  return <HomePage
-    name={name}
-    isSurveyDue={isSurveyDue}
-    dailyVideo={dailyVideo}
-    dailySessionAlreadyDone={dailySessionDone}
-    newSessionQuestion={newSessionQuestion}
-    randomTip={randomTip}
-    course={course}
-    courseVideos={orderedCourseVideos}
-    dailyVideoCourseIndex={dailyVideoCourseIndex}
-    videos={videos}
-    badges={badges}
-    dailyActivity={dailyActivity}
-    yesterdayActivity={yesterdayActivity}
-    currentDaysInArow={daysInArow}
-    hasReminderConfigured={hasReminderConfigured}
-    currentChallenge={currentChallenge}
-  />
+  return (
+    <>
+      {activeWebinar && (
+        <div className="mb-6">
+          <WebinarBanner webinar={activeWebinar} />
+        </div>
+      )}
+      <HomePage
+        name={name}
+        isSurveyDue={isSurveyDue}
+        dailyVideo={dailyVideo}
+        dailySessionAlreadyDone={dailySessionDone}
+        newSessionQuestion={newSessionQuestion}
+        randomTip={randomTip}
+        course={course}
+        courseVideos={orderedCourseVideos}
+        dailyVideoCourseIndex={dailyVideoCourseIndex}
+        videos={videos}
+        badges={badges}
+        dailyActivity={dailyActivity}
+        yesterdayActivity={yesterdayActivity}
+        currentDaysInArow={daysInArow}
+        hasReminderConfigured={hasReminderConfigured}
+        currentChallenge={currentChallenge}
+      />
+    </>
+  )
 }
