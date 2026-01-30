@@ -1,16 +1,24 @@
 'use client'
 
 import { useState, useRef } from 'react';
-import { MdArrowForward, MdCheck } from 'react-icons/md';
+import { MdCheck, MdContentCopy, MdLink } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
-import { FiBell, FiCalendar } from 'react-icons/fi';
+import { FiBell } from 'react-icons/fi';
+import { PiMicrosoftOutlookLogo } from 'react-icons/pi';
 import { openGoogleCalendar } from '@/lib/googleCalendar';
+import { openOutlookCalendar } from '@/lib/outlookCalendar';
 import { getReminderMessageForTime } from '@/lib/reminderMessages';
 import { updateReminderTime } from './actions';
 
-export default function ReminderPage({ initialReminderTime }: { initialReminderTime: string | null }) {
+interface ReminderPageProps {
+  initialReminderTime: string | null;
+  calendarUrl: string | null;
+}
+
+export default function ReminderPage({ initialReminderTime, calendarUrl }: ReminderPageProps) {
   const [selectedTime, setSelectedTime] = useState<string | null>(initialReminderTime);
   const [saved, setSaved] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   const timeInputRef = useRef<HTMLInputElement>(null);
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,16 +30,32 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
     timeInputRef.current?.showPicker();
   };
 
-  const handleSaveAndAddToCalendar = async () => {
+  const handleSaveReminderTime = async () => {
     if (!selectedTime) return;
-    
-    openGoogleCalendar(selectedTime);
-
     const formData = new FormData();
     formData.append('reminderTime', selectedTime);
     await updateReminderTime(formData);
-    
     setSaved(true);
+  };
+
+  const handleAddToGoogle = async () => {
+    if (!selectedTime) return;
+    openGoogleCalendar(selectedTime);
+    await handleSaveReminderTime();
+  };
+
+  const handleAddToOutlook = async () => {
+    if (!selectedTime) return;
+    openOutlookCalendar(selectedTime);
+    await handleSaveReminderTime();
+  };
+
+  const handleCopyLink = async () => {
+    if (!calendarUrl) return;
+    await navigator.clipboard.writeText(calendarUrl);
+    setCopiedLink(true);
+    await handleSaveReminderTime();
+    setTimeout(() => setCopiedLink(false), 3000);
   };
 
   const reminderMessage = selectedTime ? getReminderMessageForTime(selectedTime) : null;
@@ -86,25 +110,70 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
           </div>
 
           {selectedTime && (
-            <div className="flex gap-3 pt-4 border-t">
-              <button
-                type="button"
-                onClick={handleSaveAndAddToCalendar}
-                className="flex-1 bg-deepmobility-500 text-white py-3 px-6 rounded-2xl hover:bg-deepmobility-600 transition-colors flex items-center justify-center gap-2 shadow-sm"
-              >
-                {saved ? (
-                  <>
-                    <MdCheck size={24} />
-                    <span>Rappel configuré !</span>
-                  </>
-                ) : (
-                  <>
-                    <FcGoogle size={24} />
-                    <span>Enregistrer et ajouter à Google Agenda</span>
-                    <MdArrowForward size={24} />
-                  </>
-                )}
-              </button>
+            <div className="pt-4 border-t space-y-3">
+              <p className="text-sm font-medium text-gray-700 mb-2">Ajouter au calendrier :</p>
+              
+              {/* Google and Outlook buttons on same line */}
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={handleAddToGoogle}
+                  className="bg-white border-2 border-gray-200 py-3 px-4 rounded-2xl hover:border-gray-300 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                >
+                  <FcGoogle size={24} />
+                  <span className="font-medium">Google</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleAddToOutlook}
+                  className="bg-white border-2 border-gray-200 py-3 px-4 rounded-2xl hover:border-gray-300 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                >
+                  <PiMicrosoftOutlookLogo size={24} className="text-[#0078D4]" />
+                  <span className="font-medium">Outlook</span>
+                </button>
+              </div>
+
+              {/* iCal link option */}
+              {calendarUrl && (
+                <div className="bg-gray-50 rounded-2xl p-4 border-2 border-gray-200">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 min-w-0 flex-1">
+                      <MdLink size={20} className="text-gray-500 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="font-medium text-gray-700 text-sm">Lien iCal dynamique</p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {calendarUrl}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleCopyLink}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors flex-shrink-0 ${
+                        copiedLink
+                          ? 'bg-green-500 text-white'
+                          : 'bg-deepmobility-500 text-white hover:bg-deepmobility-600'
+                      }`}
+                    >
+                      {copiedLink ? (
+                        <>
+                          <MdCheck size={18} />
+                          <span>Copié !</span>
+                        </>
+                      ) : (
+                        <>
+                          <MdContentCopy size={18} />
+                          <span>Copier</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Abonnez-vous avec Apple Calendar, Thunderbird ou tout autre calendrier. Les modifications seront synchronisées automatiquement.
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -121,8 +190,8 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
                 Rappel configuré avec succès !
               </h3>
               <p className="text-sm sm:text-base text-gray-700">
-                Votre rappel quotidien a été enregistré pour <strong>{selectedTime}</strong> et l'événement récurrent 
-                a été ajouté à votre agenda Google. Vous recevrez maintenant une notification chaque jour à cette heure.
+                Votre rappel quotidien a été enregistré pour <strong>{selectedTime}</strong>. 
+                L'événement récurrent a été ajouté à votre calendrier. Vous recevrez maintenant une notification chaque jour à cette heure.
               </p>
             </div>
           </div>
@@ -141,4 +210,3 @@ export default function ReminderPage({ initialReminderTime }: { initialReminderT
     </div>
   );
 }
-

@@ -49,7 +49,29 @@ async function makeRequest(method: string, route: string, withAuthentication: bo
   return response.json()
 }
 
+async function getUserIdFromJwt(): Promise<string | null> {
+  const cookieStore = await cookies()
+  const jwt = cookieStore.get('jwt')
+  
+  if (!jwt?.value) return null
+  
+  try {
+    // Decode JWT payload (base64)
+    const payload = jwt.value.split('.')[1]
+    const decoded = JSON.parse(Buffer.from(payload, 'base64').toString())
+    return decoded.id || decoded.sub || null
+  } catch {
+    return null
+  }
+}
+
+function getApiUrl(): string {
+  return apiUrl
+}
+
 export {
+  getApiUrl,
+  getUserIdFromJwt,
   unauthenticatedGet,
   get,
   unauthenticatedPost,
