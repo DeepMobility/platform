@@ -32,6 +32,7 @@ export default async function Home() {
     hasReminderConfigured,
     currentChallenge,
     activeWebinar,
+    onboardingVideoUrl,
   }: {
     name: string,
     isSurveyDue: boolean,
@@ -48,6 +49,7 @@ export default async function Home() {
     hasReminderConfigured: boolean,
     currentChallenge: Challenge,
     activeWebinar?: ActiveWebinar,
+    onboardingVideoUrl?: string,
   } = dashboardData
 
   const randomTip = tips[Math.floor(Math.random() * tips.length)]
@@ -82,6 +84,7 @@ export default async function Home() {
         currentDaysInArow={daysInArow}
         hasReminderConfigured={hasReminderConfigured}
         currentChallenge={currentChallenge}
+        onboardingVideoUrl={onboardingVideoUrl}
       />
     </>
   )

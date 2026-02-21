@@ -18,7 +18,7 @@ export async function autologin(token: string) {
   await setAuthCookies(response);
   
   let redirectUrl: string;
-  console.log(response);
+
   if (!response.jobType) {
     redirectUrl = `/premiers-pas/mode-de-travail${response.purpose === 'registration' ? '?welcome=true' : ''}`;
   } else {
