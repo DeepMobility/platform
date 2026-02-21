@@ -5,9 +5,11 @@ import { login, resendConfirmation } from './actions'
 import Link from 'next/link'
 import { useActionState, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function LoginPage() {
   const router = useRouter()
+  const t = useTranslations('auth')
 
   const initialState = { isComplete: false, errorMessage: "" }
 
@@ -43,36 +45,36 @@ export default function LoginPage() {
   return (
     <div className='flex flex-col'>
       <div className='flex justify-between bg-gray-200 p-4 rounded-3xl gap-2'>
-        <div className='flex-1 bg-gray-500 text-center py-2 rounded-2xl text-white'>Connexion</div>
-        <Link href="/auth/inscription" className='flex-1 text-center px-auto py-2 text-gray-700'>Inscription</Link>
+        <div className='flex-1 bg-gray-500 text-center py-2 rounded-2xl text-white'>{t('login')}</div>
+        <Link href="/auth/inscription" className='flex-1 text-center px-auto py-2 text-gray-700'>{t('register')}</Link>
       </div>
 
       <Form action={formAction} className="mt-8 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <label htmlFor="email">Email</label>
-          <input 
-            type="text" 
+          <label htmlFor="email">{t('email')}</label>
+          <input
+            type="text"
             name="email"
             onChange={(e) => setEmailForResend(e.target.value)}
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="password">Mot de passe</label>
+          <label htmlFor="password">{t('password')}</label>
           <input type={showPassword ? "text" : "password"} name="password"/>
           <div className='flex gap-2'>
             <input id="showPassword" type="checkbox" onChange={() => setShowPassword(!showPassword)} />
-            <label htmlFor="showPassword">Afficher le mot de passe</label>
+            <label htmlFor="showPassword">{t('showPassword')}</label>
           </div>
         </div>
 
         {formState?.errorMessage && (
-          <p className='text-red-500'>{formState.errorMessage}</p>
+          <p className='text-red-500'>{t(formState.errorMessage)}</p>
         )}
 
-        {formState?.errorMessage === 'Email non confirmé' ? (
+        {formState?.errorMessage === 'emailNotConfirmed' ? (
           resendStatus === 'sent' ? (
-            <p className='text-gray-600'>✓ Email de confirmation renvoyé avec succès</p>
+            <p className='text-gray-600'>{t('confirmationResent')}</p>
           ) : (
             <button
               type="button"
@@ -80,18 +82,18 @@ export default function LoginPage() {
               disabled={resendStatus === 'sending'}
               className='border-2 border-gray-500 text-gray-500 px-4 py-2 rounded-2xl disabled:opacity-50 hover:opacity-70'
             >
-              {resendStatus === 'sending' ? 'Envoi en cours...' : 'Renvoyer l\'email de confirmation'}
+              {resendStatus === 'sending' ? t('sending') : t('resendConfirmation')}
             </button>
           )) : null}
 
-        <button type="submit" className='bg-gray-500 text-white p-2 rounded-2xl'>Se connecter</button>
+        <button type="submit" className='bg-gray-500 text-white p-2 rounded-2xl'>{t('signIn')}</button>
       </Form>
 
       <Link
         href="/auth/reinitialisation-mot-de-passe"
         className='mt-4 mx-auto underline'
       >
-        Mot de passe oublié ?
+        {t('forgotPassword')}
       </Link>
     </div>
   )

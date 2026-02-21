@@ -3,6 +3,7 @@
 import VideoCourseDone from '@/components/VideoCourseDone';
 import Image from 'next/image'
 import { useMemo } from "react";
+import { useTranslations } from 'next-intl'
 
 export default function CourseVideo({
   video,
@@ -19,6 +20,7 @@ export default function CourseVideo({
   onClick: (v: Video) => void,
   className?: string,
 }) {
+  const t = useTranslations('home')
   const videoCourseDone = useMemo(() => {
     return (videoIndex < dailyVideoCourseIndex || (dailySessionDone && videoIndex === dailyVideoCourseIndex))
   }, [videoIndex, dailyVideoCourseIndex, dailySessionDone])
@@ -33,7 +35,7 @@ export default function CourseVideo({
       }
     >
       <div className="font-bold flex gap-2">
-        <span>Jour {videoIndex + 1}</span>
+        <span>{t('dayNumber', { number: videoIndex + 1 })}</span>
       </div>
       <div className='relative'>
         <Image
@@ -41,7 +43,7 @@ export default function CourseVideo({
           width={240} height={150}
           unoptimized={true}
           className="brightness-50 rounded-xl w-[240px] h-[150px]"
-          alt="Image de la video du jour"
+          alt={t('videoThumbnailAlt')}
         />
 
         <VideoCourseDone isDone={videoCourseDone} />

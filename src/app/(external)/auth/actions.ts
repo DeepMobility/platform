@@ -11,4 +11,7 @@ export async function setAuthCookies(user: any) {
   cookieStore.set('userJobType', user.jobType, cookieOptions)
   cookieStore.set('userPainfulBodyParts', JSON.stringify(user.painfulBodyParts), cookieOptions)
   cookieStore.set('userOtherThematicInterests', JSON.stringify(user.otherThematicInterests), cookieOptions)
+  if (user.accountSlug) {
+    cookieStore.set('accountSlug', user.accountSlug, cookieOptions)
+  }
 }

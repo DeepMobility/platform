@@ -9,8 +9,12 @@ import { useState } from "react"
 import AppModal from "@/components/AppModal"
 import Image from 'next/image'
 import Logo from "@/../public/logo.svg";
+import { useTranslations } from 'next-intl'
 
 export default function JobTypePage({ userJobType }: { userJobType: string | undefined }) {
+  const t = useTranslations('onboarding')
+  const tc = useTranslations('common')
+  const tContent = useTranslations('content.jobTypes')
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -29,7 +33,7 @@ export default function JobTypePage({ userJobType }: { userJobType: string | und
 
   return (
     <div>
-      <h1 className="font-bold text-xl">Faisons connaissance ! 1/3</h1>
+      <h1 className="font-bold text-xl">{t('gettingToKnow', { step: 1, total: 3 })}</h1>
 
       {welcome && (
         <AppModal closeModal={removeWelcome} size="md">
@@ -38,17 +42,17 @@ export default function JobTypePage({ userJobType }: { userJobType: string | und
               src={Logo}
               width={150}
               height={120}
-              alt="Logo DeepMobility"
+              alt={tc('deepmobilityLogoAlt')}
               className="w-[150px] h-[120px]"
             />
 
             <div className="font-bold text-2xl">
-              Bienvenue sur DeepMobility
+              {t('welcomeTitle')}
             </div>
 
             <div className="flex flex-col text-lg">
-              <span>Prenons quelques instants pour faire connaissance</span>
-              <span>et <b>définir ensemble votre parcours sur mesure</b>.</span>
+              <span>{t('welcomeIntro')}</span>
+              <span dangerouslySetInnerHTML={{ __html: t.raw('welcomeCustomize') }} />
             </div>
 
             <button
@@ -56,28 +60,28 @@ export default function JobTypePage({ userJobType }: { userJobType: string | und
               onClick={removeWelcome}
               className='bg-gray-500 text-white py-2 px-6 rounded-2xl'
             >
-              Commencer
+              {t('start')}
             </button>
           </div>
         </AppModal>
       )}
 
       <Form action={updateJob} className="mt-4 flex flex-col gap-6">
-        <p>1. Quelle est votre activité principale au travail ?</p>
+        <p>{t('question1')}</p>
 
         <div className="flex flex-col gap-4">
-          {jobTypes.map((jobType) => (
-            <div className="flex gap-2" key={jobType.value}>
-              <input type="radio" name="jobType" id={jobType.value} value={jobType.value} required
-                defaultChecked={userJobType === jobType.value}
+          {jobTypes.map((type) => (
+            <div className="flex gap-2" key={type}>
+              <input type="radio" name="jobType" id={type} value={type} required
+                defaultChecked={userJobType === type}
               />
-              <label htmlFor={jobType.value}>{jobType.label}</label>
+              <label htmlFor={type}>{tContent(type)}</label>
             </div>
           ))}
         </div>
-        
+
         <button type="submit" className='bg-gray-500 text-white p-2 rounded-2xl flex gap-2 ml-auto'>
-          <span>Question suivante</span>
+          <span>{t('nextQuestion')}</span>
           <MdArrowForward size="24px"/>
         </button>
       </Form>

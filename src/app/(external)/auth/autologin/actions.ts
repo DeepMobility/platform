@@ -9,14 +9,14 @@ export async function autologin(token: string) {
   if (response.statusCode === 401) {
     return {
       success: false,
-      errorMessage: "Le lien de connexion est invalide ou a expiré.",
+      errorMessage: "autologinLinkExpired",
       purpose: null,
       redirectUrl: null,
     };
   }
 
   await setAuthCookies(response);
-  
+
   let redirectUrl: string;
 
   if (!response.jobType) {
@@ -32,4 +32,3 @@ export async function autologin(token: string) {
     redirectUrl,
   };
 }
-

@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { unauthenticatedGet } from "@/lib/httpMethods";
 import { FiExternalLink, FiLogOut } from "react-icons/fi";
 import MobileMenu from "@/components/MobileMenu";
+import { getTranslations } from 'next-intl/server';
 
 export default async function ConnectedLayout({
   children,
@@ -12,7 +13,8 @@ export default async function ConnectedLayout({
   children: React.ReactNode;
 }>) {
   const headersList = await headers()
-  
+  const t = await getTranslations('common')
+
   const { logoUrl: accountLogo }: { logoUrl: string } = await unauthenticatedGet(`get-account-logo-url/${headersList.get('host')}`)
 
   return (
@@ -23,7 +25,7 @@ export default async function ConnectedLayout({
             src={accountLogo || "/logo.svg"}
             width={139}
             height={69}
-            alt="Logo Client"
+            alt={t('clientLogoAlt')}
             className="h-8 w-auto"
           />
 
@@ -33,23 +35,23 @@ export default async function ConnectedLayout({
             src={Logo}
             width={139}
             height={69}
-            alt="Logo DeepMobility"
+            alt={t('deepmobilityLogoAlt')}
             className="h-8 w-auto"
           />
         </Link>
-        
+
         <div className="hidden sm:flex gap-6">
           <Link
             href="/rappels"
             className="text-gray-400 hover:underline hover:text-gray-500"
           >
-            Rappels
+            {t('reminders')}
           </Link>
           <Link
             href="/faq"
             className="text-gray-400 hover:underline hover:text-gray-500"
           >
-            FAQ
+            {t('faq')}
           </Link>
           <Link href="/logout" prefetch={false} className="text-gray-300 hover:text-gray-500">
             <FiLogOut size="25px"/>
@@ -69,21 +71,21 @@ export default async function ConnectedLayout({
             href="/objectifs-pedagogiques"
             className="text-gray-500 hover:underline flex gap-2"
           >
-            <span>Objectifs pédagogiques</span>
+            <span>{t('pedagogicalObjectives')}</span>
             <span className="my-auto"><FiExternalLink /></span>
           </Link>
           <Link
             href="/mentions-legales"
             className="text-gray-500 hover:underline flex gap-2"
           >
-            <span>Mentions légales</span>
+            <span>{t('legalNotice')}</span>
             <span className="my-auto"><FiExternalLink /></span>
           </Link>
           <Link
             href="/politique-de-confidentialite"
             className="text-gray-500 hover:underline flex gap-2"
           >
-            <span>Politique de confidentialité</span>
+            <span>{t('privacyPolicy')}</span>
             <span className="my-auto"><FiExternalLink /></span>
           </Link>
         </div>

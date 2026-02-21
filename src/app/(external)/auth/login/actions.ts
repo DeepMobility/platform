@@ -18,7 +18,7 @@ export async function resendConfirmation(email: string) {
     return { success: false }
   }
 }
- 
+
 export async function login(
   _state: {
     isComplete: boolean,
@@ -37,7 +37,7 @@ export async function login(
   if (response.statusCode === 401) {
     return {
       isComplete: false,
-      errorMessage: "Aucun compte associé à cet email"
+      errorMessage: "noAccountForEmail"
     }
   }
 
@@ -45,12 +45,12 @@ export async function login(
     if (response.message === 'email_not_confirmed') {
       return {
         isComplete: false,
-        errorMessage: "Email non confirmé"
+        errorMessage: "emailNotConfirmed"
       }
     }
     return {
       isComplete: false,
-      errorMessage: "Mot de passe incorrect"
+      errorMessage: "wrongPassword"
     }
   }
 

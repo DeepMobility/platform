@@ -1,8 +1,3 @@
-const exerciseTypes = [
-  { value: 'balance', label: 'Équilibre' },
-  { value: 'strengthening', label: 'Renforcement' },
-  { value: 'stretching', label: 'Étirements' },
-  { value: 'breathing', label: 'Respiration' },
-]
+const exerciseTypes = ['balance', 'strengthening', 'stretching', 'breathing']
 
 export default exerciseTypes
