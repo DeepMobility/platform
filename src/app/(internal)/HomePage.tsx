@@ -49,6 +49,7 @@ export default function HomePage({
   currentDaysInArow,
   hasReminderConfigured,
   currentChallenge: initialCurrentChallenge,
+  onboardingVideoUrl,
 }: {
   name: string,
   isSurveyDue: boolean,
@@ -66,6 +67,7 @@ export default function HomePage({
   currentDaysInArow: number,
   hasReminderConfigured: boolean,
   currentChallenge?: Challenge,
+  onboardingVideoUrl?: string,
 }) {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -101,6 +103,8 @@ export default function HomePage({
   const [displayCongrats, setDisplayCongrats] = useState(false)
 
   const [currentChallenge, setCurrentChallenge] = useState<Challenge | undefined>(initialCurrentChallenge);
+
+  const [displayOnboardingVideo, setDisplayOnboardingVideo] = useState(!!welcome && !!onboardingVideoUrl);
 
   useEffect(() => {
     const initAddToHomeScreen = () => {
@@ -384,7 +388,47 @@ export default function HomePage({
         </div> 
       </h1>
 
-      {welcome && (
+      {displayOnboardingVideo && onboardingVideoUrl && (
+        <div className="fixed inset-0 z-20 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-6 w-full max-w-[800px] px-4">
+            <div className="rounded-xl overflow-hidden bg-black aspect-video w-full">
+              {/youtube\.com\/watch\?v=|youtu\.be\//.test(onboardingVideoUrl) ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${onboardingVideoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/)?.[1]}?autoplay=1`}
+                  className="w-full h-full"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : /vimeo\.com\/(\d+)/.test(onboardingVideoUrl) ? (
+                <iframe
+                  src={`https://player.vimeo.com/video/${onboardingVideoUrl.match(/vimeo\.com\/(\d+)/)?.[1]}?autoplay=1`}
+                  className="w-full h-full"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <video
+                  src={onboardingVideoUrl}
+                  controls
+                  autoPlay
+                  controlsList="nodownload"
+                  className="w-full h-full"
+                />
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setDisplayOnboardingVideo(false)}
+              className='bg-white text-gray-800 py-2 px-6 rounded-2xl'
+            >
+              Continuer
+            </button>
+          </div>
+        </div>
+      )}
+
+      {welcome && !displayOnboardingVideo && (
         <AppModal closeModal={removeWelcome} size="md">
           <div className="w-full bg-[#A89B93] gap-4 flex flex-col items-center justify-around p-4 text-center">
             <Image
@@ -403,7 +447,7 @@ export default function HomePage({
               <div className="text-lg">
                 Réalisez chaque jour votre routine pour améliorer votre bien-être.
               </div>
-            </div>     
+            </div>
 
             <button
               type="button"

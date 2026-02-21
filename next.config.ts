@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "ik.imagekit.io",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "drive.usercontent.google.com",
+        port: "",
+      }
     ],
   },
   eslint: {
