@@ -3,6 +3,11 @@
 import cookieOptions from '@/lib/cookieOptions';
 import { cookies } from 'next/headers';
  
+export async function setAccountSlugCookie(slug: string) {
+  const cookieStore = await cookies()
+  cookieStore.set('accountSlug', slug, cookieOptions)
+}
+
 export async function setAuthCookies(user: any) {
   const cookieStore = await cookies()
 

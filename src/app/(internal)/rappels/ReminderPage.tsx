@@ -118,7 +118,7 @@ export default function ReminderPage({ initialReminderTime, calendarUrl }: Remin
               <div className="bg-gradient-to-br from-deepmobility-50 to-deepmobility-100 rounded-2xl p-3 border border-deepmobility-200">
                 <div className="flex gap-2 items-start">
                   <span className="text-2xl">{tReminder(`${reminderMessageKey}.emoji`)}</span>
-                  <p className="text-sm text-gray-700 flex-1">{tReminder(`${reminderMessageKey}.message`)}</p>
+                  <p className="text-sm text-gray-700 flex-1" dangerouslySetInnerHTML={{ __html: tReminder.markup(`${reminderMessageKey}.message`, { b: (chunks) => `<b>${chunks}</b>` }) }} />
                 </div>
               </div>
             )}
