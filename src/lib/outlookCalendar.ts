@@ -1,12 +1,12 @@
-import { getReminderMessageForTime } from './reminderMessages';
-
 /**
  * Generate an Outlook Calendar URL for adding a reminder
  * Note: Outlook web doesn't support RRULE in URL params, so users need to manually set recurrence
  * @param reminderTime - Time in HH:MM format (e.g., "08:00")
+ * @param title - Calendar event title
+ * @param description - Calendar event description
  * @returns Outlook Calendar URL
  */
-export function generateOutlookCalendarUrl(reminderTime: string): string {
+export function generateOutlookCalendarUrl(reminderTime: string, title: string, description: string): string {
   const [hours, minutes] = reminderTime.split(':');
 
   // Create a date for today at the specified time
@@ -19,17 +19,6 @@ export function generateOutlookCalendarUrl(reminderTime: string): string {
   // Format dates for Outlook (ISO 8601)
   const startdt = startDate.toISOString();
   const enddt = endDate.toISOString();
-
-  // Get personalized message based on time
-  const { emoji, message } = getReminderMessageForTime(reminderTime);
-
-  const title = `${emoji} Rappel DeepMobility - Votre routine bien-être`;
-
-  // Add recurrence reminder to description since URL doesn't support RRULE
-  const description =
-    `${message}\n\n` +
-    `Rendez-vous sur votre plateforme DeepMobility : ${window.location.origin}\n\n` +
-    `⚠️ IMPORTANT : Pensez à activer la répétition quotidienne dans Outlook pour que ce rappel se répète chaque jour.`;
 
   // Build URL parameters
   const params = new URLSearchParams({
@@ -49,8 +38,10 @@ export function generateOutlookCalendarUrl(reminderTime: string): string {
 /**
  * Open Outlook Calendar in a new window to add the reminder
  * @param reminderTime - Time in HH:MM format
+ * @param title - Calendar event title
+ * @param description - Calendar event description
  */
-export function openOutlookCalendar(reminderTime: string): void {
-  const url = generateOutlookCalendarUrl(reminderTime);
+export function openOutlookCalendar(reminderTime: string, title: string, description: string): void {
+  const url = generateOutlookCalendarUrl(reminderTime, title, description);
   window.open(url, '_blank');
 }

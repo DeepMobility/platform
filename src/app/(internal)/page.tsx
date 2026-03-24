@@ -1,8 +1,9 @@
 import { get } from '@/lib/httpMethods';
 import HomePage from './HomePage';
-import tips from '@/lib/tips';
+import tipCount from '@/lib/tips';
 import sessionQuestions from '@/lib/sessionQuestions';
 import WebinarBanner from '@/components/WebinarBanner';
+import { getTranslations } from 'next-intl/server';
 
 interface ActiveWebinar {
   id: string;
@@ -52,9 +53,22 @@ export default async function Home() {
     onboardingVideoUrl?: string,
   } = dashboardData
 
-  const randomTip = tips[Math.floor(Math.random() * tips.length)]
+  const tTips = await getTranslations('content.tips')
+  const tQuestions = await getTranslations('content.sessionQuestions')
 
-  const newSessionQuestion = sessionQuestions[Math.floor(Math.random() * sessionQuestions.length)]
+  const randomTipIndex = Math.floor(Math.random() * tipCount)
+  const randomTip = {
+    value: tTips.raw(`${randomTipIndex}.value`),
+    source: tTips.raw(`${randomTipIndex}.source`),
+    highlightedNumber: tTips.raw(`${randomTipIndex}.highlightedNumber`),
+  }
+
+  const randomQuestionKey = sessionQuestions[Math.floor(Math.random() * sessionQuestions.length)]
+  const newSessionQuestion = {
+    value: randomQuestionKey,
+    beforeLabel: tQuestions(`${randomQuestionKey}.beforeLabel`),
+    afterLabel: tQuestions(`${randomQuestionKey}.afterLabel`),
+  }
 
   const orderedCourseVideos = courseVideos.slice(courseStartIndex).concat(courseVideos.slice(0, courseStartIndex))
 

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
 
 export default async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
@@ -14,17 +13,17 @@ export default async function middleware(request: NextRequest) {
     );
   }
 
-  const cookieStore = await cookies()
-
   if (path === "/logout") {
-    cookieStore.delete('jwt')
-    cookieStore.delete('userName')
-    cookieStore.delete('userJobType')
+    const response = NextResponse.redirect(new URL('/auth/login', request.url))
+    response.cookies.delete('jwt')
+    response.cookies.delete('userName')
+    response.cookies.delete('userJobType')
+    response.cookies.delete('accountSlug')
 
-    return NextResponse.redirect(new URL('/auth/login', request.url))
+    return response
   }
 
-  const jwt = cookieStore.get('jwt')
+  const jwt = request.cookies.get('jwt')
 
   if (!jwt?.value) {
     if (path.startsWith('/auth')) {
@@ -38,15 +37,15 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  if (!cookieStore.get('userJobType')?.value) {
+  if (!request.cookies.get('userJobType')?.value) {
     return NextResponse.redirect(new URL('/premiers-pas/mode-de-travail', request.nextUrl))
   }
 
-  if (!cookieStore.get('userPainfulBodyParts')?.value) {
+  if (!request.cookies.get('userPainfulBodyParts')?.value) {
     return NextResponse.redirect(new URL('/premiers-pas/regions-douloureuses', request.nextUrl))
   }
 
-  if (!cookieStore.get('userOtherThematicInterests')?.value) {
+  if (!request.cookies.get('userOtherThematicInterests')?.value) {
     return NextResponse.redirect(new URL('/premiers-pas/autre-interets', request.nextUrl))
   }
 

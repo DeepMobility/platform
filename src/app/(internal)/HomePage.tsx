@@ -1,6 +1,5 @@
 'use client'
 
-import courses from "@/lib/courses";
 import formatDuration from "@/lib/durationFormatter";
 import exerciseTypes from "@/lib/exerciseTypes";
 import painfulBodyParts from "@/lib/painfulBodyParts";
@@ -23,6 +22,7 @@ import 'swiper/css';
 import Fires from "./Fires";
 import ChallengeWidget from './ChallengeWidget';
 import FullScreenModal from "@/components/FullScreenModal";
+import { useTranslations } from 'next-intl'
 
 // Declare the AddToHomeScreen type on window
 declare global {
@@ -69,6 +69,12 @@ export default function HomePage({
   currentChallenge?: Challenge,
   onboardingVideoUrl?: string,
 }) {
+  const t = useTranslations('home')
+  const tc = useTranslations('common')
+  const tBodyParts = useTranslations('content.painfulBodyParts')
+  const tExerciseTypes = useTranslations('content.exerciseTypes')
+  const tBadges = useTranslations('content.badges')
+  const tCourses = useTranslations('content.courses')
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -134,7 +140,7 @@ export default function HomePage({
   const removeWelcome = () => {
     router.replace('/');
     setWelcome(null);
-    
+
     setTimeout(() => {
       if (typeof window !== 'undefined' && window.AddToHomeScreenInstance) {
         try {
@@ -274,8 +280,8 @@ export default function HomePage({
     const teamsArray = Object.entries(currentChallenge.progress.teamsInfo).map(([teamId, team]) => ({
       teamId,
       ...team,
-      points: team.name === currentChallenge.progress.currentUserTeamInfo.name 
-        ? team.points + pointsEarned 
+      points: team.name === currentChallenge.progress.currentUserTeamInfo.name
+        ? team.points + pointsEarned
         : team.points
     }));
 
@@ -297,7 +303,7 @@ export default function HomePage({
       ...user,
       userId,
       points: user.name === currentChallenge.progress.currentUserInfo.name
-        ? user.points + pointsEarned 
+        ? user.points + pointsEarned
         : user.points
     }));
 
@@ -354,18 +360,18 @@ export default function HomePage({
 
   const getEndSessionIncentive = (videosLeft: number) => {
     if (videosLeft === 0) {
-      return "Votre parcours de la semaine est validé. Ancrer cette habitude sur tout le trimestre, recommencez dès demain avec la J1"
+      return t('weekValidated')
     }
     if (videosLeft === 1) {
-      return `Votre parcours de la semaine est presque validé, revenez demain pour une semaine complète.`
+      return t('weekAlmostValidated')
     }
-    return `Poursuivez encore ${videosLeft} jours consécutifs pour réaliser votre parcours complet.`
+    return t('continueForDays', { days: videosLeft })
   }
 
   return (
     <div>
       <h1 className="text-2xl flex gap-4 flex-wrap">
-        <span>Bonjour {name} !</span>
+        <span>{t('greeting', { name })}</span>
         <div className="flex gap-2">
           {[1,2,3,4,5].map((fire) => (
             <div key={fire} className="relative">
@@ -378,14 +384,14 @@ export default function HomePage({
                     (!dailySessionDone && (dailyVideoCourseIndex < fire))
                   ) ? "brightness-[0.7]" : ""
                 }`}
-                alt="Flamme"
+                alt={t('flameAlt')}
               />
               <div className="bg-transparent absolute bottom-0 right-[6px] text-sm">
-                J{fire}
-              </div>              
+                {t('dayLabel', { number: fire })}
+              </div>
             </div>
           ))}
-        </div> 
+        </div>
       </h1>
 
       {displayOnboardingVideo && onboardingVideoUrl && (
@@ -422,7 +428,7 @@ export default function HomePage({
               onClick={() => setDisplayOnboardingVideo(false)}
               className='bg-white text-gray-800 py-2 px-6 rounded-2xl'
             >
-              Continuer
+              {t('onboardingContinue')}
             </button>
           </div>
         </div>
@@ -435,17 +441,17 @@ export default function HomePage({
               src={Logo}
               width={150}
               height={120}
-              alt="Logo DeepMobility"
+              alt={tc('deepmobilityLogoAlt')}
               className="w-[150px] h-[120px]"
             />
 
-            <b className="text-2xl">BRAVO !</b>
+            <b className="text-2xl">{t('bravo')}</b>
 
             <div className="flex flex-col gap-2">
-              <b className="text-xl">Votre parcours sur mesure est maintenant prêt !</b>
+              <b className="text-xl">{t('courseReady')}</b>
 
               <div className="text-lg">
-                Réalisez chaque jour votre routine pour améliorer votre bien-être.
+                {t('doDaily')}
               </div>
             </div>
 
@@ -454,7 +460,7 @@ export default function HomePage({
               onClick={removeWelcome}
               className='bg-gray-500 text-white py-2 px-6 rounded-2xl'
             >
-              C'est parti !
+              {t('letsGo')}
             </button>
           </div>
         </AppModal>
@@ -464,7 +470,7 @@ export default function HomePage({
         <div className="order-2 lg:order-1 w-full xl:max-w-[800px] shadow-sm p-4 rounded-3xl border flex flex-col gap-2 sm:gap-6 overflow-hidden">
           <h2 className="text-lg flex gap-2">
             <MdOndemandVideo size="24px" className="my-auto"/>
-            <span>Ma routine du jour</span>
+            <span>{t('dailyRoutine')}</span>
           </h2>
 
           <div className="flex sm:hidden flex-col gap-1 rounded-lg bg-gray-100 p-2">
@@ -474,7 +480,7 @@ export default function HomePage({
               </div>
               <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} className="text-sm flex-1 min-w-0 break-words"/>
             </div>
-            <div className="text-xs italic break-words">Source: {randomTip.source}</div>
+            <div className="text-xs italic break-words">{tc('source')}: {randomTip.source}</div>
           </div>
 
           <div className="flex-1 flex flex-wrap gap-4">
@@ -489,15 +495,15 @@ export default function HomePage({
                 width={270} height={165}
                 unoptimized={true}
                 className="brightness-50 rounded-xl w-full max-w-[340px] h-[180px] sm:h-[240px] object-cover"
-                alt="Image de la video du jour"
+                alt={t('videoThumbnailAlt')}
               />
               <div className="flex gap-1 bg-white absolute bottom-2 right-2 rounded-md p-1 text-sm">
                 <PiClock size="16px" className="my-auto"/>
-                <span>{formatDuration(dailyVideo.duration)}</span>
+                <span>{formatDuration(dailyVideo.duration, tc)}</span>
               </div>
 
               <VideoCourseDone isDone={dailySessionDone} />
-            </button>         
+            </button>
 
             <div className="flex-1 min-w-[270px] flex flex-col justify-between">
               <div>
@@ -506,12 +512,12 @@ export default function HomePage({
                 <div className="flex flex-wrap gap-2 mt-2">
                   {dailyVideo.bodyParts.map((bodyPart) => (
                     <span key={bodyPart} className="bg-gray-200 text-xs rounded-md px-2">
-                      {painfulBodyParts.find(painfulBodyPart => painfulBodyPart.value === bodyPart)?.label}
+                      {tBodyParts(bodyPart)}
                     </span>
                   ))}
                   {dailyVideo.exerciseTypes.map((type) => (
                     <span key={type} className="bg-gray-200 text-xs rounded-md px-2">
-                      {exerciseTypes.find(exerciseType => exerciseType.value === type)?.label}
+                      {tExerciseTypes(type)}
                     </span>
                   ))}
                 </div>
@@ -521,7 +527,7 @@ export default function HomePage({
                 className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-4 sm:mt-2'
                 onClick={() => !dailySessionDone ? showNewSession(dailyVideo) : playVideo(dailyVideo)}
               >
-                <span>{dailySessionDone ? 'Revoir' : 'Commencer' }</span>
+                <span>{dailySessionDone ? t('review') : t('start') }</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
             </div>
@@ -540,22 +546,21 @@ export default function HomePage({
                   />
                   {!!surveyAnswered ? (
                     <p>
-                      Merci d'avoir répondu à notre questionnaire, vos réponses nous aident à toujours
-                      enrichir nos vidéos et nous permettent d'améliorer vos parcours.
+                      {t('surveyThanks')}
                     </p>
                   ): (
                     <div>
                       <span>
-                        Aidez nous à adapter votre parcours à vos besoins : c'est l'heure de compléter quelques questions sur vous ! 
+                        {t('surveyHelp')}
                       </span>
                       <Link href="/questionnaire"
                         className="bg-gray-200 py-2 justify-center rounded-2xl flex gap-2 mt-2 hover:opacity-70"
                       >
-                        <span>Compléter</span>
+                        <span>{t('complete')}</span>
                         <MdArrowForward size="24px" className="my-auto"/>
                       </Link>
                     </div>
-                  )}  
+                  )}
                 </div>
             </div>
           ) : (
@@ -567,7 +572,7 @@ export default function HomePage({
                     </div>
                     <div dangerouslySetInnerHTML={{__html: randomTip.value + "*"}} />
                   </div>
-                  <div className="text-xs italic">Source: {randomTip.source}</div>
+                  <div className="text-xs italic">{tc('source')}: {randomTip.source}</div>
                 </div>
             </div>
           )}
@@ -578,16 +583,16 @@ export default function HomePage({
                 <div className="text-4xl">🔔</div>
                 <div className="flex-1">
                   <div className="font-semibold text-gray-800 mb-1">
-                    Ne manquez plus vos routines quotidiennes
+                    {t('neverMissRoutines')}
                   </div>
                   <p className="text-sm text-gray-600 mb-2">
-                    Configurez un rappel pour ancrer votre nouvelle habitude bien-être
+                    {t('configureReminderHint')}
                   </p>
-                  <Link 
+                  <Link
                     href="/rappels"
                     className="bg-deepmobility-500 text-white py-2 px-4 rounded-2xl inline-flex gap-2 items-center hover:bg-deepmobility-600 transition-colors text-sm"
                   >
-                    <span>Configurer mes rappels</span>
+                    <span>{t('configureMyReminders')}</span>
                     <MdArrowForward size={18} />
                   </Link>
                 </div>
@@ -600,25 +605,25 @@ export default function HomePage({
 
             <div className="flex justify-around border-t pt-2 sm:border-t-0 sm:pt-0 sm:max-w-[170px] min-w-[150px] sm:flex-wrap sm:border-l sm:pl-2">
               {badgesList.map(badge => (
-                <div key={badge.value} className="group">
-                  {userBadges.includes(badge.value) ? (
+                <div key={badge} className="group">
+                  {userBadges.includes(badge) ? (
                     <Image
-                      src={`/badges/${badge.value}.png`}
+                      src={`/badges/${badge}.png`}
                       width={70} height={70}
                       className="w-[70px] h-[70px] rounded-t-3xl mx-auto"
-                      alt="Badge débloqué"
+                      alt={t('badgeUnlockedAlt')}
                     />
                   ): (
                     <Image
-                      src={`/badges/${badge.value}-disabled.png`}
+                      src={`/badges/${badge}-disabled.png`}
                       width={70} height={70}
                       className="w-[70px] h-[70px] rounded-t-3xl mx-auto"
-                      alt="Badge à débloquer"
+                      alt={t('badgeToUnlockAlt')}
                     />
                   )}
 
                   <div className="hidden group-hover:block absolute bg-white rounded-xl border shadow-sm p-2">
-                    {badge.condition}
+                    {tBadges(`${badge}.condition`)}
                   </div>
                 </div>
               ))}
@@ -635,11 +640,11 @@ export default function HomePage({
         <div className="order-3 lg:order-4 shadow-sm p-4 rounded-3xl border w-full">
           <h2 className="text-lg flex gap-2">
             <PiPathFill size="24px" className="my-auto"/>
-            <span>Mon parcours sur mesure | {courses.find((c) => c.value === course)?.label}</span>
+            <span>{t('myCourse')} | {tCourses(`${course}.label`)}</span>
           </h2>
 
           <div className="italic mt-1">
-            Des routines musculaires conçues spécialement pour vous, à réaliser chaque jour au travail et/ou à la maison et ça pendant tout un trimestre.
+            {t('courseDescription')}
           </div>
 
           <div className="sm:hidden">
@@ -650,7 +655,7 @@ export default function HomePage({
                     <div className="w-[16px]">
                       {index !== 0 && (
                         <LuChevronLeft />
-                      )} 
+                      )}
                     </div>
                     <CourseVideo video={video} videoIndex={index}
                       dailyVideoCourseIndex={dailyVideoCourseIndex} dailySessionDone={dailySessionDone}
@@ -665,7 +670,7 @@ export default function HomePage({
                 </SwiperSlide>
               ))}
             </Swiper>
-          </div> 
+          </div>
 
           <div className="hidden sm:flex rounded-3xl gap-2 mt-4 px-4 flex-wrap justify-center">
             {courseVideos.map((video, index) => (
@@ -685,19 +690,19 @@ export default function HomePage({
         >
           <h2 className="text-lg flex gap-2">
             <MdOutlineVideoLibrary size="24px" className="my-auto"/>
-            <span>Toutes les routines</span>
+            <span>{t('allRoutines')}</span>
           </h2>
 
           <div className="flex gap-2 text-slate-800 mt-auto">
-            <span>Afficher</span>
+            <span>{tc('show')}</span>
             <LuChevronsUpDown size="20px" className="my-auto"/>
           </div>
         </button>
-        
+
         {displayAllVideos && (
           <div className="flex flex-col sm:flex-row gap-6 mt-2">
             <div className="sm:w-60 flex-none mt-4">
-              <div className="font-bold border-b">Filtrer</div>
+              <div className="font-bold border-b">{tc('filter')}</div>
 
               <div className="pl-4">
                 <div className="mt-4 flex gap-2">
@@ -705,36 +710,36 @@ export default function HomePage({
                     onChange={toggleAllVideoFilter} checked={allVideoFilter}
                     id="allVideoFilter"
                   />
-                  <label htmlFor="allVideoFilter">Toutes les routines</label>
+                  <label htmlFor="allVideoFilter">{t('allRoutines')}</label>
                 </div>
 
                 <div className="mt-4">
-                  <div className="font-bold">Parties du corps</div>
+                  <div className="font-bold">{t('bodyParts')}</div>
                   <div className="flex flex-col mt-1">
                     {painfulBodyParts.map((bodyPart) => (
-                      <div key={bodyPart.value} className="flex gap-2">
+                      <div key={bodyPart} className="flex gap-2">
                         <input type="checkbox" name="bodyPartFilters"
-                          onChange={updateBodyPartFilters} value={bodyPart.value}
-                          checked={bodyPartFilters.includes(bodyPart.value)}
-                          id={bodyPart.value}
+                          onChange={updateBodyPartFilters} value={bodyPart}
+                          checked={bodyPartFilters.includes(bodyPart)}
+                          id={bodyPart}
                         />
-                        <label htmlFor={bodyPart.value}>{bodyPart.label}</label>
+                        <label htmlFor={bodyPart}>{tBodyParts(bodyPart)}</label>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div className="mt-4">
-                  <div className="font-bold">Types d'exercice</div>
+                  <div className="font-bold">{t('exerciseTypes')}</div>
                   <div className="flex flex-col mt-1">
                     {exerciseTypes.map((type) => (
-                      <div key={type.value} className="flex gap-2">
+                      <div key={type} className="flex gap-2">
                         <input type="checkbox" name="exerciseTypeFilters"
-                          onChange={updateExerciseTypeFilters} value={type.value}
-                          checked={exerciseTypeFilters.includes(type.value)}
-                          id={type.value}
+                          onChange={updateExerciseTypeFilters} value={type}
+                          checked={exerciseTypeFilters.includes(type)}
+                          id={type}
                         />
-                        <label htmlFor={type.value}>{type.label}</label>
+                        <label htmlFor={type}>{tExerciseTypes(type)}</label>
                       </div>
                     ))}
                   </div>
@@ -754,7 +759,7 @@ export default function HomePage({
                     width={180} height={100}
                     unoptimized={true}
                     className="brightness-50 rounded-xl w-[180px] sm:w-[160px] h-[115px] sm:h-[100px]"
-                    alt="Image de la video du jour"
+                    alt={t('videoThumbnailAlt')}
                   />
                   <div className="w-[160px] whitespace-nowrap overflow-hidden text-ellipsis">
                     {video.name}
@@ -774,14 +779,14 @@ export default function HomePage({
               unoptimized={true}
               width={700} height={200}
               className="w-full h-[200px] rounded-t-3xl object-cover"
-              alt="Image de la video du jour"
+              alt={t('videoThumbnailAlt')}
             />
             <div className="flex flex-col h-full p-4">
               <div className="flex gap-8">
                 <span className="text-lg font-bold">{selectedVideo?.name}</span>
                 <div className="flex gap-1">
                   <PiClock size="16px" className="my-auto"/>
-                  <span className="my-auto">{formatDuration(selectedVideo?.duration || 0)}</span>
+                  <span className="my-auto">{formatDuration(selectedVideo?.duration || 0, tc)}</span>
                 </div>
               </div>
               <p className="mt-4">
@@ -790,12 +795,12 @@ export default function HomePage({
               <div className="flex flex-wrap gap-2 mt-2">
                 {selectedVideo?.bodyParts.map((bodyPart) => (
                   <span key={bodyPart} className="bg-gray-200 text-xs rounded-md px-2 mb-auto">
-                    {painfulBodyParts.find(painfulBodyPart => painfulBodyPart.value === bodyPart)?.label}
+                    {tBodyParts(bodyPart)}
                   </span>
                 ))}
                 {selectedVideo?.exerciseTypes.map((type) => (
                   <span key={type} className="bg-gray-200 text-xs rounded-md px-2 mb-auto">
-                    {exerciseTypes.find(exerciseType => exerciseType.value === type)?.label}
+                    {tExerciseTypes(type)}
                   </span>
                 ))}
               </div>
@@ -803,7 +808,7 @@ export default function HomePage({
                 className='bg-gray-200 py-2 px-8 rounded-2xl ml-auto flex gap-2 mt-4 sm:mt-auto'
                 onClick={() => selectedVideo?.id === dailyVideo.id && !dailySessionDone ? showNewSession() : playVideo()}
               >
-                <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? 'Démarrer': 'Lancer la vidéo'}</span>
+                <span>{selectedVideo?.id === dailyVideo.id && !dailySessionDone ? t('startSession') : t('launchVideo')}</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
             </div>
@@ -819,7 +824,7 @@ export default function HomePage({
               unoptimized={true}
               width={700} height={200}
               className="w-full h-[200px] rounded-t-3xl object-cover"
-              alt="Image de la video du jour"
+              alt={t('videoThumbnailAlt')}
             />
             <Form action={startVideoSession} className="flex flex-col justify-between h-full p-4">
               <div>{newSessionQuestion.beforeLabel}</div>
@@ -831,14 +836,14 @@ export default function HomePage({
                   <option value="4">4</option>
                   <option value="5">5</option>
                 </datalist>
-                
+
                 <input
                   type="range" name="beforeRating" min="1" max="5" list="values"
                   className="w-[250px] sm:w-[400px] m-0 p-0 accent-gray-500"
                 />
               </div>
               <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 ml-auto flex gap-2'>
-                <span>Lancer la vidéo</span>
+                <span>{t('launchVideo')}</span>
                 <MdArrowForward size="24px" className="my-auto"/>
               </button>
             </Form>
@@ -868,7 +873,7 @@ export default function HomePage({
               width={700} height={200}
               unoptimized={true}
               className="w-full h-[200px] rounded-t-3xl object-cover"
-              alt="Image de la video du jour"
+              alt={t('videoThumbnailAlt')}
             />
             <Form action={endVideoSession} className="flex flex-col justify-between h-full p-4">
               <div>{newSessionQuestion.afterLabel}</div>
@@ -880,14 +885,14 @@ export default function HomePage({
                   <option value="4">4</option>
                   <option value="5">5</option>
                 </datalist>
-                
+
                 <input
                   type="range" name="afterRating" min="1" max="5" list="values"
                   className="w-[250px] sm:w-[400px] m-0 p-0 accent-gray-500"
                 />
               </div>
               <button type="submit" className='bg-gray-200 py-2 px-8 rounded-2xl mt-4 sm:mt-auto ml-auto flex gap-2'>
-                Terminer
+                {tc('finish')}
               </button>
             </Form>
           </div>
@@ -898,7 +903,7 @@ export default function HomePage({
         <AppModal closeModal={closeModal} globalClose={true}>
           <div className="w-full flex flex-col text-center gap-2 px-4 py-8 items-center justify-around">
             <div className="text-3xl font-bold">
-              {(newBadge ? "Nouveau badge débloqué !" : "Routine journalière terminée !")}
+              {(newBadge ? t('newBadgeUnlocked') : t('dailyRoutineCompleted'))}
             </div>
             {newBadge ? (
               <Image
@@ -906,7 +911,7 @@ export default function HomePage({
                 width={400} height={150}
                 unoptimized={true}
                 className="aspect-3/1 w-full max-w-[500px]"
-                alt="Badge débloqué"
+                alt={t('badgeUnlockedAlt')}
               />
             ): (
               <div className="flex gap-2">
@@ -916,27 +921,20 @@ export default function HomePage({
                       src={`/fire.svg`}
                       width={50} height={70}
                       className={`w-[50px] h-[70px] ${dailyVideoCourseIndex + 1 < fire ? "brightness-[0.7]" : ""}`}
-                      alt="Flamme"
+                      alt={t('flameAlt')}
                     />
                     {dailyVideoCourseIndex + 1 >= fire && (
                       <div className="bg-transparent absolute bottom-[3px] right-[14px] text-lg font-bold">
-                        J{fire}
+                        {t('dayLabel', { number: fire })}
                       </div>
-                    )} 
+                    )}
                   </div>
                 ))}
-              </div> 
-              // <Image
-              //   src={`/congrats.svg`}
-              //   width={400} height={150}
-              //   unoptimized={true}
-              //   className="aspect-3/1 w-full max-w-[500px]"
-              //   alt="Bravo"
-              // />
+              </div>
             )}
             <div className="text-xl">
               {(newBadge
-                ? badgesList.find(badge => badge.value === newBadge)?.congrats
+                ? tBadges(`${newBadge}.congrats`)
                 : getEndSessionIncentive(5 - dailyVideoCourseIndex - 1)
               )}
             </div>

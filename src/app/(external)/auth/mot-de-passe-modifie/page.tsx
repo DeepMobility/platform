@@ -1,17 +1,20 @@
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 export default async function PasswordUpdated() {
+  const t = await getTranslations('auth')
+
   return (
     <div className="flex flex-col">
       <span className=' mx-auto'>
-        Votre mot de passe a été mis à jour.
+        {t('passwordUpdated')}
       </span>
 
       <Link
         href="/auth/login"
         className='mt-4 mx-auto underline'
       >
-        Retour au login
+        {t('backToLoginLink')}
       </Link>
     </div>
   )

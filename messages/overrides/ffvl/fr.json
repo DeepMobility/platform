@@ -1,0 +1,677 @@
+{
+  "metadata": {
+    "title": "DeepMobility",
+    "description": "Pour vos routines musculaires"
+  },
+  "common": {
+    "back": "Retour",
+    "cancel": "Annuler",
+    "validate": "Valider",
+    "continue": "Continuer",
+    "logout": "Déconnexion",
+    "reminders": "Rappels",
+    "faq": "FAQ",
+    "legalNotice": "Mentions légales",
+    "privacyPolicy": "Politique de confidentialité",
+    "pedagogicalObjectives": "Objectifs pédagogiques",
+    "clientLogoAlt": "Logo Client",
+    "deepmobilityLogoAlt": "Logo DeepMobility",
+    "menu": "Menu",
+    "filter": "Filtrer",
+    "show": "Afficher",
+    "source": "Source",
+    "finish": "Terminer",
+    "duration": {
+      "minutesAndSeconds": "{minutes} min {seconds}",
+      "minutesOnly": "{minutes} min"
+    }
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "email": "Email",
+    "password": "Mot de passe",
+    "showPassword": "Afficher le mot de passe",
+    "signIn": "Se connecter",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccountForEmail": "Aucun compte associé à cet email",
+    "wrongPassword": "Mot de passe incorrect",
+    "emailNotConfirmed": "Email non confirmé",
+    "resendConfirmation": "Renvoyer l'email de confirmation",
+    "sending": "Envoi en cours...",
+    "confirmationResent": "✓ Email de confirmation renvoyé avec succès",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "birthYear": "Année de naissance",
+    "gender": "Genre",
+    "signUp": "S'inscrire",
+    "registerSuccess": "Inscription réussie !",
+    "registerEmailSent": "Un email de confirmation vous a été envoyé.\nCliquez sur le lien dans l'email pour valider et accéder à la plateforme FFVL x DeepMobility.\n\nDes routines courtes pour rester actif et performer dans ton corps et dans ta tête  et être prêt pour pratiquer ta ou tes pratiques de vol libre préférée(s).",
+    "checkSpam": "Si vous ne recevez pas l'email dans les prochaines minutes, vérifiez votre dossier spam.",
+    "backToLogin": "Retour à la connexion",
+    "userAlreadyExists": "Ce compte existe déjà",
+    "userNotAllowed": "Vous n'êtes pas autorisé à accéder à cette plateforme. Veuillez contacter votre administrateur.",
+    "registrationError": "Une erreur est survenue lors de l'inscription",
+    "completeRegistration": "Compléter mon inscription",
+    "emailCannotBeModified": "Cet email ne peut pas être modifié",
+    "validateRegistration": "Valider mon inscription",
+    "registrationConfirmed": "Inscription confirmée ! Redirection en cours...",
+    "invitationExpired": "Le lien d'invitation est invalide ou a expiré",
+    "invitationError": "Une erreur est survenue lors de la finalisation de votre inscription",
+    "unknownError": "Une erreur est survenue",
+    "accountEmail": "Email du compte",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "save": "Sauvegarder",
+    "passwordUpdated": "Votre mot de passe a été mis à jour.",
+    "backToLoginLink": "Retour au login",
+    "tokenSentMessage": "Un email pour modifier votre mot de passe vous a été envoyé à l'adresse renseignée.",
+    "autologinLinkExpired": "Le lien de connexion est invalide ou a expiré.",
+    "autologinAccountConfirmed": "Votre compte a été confirmé avec succès.",
+    "autologinSuccess": "Connexion réussie !",
+    "autologinError": "Une erreur est survenue",
+    "autologinAutoError": "Une erreur est survenue lors de la connexion automatique.",
+    "autologinNoToken": "Aucun token fourni",
+    "autologinLoadingRegistration": "Confirmation de votre inscription en cours...",
+    "autologinLoadingPasswordReset": "Vérification en cours...",
+    "autologinLoadingDefault": "Connexion en cours...",
+    "autologinErrorRegistration": "Erreur de confirmation",
+    "autologinErrorPasswordReset": "Lien invalide",
+    "autologinErrorDefault": "Erreur de connexion",
+    "autologinErrorDetailsRegistration": "Le lien de confirmation peut avoir expiré ou être invalide.",
+    "autologinErrorDetailsPasswordReset": "Le lien de réinitialisation peut avoir expiré.",
+    "autologinErrorDetailsDefault": "Le lien de connexion peut avoir expiré ou être invalide.",
+    "autologinSuccessTitle": "✅ Connexion réussie !",
+    "autologinRedirecting": "Redirection en cours...",
+    "createNewAccount": "Créer un nouveau compte",
+    "connectWithEmailPassword": "Se connecter avec email et mot de passe"
+  },
+  "onboarding": {
+    "gettingToKnow": "Faisons connaissance ! {step}/{total}",
+    "welcomeTitle": "Bienvenue sur DeepMobility",
+    "welcomeIntro": "Prenons quelques instants pour faire connaissance",
+    "welcomeCustomize": "et <b>définir ensemble votre parcours sur mesure</b>.",
+    "start": "Commencer",
+    "question1": "1. Quelle est votre activité principale au travail ?",
+    "nextQuestion": "Question suivante",
+    "question2": "2. Quelles parties de votre corps vous semblent les plus tendues ou inconfortables en ce moment ?",
+    "question3": "3. Quelles thématiques vous intéressent pour explorer d'autres routines à l'avenir ?"
+  },
+  "home": {
+    "greeting": "Bonjour {name} !",
+    "flameAlt": "Flamme",
+    "dayLabel": "J{number}",
+    "dailyRoutine": "Ma routine du jour",
+    "review": "Revoir",
+    "start": "Commencer",
+    "surveyThanks": "Merci d'avoir répondu à notre questionnaire, vos réponses nous aident à toujours enrichir nos vidéos et nous permettent d'améliorer vos parcours.",
+    "surveyHelp": "Aidez nous à adapter votre parcours à vos besoins : c'est l'heure de compléter quelques questions sur vous !",
+    "complete": "Compléter",
+    "neverMissRoutines": "Ne manquez plus vos routines quotidiennes",
+    "configureReminderHint": "Configurez un rappel pour intégrer facilement ces routines dans votre semaine et accompagner votre pratique sportive de vol libre",
+    "configureMyReminders": "Configurer mes rappels",
+    "bravo": "BRAVO !",
+    "courseReady": "Votre parcours sur mesure est maintenant prêt !",
+    "doDaily": "Réalisez chaque jour votre routine pour améliorer votre bien-être.",
+    "letsGo": "C'est parti !",
+    "myCourse": "Mon parcours sur mesure",
+    "courseDescription": "Des routines musculaires à intégrer dans ta semaine pour rester en forme, casser la sédentarité et profiter pleinement de tes activités de vol libre.",
+    "allRoutines": "Toutes les routines",
+    "bodyParts": "Parties du corps",
+    "exerciseTypes": "Types d'exercice",
+    "startSession": "Démarrer",
+    "launchVideo": "Lancer la vidéo",
+    "newBadgeUnlocked": "Nouveau badge débloqué !",
+    "dailyRoutineCompleted": "Routine journalière terminée !",
+    "badgeUnlockedAlt": "Badge débloqué",
+    "badgeToUnlockAlt": "Badge à débloquer",
+    "videoThumbnailAlt": "Image de la video du jour",
+    "weekValidated": "Votre parcours de la semaine est validé. Ancrer cette habitude sur tout le trimestre, recommencez dès demain avec la J1",
+    "weekAlmostValidated": "Votre parcours de la semaine est presque validé, revenez demain pour une semaine complète.",
+    "continueForDays": "Poursuivez encore {days} jours consécutifs pour réaliser votre parcours complet.",
+    "onboardingContinue": "Continuer",
+    "dayNumber": "Jour {number}",
+    "flameSeriesAlt": "Série flamme",
+    "routineCount": "Routine {current} / 5",
+    "newIncentive1": "Commencez votre parcours sur mesure DeepMobility.",
+    "newIncentive2": "C'est le bon moment pour commencer. Une routine suffit pour lancer votre progression.",
+    "newIncentive3": "Vous n'avez pas encore bougé cette semaine. Lancez-vous, il suffit de 6 minutes pour faire la différence.",
+    "newIncentive4": "Tout commence ici. Lancez votre parcours sur mesure DeepMobility avec une première routine simple et efficace.",
+    "doneIncentive1": "Bravo, première routine validée ! Plus que 4 cette semaine. Ce cycle revient chaque semaine pendant le trimestre.",
+    "doneIncentive2": "Bien joué ! 2 sur 5. Encore 3 routines cette semaine pour valider votre cycle hebdo.",
+    "doneIncentive3": "Vous tenez le rythme ! 2 routines restantes pour finaliser la semaine. Même objectif la semaine prochaine.",
+    "doneIncentive4": "Dernier effort ! Une routine et votre parcours hebdo est validé. Recommencez ce cycle chaque semaine.",
+    "doneIncentive5": "Parcours terminé pour cette semaine. Répétez-le chaque semaine pour ancrer votre routine sur tout le trimestre."
+  },
+  "reminders": {
+    "title": "Mes rappels quotidiens",
+    "subtitle": "Configurez un rappel quotidien pour ne jamais manquer votre routine bien-être",
+    "chooseTime": "Choisissez votre heure de rappel",
+    "selectTime": "Sélectionnez l'heure précise à laquelle vous souhaitez recevoir votre rappel quotidien",
+    "reminderTime": "Heure du rappel",
+    "addToCalendar": "Ajouter au calendrier :",
+    "icalLink": "Lien iCal dynamique",
+    "copied": "Copié !",
+    "copy": "Copier",
+    "icalDescription": "Abonnez-vous avec Apple Calendar, Thunderbird ou tout autre calendrier. Les modifications seront synchronisées automatiquement.",
+    "calendarTitle": "{emoji} Rappel DeepMobility - Votre routine bien-être",
+    "calendarDescription": "{message}\n\nRendez-vous sur votre plateforme DeepMobility : {origin}",
+    "calendarOutlookRecurrence": "⚠️ IMPORTANT : Pensez à activer la répétition quotidienne dans Outlook pour que ce rappel se répète chaque jour.",
+    "successTitle": "Rappel configuré avec succès !",
+    "successMessage": "Votre rappel quotidien a été enregistré pour <strong>{time}</strong>. L'événement récurrent a été ajouté à votre calendrier. Vous recevrez maintenant une notification chaque jour à cette heure.",
+    "noReminder": "Aucun rappel configuré",
+    "noReminderHint": "Sélectionnez un moment de la journée ci-dessus pour commencer"
+  },
+  "faqPage": {
+    "title": "Foire aux questions :"
+  },
+  "survey": {
+    "title": "Étude de satisfaction trimestrielle",
+    "description": "Votre retour est essentiel pour nous aider à affiner nos routines et à adapter nos contenus à vos besoins. Cette enquête de 5 questions est rapide et confidentielle. Merci pour vos réponses !",
+    "questionProgress": "{current} / {total}"
+  },
+  "webinar": {
+    "ongoing": "Un webinaire est en cours.",
+    "joinWebinar": "Rejoindre le webinaire",
+    "upcomingWithRegistration": "Un webinaire <strong>{title}</strong> est prévu le <strong>{date}</strong> à <strong>{time}</strong>",
+    "registerWebinar": "Je m'inscris",
+    "upcoming": "Un webinaire <strong>{title}</strong> est prévu le <strong>{date}</strong> à <strong>{time}</strong>."
+  },
+  "challenge": {
+    "challengeCompleted": "Défi Réussi!",
+    "completedOn": "Terminé le {date}",
+    "participants": "{count} participants",
+    "bravoMessage": "Bravo pour votre mobilisation ! Grâce à vos routines, <amount>{amount}</amount> ont été récoltés pour soutenir <association>{association}</association>.",
+    "remainingDays": "Encore <strong>{count}</strong> jour{count, plural, one {} other {s}} pour participer",
+    "teamRanking": "Classement des équipes",
+    "myTeamRank": "Mon équipe: #{rank}",
+    "participantRanking": "Classement des participants",
+    "myRank": "Mon rang: #{rank}",
+    "ourTeam": "Notre équipe",
+    "myParticipation": "Ma participation",
+    "contributedPercentage": "<name>{name}</name> a contribué à hauteur de <percentage>{percentage}%</percentage> du montant total récolté à ce jour.",
+    "members": "{count} membre(s)",
+    "myContribution": "Ma contribution:",
+    "actions": "Actions",
+    "viewDetails": "Voir tous les détails",
+    "amountCollected": "Montant collecté",
+    "endOfChallenge": "Fin du défi",
+    "teamRankLabel": "Rang de mon équipe",
+    "myRankLabel": "Mon rang",
+    "teamPoints": "Points de mon équipe:",
+    "teamMembers": "Membres de l'équipe:",
+    "myTeamRankDetail": "Mon rang dans l'équipe:",
+    "goalExceeded": "Objectif dépassé de <amount>{amount}</amount> !",
+    "myTeam": "Mon équipe",
+    "me": "Moi",
+    "forAssociation": "Pour {name}",
+    "points": "{count} points"
+  },
+  "legal": {
+    "mentionsLegalesTitle": "Mentions légales",
+    "mentionsLegalesHosting": "Le Site Internet est hébergé par la société Scalingo SAS (www.scalingo.com) dont le siège social est 15 avenue du Rhin 67100 Strasbourg, France. La société Scalingo dispose de Data-Centers hautement sécurisés situés sur le territoire Français, offrant d'importantes garanties de sécurité et respecte tant la législation européenne que la législation Française concernant les données personnelles.",
+    "denomination": "Dénomination :",
+    "denominationValue": "LUC TAILHARDAT CORPORATE - SIREN : 890 702 384",
+    "addressLabel": "Adresse du siège :",
+    "addressValue": "14/14 Bis Rue Saint-Maur, 75011 Paris, France",
+    "privacyTitle": "Politique de confidentialité",
+    "privacySubtitle": "Utilisation des données personnelles conforme au RGPD",
+    "privacyContent": "La plateforme Deepmobility est conçue pour garantir la sécurisation de vos données personnelles (chiffrage des données en base de données, anonymisation des données statistiques, etc). Vous pouvez à tout moment demander la suppression de votre compte à l'adresse email luc@deepmobility.com.",
+    "coursesTitle": "Contenu des parcours",
+    "pedagogicalObjectives": "Objectifs pédagogiques",
+    "targetedSkills": "Compétences visées"
+  },
+  "content": {
+    "jobTypes": {
+      "standing": "Travail debout prolongé",
+      "repetitive-gestures": "Travail physique avec port de charge",
+      "sitting": "Travail assis et/ou debout avec gestes répétitifs",
+      "remote": "Travail sédentaire (assis la majorité du temps)"
+    },
+    "painfulBodyParts": {
+      "cervical": "Cervicales",
+      "lower-back": "Bas du dos",
+      "shoulders": "Épaules",
+      "legs": "Jambes",
+      "upper-back": "Haut du dos",
+      "knees": "Genoux",
+      "elbows": "Coudes",
+      "ankles": "Chevilles",
+      "wrists": "Poignets",
+      "feet": "Pieds"
+    },
+    "otherThematicInterests": {
+      "upper-back-relaxation": "Détendre le haut du dos et les cervicales",
+      "legs-reinforcement": "Renforcer et mobiliser les jambes",
+      "shoulders-wrists-release": "Soulager les tensions dans les épaules et les poignets",
+      "lower-back-pain-prevention": "Prévenir les douleurs dans le bas du dos"
+    },
+    "badges": {
+      "3-in-1-day": {
+        "condition": "Trois séances en un jour validées.",
+        "congrats": "Trois séances en un jour validées ! Vous avez compris que quelques minutes par jour font la différence. Gardez le rythme !"
+      },
+      "1-full-week": {
+        "condition": "Premier parcours validé.",
+        "congrats": "Félicitations, ce badge marque une semaine complète de routine, preuve que vous intégrez déjà le mouvement dans votre quotidien. Continuez sur cette lancée !"
+      },
+      "90min": {
+        "condition": "Cumulé 1h30 de routine musculaire.",
+        "congrats": "Bravo pour ces 1h30 de mobilité avec DeepMobility. Ce badge récompense votre engagement à bouger régulièrement. Continuez sur cette lancée !"
+      },
+      "5-full-week": {
+        "condition": "5 parcours consécutifs.",
+        "congrats": "Vous faites partie des utilisateurs réguliers de DeepMobility ! Ce badge récompense ceux qui ont validé 5 semaines consécutives. Vous êtes un modèle d'engagement !"
+      }
+    },
+    "faq": {
+      "0": {
+        "label": "1. Quel est l'objectif de DeepMobility ?",
+        "value": "DeepMobility est une solution digitale conçue pour intégrer 6 minutes de mouvement fonctionnel chaque jour. L'objectif est simple : prévenir les douleurs, améliorer la posture, limiter les tensions liées aux postures prolongées ou aux gestes répétitifs, et ancrer une routine bénéfique dans votre quotidien. Le mouvement devient une habitude, au service de votre bien-être."
+      },
+      "1": {
+        "label": "2. Est-ce que DeepMobility est un programme médical ?",
+        "value": "Non. DeepMobility n'est pas un traitement médical. C'est un programme de prévention fondé sur des mouvements fonctionnels. Il s'adresse à tous, sans matériel, pour favoriser une meilleure mobilité, réduire les risques de blessures et accompagner le corps dans son quotidien. On ne soigne pas, on prévient."
+      },
+      "2": {
+        "label": "3. Est-ce que je dois faire les vidéos tous les jours ?",
+        "value": "Oui. Chaque jour, une vidéo adaptée à votre profil vous attend. Le programme repose sur la régularité pour ancrer une habitude bénéfique pour votre corps. En validant chaque jour votre vidéo, vous construisez un parcours évolutif, pensé pour s'inscrire dans votre quotidien. Et surtout, ce parcours est renouvelé chaque trimestre, en fonction de vos ressentis et de l'évolution de votre corps."
+      },
+      "3": {
+        "label": "4. Combien de temps dure un parcours DeepMobility ?",
+        "value": "Le programme est organisé par trimestre. Tous les trois mois, un nouveau questionnaire rapide vous est proposé pour faire le point sur vos douleurs, tensions ou évolutions. Cela permet d'ajuster votre routine avec un nouveau parcours sur mesure, en lien avec votre corps du moment. DeepMobility suit votre rythme et s'adapte à vous, trimestre après trimestre."
+      },
+      "4": {
+        "label": "5. Est-ce que DeepMobility peut soigner mes douleurs ou blessures existantes ?",
+        "value": "Non. Si vous avez une douleur aiguë ou une blessure, vous devez consulter un professionnel de santé. DeepMobility agit en prévention : en bougeant régulièrement, vous améliorez votre posture, relâchez les tensions et réduisez les risques futurs."
+      },
+      "5": {
+        "label": "6. Que se passe-t-il si je manque un jour ?",
+        "value": "Vous pouvez reprendre dès le lendemain. Le programme est souple mais structurant. Ce n'est pas la perfection qui compte, c'est la constance. Chaque jour est une opportunité de remettre votre corps en mouvement."
+      }
+    },
+    "surveyQuestions": {
+      "overall-feeling": {
+        "label": "Sur une échelle de 1 à 5, comment évaluez-vous l'impact de DeepMobility sur votre bien-être au travail ?"
+      },
+      "memorization": {
+        "label": "Avez-vous intégré certains mouvements ou routines de DeepMobility en dehors des séances proposées ?",
+        "choices": {
+          "yes": "Oui, j'applique régulièrement certains exercices dans ma journée",
+          "sometimes": "Oui, mais pas systématiquement",
+          "no": "Non, uniquement lors des séances sur la plateforme"
+        }
+      },
+      "pain-reduction": {
+        "label": "Sur une échelle de 1 à 5, dans quelle mesure avez-vous ressenti une diminution des tensions ou douleurs corporelles depuis le début du parcours ?"
+      },
+      "user-experience": {
+        "label": "Quel aspect de DeepMobility pourrait être amélioré selon vous ?",
+        "choices": {
+          "video-diversity": "La diversité des vidéos et des routines proposées",
+          "personalization": "Le suivi et la personnalisation de mon parcours",
+          "nothing": "Rien, tout est top !"
+        }
+      },
+      "commitment": {
+        "label": "Quelle est votre motivation à poursuivre DeepMobility sur le long terme ?",
+        "choices": {
+          "high": "Très motivé, j'adore cette routine",
+          "medium": "Motivé, mais j'aimerais encore plus de variété",
+          "low": "J'apprécie, mais j'ai besoin d'un coup de boost pour rester régulier"
+        }
+      }
+    },
+    "reminderMessages": {
+      "6to7": {
+        "emoji": "🌅",
+        "message": "<b>Avant de lancer votre  journée</b>\n6 minutes pour réveiller le corps et huiler la mécanique"
+      },
+      "7to8": {
+        "emoji": "🪥",
+        "message": "<b>Avant de toucher au matériel</b>\nUn échauffement rapide pour délier bras, épaules et appuis et un apport de liquide"
+      },
+      "8to10": {
+        "emoji": "⚡",
+        "message": "<b>On met le corps en mouvement.</b>\n6 minutes pour gagner en précision, en force, en fluidité… et en plaisir."
+      },
+      "10to12": {
+        "emoji": "🚭",
+        "message": "<b>Pause mobilité.</b>\nDans l'air ou bien ancré au sol, le corps mérite un reset, peut être un apport de liquide"
+      },
+      "12to14": {
+        "emoji": "🍽️",
+        "message": "<b>Entre deux vols, deux lancers ou deux bords.</b>\n6 minutes pour relancer la machine et garder de bonnes sensations sans oublier de boire"
+      },
+      "14to16": {
+        "emoji": "🥱",
+        "message": "<b>Le bon moment pour s'étirer un peu.</b>\nÉpaules, dos, hanches : tout ce qui travaille te dira merci"
+      },
+      "16to18": {
+        "emoji": "💪",
+        "message": "<b>Récup' active.</b>\nOn relâche les tensions, on garde de la précision dans les gestes, on boit."
+      },
+      "18to20": {
+        "emoji": "🏃",
+        "message": "<b>Fin de pratique ou fin de journée.</b>\n6 minutes pour décharger le corps et repartir plus léger."
+      },
+      "20to21": {
+        "emoji": "🌙",
+        "message": "<b>On calme le jeu.</b>\nDes mouvements doux pour détendre le corps après l'action."
+      },
+      "21to22": {
+        "emoji": "📱",
+        "message": "<b>On pose le matériel… et le corps aussi.</b>\nUne micro-routine pour finir la journée souple et détendue."
+      },
+      "default": {
+        "emoji": "🧘",
+        "message": "C'est l'heure de votre routine bien-être quotidienne ! Prenez quelques minutes pour prendre soin de vous et améliorer votre mobilité."
+      }
+    },
+    "tips": {
+      "0": { "value": "<b>Toutes les 2 heures</b>, programmez une pause mobilité pour réduire de <b>50 %</b> les douleurs musculo-squelettiques.", "source": "Étude ANACT, 2022", "highlightedNumber": "50%" },
+      "1": { "value": "<b>Un écran mal positionné</b> peut augmenter les tensions cervicales de <b>60 %</b>, alors ajustez-le à hauteur des yeux.", "source": "Institut de recherche en santé au travail (IRSST), 2023", "highlightedNumber": "60%" },
+      "2": { "value": "<b>Une posture correcte</b> réduit la fatigue musculaire de <b>25 %</b> et améliore la circulation sanguine, diminuant les douleurs lombaires et cervicales.", "source": "Étude INRS, 2023", "highlightedNumber": "25%" },
+      "3": { "value": "<b>Les gestes répétitifs</b> augmentent le risque de TMS de <b>43 %</b>, mais prendre <b>5 minutes</b> pour vos poignets aujourd'hui peut réduire ces douleurs de <b>30 %</b>.", "source": "Rapport Assurance Maladie - Risques professionnels, 2022", "highlightedNumber": "43%" },
+      "4": { "value": "<b>5 minutes</b> de routine matinale augmentent l'énergie perçue de <b>40 %</b> et diminuent la fatigue de <b>25 %</b> dès le réveil.", "source": "Étude ANSES sur les bénéfices des routines actives, 2023", "highlightedNumber": "40%" },
+      "5": { "value": "<b>Une bonne hydratation</b> améliore la récupération musculaire de <b>20 %</b>, alors pensez à boire un verre d'eau après chaque routine DeepMobility.", "source": "OMS, Rapport mondial sur la santé et l'hydratation, 2023", "highlightedNumber": "20%" },
+      "6": { "value": "<b>5 minutes</b> de mobilité peuvent compenser les effets négatifs d'<b>une heure de posture assise</b> et réduire le risque de douleurs lombaires de <b>50 %</b>.", "source": "Étude Santé publique France, 2023", "highlightedNumber": "50%" },
+      "7": { "value": "<b>Une pratique quotidienne</b> réduit les douleurs chroniques liées aux TMS de <b>40 %</b> après <b>6 mois</b> d'engagement", "source": "Étude Assurance Maladie, 2022", "highlightedNumber": "40%" },
+      "8": { "value": "<b>7 000 à 10 000 pas par jour</b> diminuent les risques de maladies cardiovasculaires de <b>30 %</b> et augmentent l'espérance de vie.", "source": "Organisation mondiale de la santé (OMS), 2022", "highlightedNumber": "30%" },
+      "9": { "value": "Faire une pause active <b>toutes les 90 minutes</b> améliore la concentration de <b>30 %</b> et diminue la fatigue mentale. Bouger, c'est aussi rebooster son cerveau.", "source": "INSERM, 2022", "highlightedNumber": "30%" },
+      "10": { "value": "Des mouvements doux ciblant la nuque peuvent réduire les tensions cervicales de <b>45 %</b> chez les personnes travaillant devant un écran plus de 6h par jour", "source": "Revue Européenne de Kinésithérapie, 2023", "highlightedNumber": "45%" },
+      "11": { "value": "<b>10 minutes</b> de mouvements articulaires par jour améliorent la mobilité des épaules et réduisent le risque de tendinite de <b>35 %</b>.", "source": "Société Française de Rhumatologie, 2023", "highlightedNumber": "35%" },
+      "12": { "value": "Une respiration profonde régulière <b>3 fois par jour</b> réduit les pics de stress au travail de <b>50 %</b>. Ajoutez-la à vos routines DeepMobility.", "source": "Université de Stanford, Étude Neurosciences, 2023", "highlightedNumber": "50%" },
+      "13": { "value": "Travailler avec les jambes croisées augmente la pression sur la colonne de <b>27 %</b>, une routine de mobilité ciblée peut compenser cet effet en 4 minutes.", "source": "Ergonomics International Journal, 2022", "highlightedNumber": "27%" },
+      "14": { "value": "Bouger les chevilles et les pieds <b>2 fois par jour</b> diminue le risque de mauvaise circulation et de jambes lourdes de <b>40 %</b>.", "source": "Association Française de Kinésithérapie Fonctionnelle, 2023", "highlightedNumber": "40%" },
+      "15": { "value": "L'alternance mouvement/repos active la mémoire à court terme, améliorant les capacités d'analyse au travail. <b>6 minutes</b> suffisent pour réactiver vos fonctions cognitives.", "source": "Journal of Occupational Health Psychology, 2023", "highlightedNumber": "6" },
+      "16": { "value": "Interrompre la position assise <b>toutes les 30 minutes</b> réduit la glycémie de <b>24 %</b> chez les employés de bureau, améliorant la santé métabolique.", "source": "Diabetologia, 2014", "highlightedNumber": "24%" },
+      "17": { "value": "<b>4 minutes</b> de mouvements doux suffisent à stimuler la production de BDNF (facteur neurotrophique), améliorant la mémoire et la concentration de <b>32 %</b>.", "source": "Frontiers in Psychology, 2021", "highlightedNumber": "32%" },
+      "18": { "value": "Une mobilité régulière au travail réduit les douleurs musculo-squelettiques de <b>41 %</b> sur 6 mois.", "source": "Revue scientifique Cochrane, 2020 – Revue systématique sur la prévention des TMS", "highlightedNumber": "41%" },
+      "19": { "value": "Les exercices de mobilité augmentent le débit sanguin musculaire de <b>25 %</b>, favorisant une meilleure récupération et moins de douleurs posturales.", "source": "Journal of Applied Physiology, 2019", "highlightedNumber": "25%" },
+      "20": { "value": "Les étirements actifs de <b>5 minutes</b> réduisent le stress perçu de <b>23 %</b> chez les travailleurs sédentaires.", "source": "Scandinavian Journal of Work, Environment & Health, 2022", "highlightedNumber": "23%" },
+      "21": { "value": "Une pratique corporelle quotidienne <b>mobilité + respiration</b> régule le système nerveux autonome et réduit de <b>30 %</b> les signes de stress chronique.", "source": "Journal of Psychosomatic Research, 2021", "highlightedNumber": "30%" },
+      "22": { "value": "Une routine de mouvement quotidienne améliore la variabilité cardiaque de <b>18 %</b>, signe d'un meilleur équilibre entre stress et récupération.", "source": "European Journal of Preventive Cardiology, 2022", "highlightedNumber": "18%" }
+    },
+    "exerciseTypes": {
+      "balance": "Équilibre",
+      "strengthening": "Renforcement",
+      "stretching": "Étirements",
+      "breathing": "Respiration"
+    },
+    "sessionQuestions": {
+      "energy": {
+        "beforeLabel": "Sur une échelle de 1 à 5, quel est votre niveau d'énergie avant cette séance ?",
+        "afterLabel": "Sur une échelle de 1 à 5, quel est votre niveau d'énergie après cette séance ?"
+      }
+    },
+    "incentiveSentences": {
+      "0": "Et si vous aviez 6 minutes de DeepMobility juste après vous être levé ? Le meilleur moyen de réveiller vos articulations… en douceur.",
+      "1": "Et si vous aviez 6 minutes de DeepMobility pendant que le café passe ? Un moment parfait pour activer votre corps sans perdre une seconde.",
+      "2": "Et si vous aviez 6 minutes de DeepMobility avant cette réunion ? Pour libérer la tension, clarifier vos idées et rester focus.",
+      "3": "Et si vous aviez 6 minutes de DeepMobility après 2h d'écran ? Votre dos, vos épaules et vos yeux vous remercieront.",
+      "4": "Et si vous aviez 6 minutes de DeepMobility pendant ce moment d'attente ? Un instant rien qu'à vous, pour respirer et relâcher les tensions.",
+      "5": "Et si vous aviez 6 minutes de DeepMobility pour faire circuler l'énergie avant de conduire ? Moins de tensions, plus de vigilance.",
+      "6": "Et si vous ajoutiez 6 minutes de DeepMobility après votre brossage de dents ? Une habitude aussi simple que essentielle pour bien démarrer la journée !",
+      "7": "Votre corps est encore chaud après la douche : c'est le moment idéal pour bouger en douceur et réveiller vos articulations avec DeepMobility !",
+      "8": "Un petit reset avant de manger ? 6 minutes de DeepMobility suffisent pour libérer les tensions et profiter pleinement de votre pause déjeuner.",
+      "9": "Évitez le coup de barre post-repas ! Une courte session DeepMobility aide votre digestion et relance votre énergie pour l'après-midi.",
+      "10": "Ne laissez pas les tensions de la journée s'accumuler ! 6 minutes de DeepMobility en rentrant du travail et vous vous sentez instantanément plus léger.",
+      "11": "Préparez votre corps avant un entraînement sportif avec quelques minutes de DeepMobility. Plus de fluidité, moins de risques de blessures !",
+      "12": "Ne sautez pas la récupération ! Une routine DeepMobility après le sport aide à détendre vos muscles et évite les raideurs du lendemain.",
+      "13": "Une journée bien remplie ? Prenez 6 minutes pour détendre votre corps avec DeepMobility avant de vous coucher. Un sommeil plus profond garanti !"
+    },
+    "courses": {
+      "standing": {
+        "label": "Position debout prolongée",
+        "videos": {
+          "0": {
+            "title": "Alléger vos jambes",
+            "objectives": {
+              "0": { "title": "Souplesse et relaxation", "description": "Apprendre des exercices pour relâcher les tensions dans les jambes et le bas du dos." },
+              "1": { "title": "Respiration synchronisée", "description": "Maîtriser la coordination entre mouvements et respiration." },
+              "2": { "title": "Posture et équilibre", "description": "Maintenir une bonne posture pendant les exercices." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces exercices dans son quotidien." }
+            },
+            "skills": {
+              "0": "Réaliser des étirements simples et progressifs pour les mollets et le bas du dos.",
+              "1": "Coordonner respiration et mouvements pour maximiser les bienfaits.",
+              "2": "Identifier les tensions corporelles et appliquer des solutions pour les soulager."
+            },
+            "content": {
+              "0": { "title": "Mobilisation douce des chevilles", "series": "(30 secondes, 2 séries)", "description": "Développement de la circulation sanguine et échauffement des jambes." },
+              "1": { "title": "Étirement des mollets avec appui", "series": "(20 secondes par jambe, 2 séries)", "description": "Assouplissement des mollets et prévention des raideurs." },
+              "2": { "title": "Flexion avant relaxante", "series": "(20 secondes, 2 séries)", "description": "Détente du bas du dos et amélioration de la posture." },
+              "3": { "title": "Rotations des hanches", "series": "(5 rotations par sens, 2 séries)", "description": "Mobilisation du bassin et réduction des tensions lombaires." },
+              "4": { "title": "Étirement axial synchronisé à la respiration", "series": "(10 secondes, 3 répétitions)", "description": "Alignement de la colonne vertébrale et sensation de légèreté." }
+            }
+          },
+          "1": {
+            "title": "Boostez votre énergie",
+            "objectives": {
+              "0": { "title": "Circulation sanguine", "description": "Activer les mollets et les cuisses pour améliorer la circulation." },
+              "1": { "title": "Souplesse musculaire", "description": "Étendre les muscles pour réduire les tensions accumulées." },
+              "2": { "title": "Coordination motrice", "description": "Améliorer la fluidité des mouvements." }
+            },
+            "skills": {
+              "0": "Exécuter des mouvements dynamiques et statiques pour stimuler la circulation sanguine.",
+              "1": "Renforcer les muscles des jambes et des chevilles pour une meilleure stabilité.",
+              "2": "Synchroniser respiration et mouvement pour un travail efficace."
+            },
+            "content": {
+              "0": { "title": "Montées sur demi-pointes", "series": "(10 répétitions, 2 séries)", "description": "Renforcement des mollets et amélioration de l'équilibre." },
+              "1": { "title": "Étirement des mollets avec appui", "series": "(20 secondes par jambe, 2 séries)", "description": "Soulagement des jambes lourdes et amélioration de la souplesse." },
+              "2": { "title": "Flexions dynamiques des genoux", "series": "(10 répétitions, 2 séries)", "description": "Activation des muscles des cuisses et amélioration de la posture." },
+              "3": { "title": "Pas latéraux alternés", "series": "(30 secondes, 2 séries)", "description": "Mobilisation des jambes et stimulation de la coordination." },
+              "4": { "title": "Étirement des quadriceps debout", "series": "(15 secondes par jambe, 2 séries)", "description": "Amélioration de la souplesse des cuisses et réduction des tensions dans les genoux." }
+            }
+          },
+          "2": {
+            "title": "Renforcez votre posture",
+            "objectives": {
+              "0": { "title": "Renforcement musculaire", "description": "Augmenter la stabilité et la puissance des jambes." },
+              "1": { "title": "Posture et équilibre", "description": "Optimiser l'alignement corporel." },
+              "2": { "title": "Prévention des tensions", "description": "Réduire les tensions musculaires grâce à des étirements ciblés." }
+            },
+            "skills": {
+              "0": "Exécuter des fentes et des squats avec une posture correcte.",
+              "1": "Améliorer la force des quadriceps, mollets et muscles stabilisateurs.",
+              "2": "Renforcer la coordination et la fluidité des mouvements."
+            },
+            "content": {
+              "0": { "title": "Fentes dynamiques", "series": "(10 répétitions par jambe, 2 séries)", "description": "Renforcement des quadriceps, fessiers et stabilisateurs des hanches." },
+              "1": { "title": "Squats légers avec appui", "series": "(10 répétitions, 2 séries)", "description": "Amélioration de la souplesse des hanches et des genoux." },
+              "2": { "title": "Montées de genoux croisées", "series": "(30 secondes, 2 séries)", "description": "Mobilisation des hanches et renforcement des abdominaux obliques." },
+              "3": { "title": "Étirement des ischio-jambiers", "series": "(20 secondes par jambe, 2 séries)", "description": "Réduction des tensions dans le bas du dos et les jambes." },
+              "4": { "title": "Mobilisation des chevilles", "series": "(10 répétitions, 2 séries)", "description": "Renforcement des chevilles et prévention des raideurs." }
+            }
+          },
+          "3": {
+            "title": "Étirez votre dos",
+            "objectives": {
+              "0": { "title": "Détente et relaxation", "description": "Relâcher les tensions dans le dos, les jambes et les flancs." },
+              "1": { "title": "Souplesse", "description": "Améliorer la mobilité des articulations et des muscles." },
+              "2": { "title": "Posture globale", "description": "Favoriser une posture plus fluide et équilibrée." }
+            },
+            "skills": {
+              "0": "Exécuter des mouvements visant la relaxation du dos, des mollets et des flancs.",
+              "1": "Améliorer l'alignement corporel grâce à des étirements ciblés.",
+              "2": "Identifier les tensions musculaires et appliquer les techniques d'étirement appropriées."
+            },
+            "content": {
+              "0": { "title": "Étirement des mollets en position inclinée", "series": "(20 secondes par jambe, 2 séries)", "description": "Amélioration de la souplesse et soulagement des tensions." },
+              "1": { "title": "Mobilisation dynamique des chevilles", "series": "(30 secondes, 2 séries)", "description": "Amélioration de la mobilité des chevilles et des mollets." },
+              "2": { "title": "Flexion avant avec ouverture des bras", "series": "(10 répétitions, 2 séries)", "description": "Détente du dos et renforcement des épaules." },
+              "3": { "title": "Étirement latéral pour les flancs", "series": "(15 secondes par côté, 2 séries)", "description": "Soulagement des tensions dans les obliques et amélioration de la posture." },
+              "4": { "title": "Rotations des hanches", "series": "(5 rotations par sens, 2 séries)", "description": "Mobilisation du bassin pour détendre le bas du dos." }
+            }
+          },
+          "4": {
+            "title": "Mobilité globale",
+            "objectives": {
+              "0": { "title": "Améliorer la mobilité générale", "description": "Apprendre des exercices favorisant la souplesse et la fluidité des mouvements." },
+              "1": { "title": "Optimiser la posture et l'équilibre", "description": "Renforcer la stabilité et l'alignement du corps." },
+              "2": { "title": "Coordonner respiration et mouvement", "description": "Intégrer une respiration fluide à chaque étirement pour maximiser les bienfaits." },
+              "3": { "title": "Favoriser l'autonomie", "description": "Permettre l'intégration de ces exercices dans le quotidien." }
+            },
+            "skills": {
+              "0": "Exécuter des mouvements de mobilisation articulaire et musculaire de manière fluide et contrôlée.",
+              "1": "Utiliser la respiration comme support à l'étirement et au relâchement musculaire.",
+              "2": "Identifier les tensions corporelles et appliquer les exercices appropriés pour les soulager."
+            }
+          }
+        }
+      },
+      "repetitive-gestures": {
+        "label": "Mouvements répétitifs et port de charges",
+        "videos": {
+          "0": {
+            "title": "Libérez vos épaules",
+            "objectives": {
+              "0": { "title": "Souplesse et relaxation", "description": "Apprendre des exercices pour relâcher les tensions dans les épaules, le haut du dos et les cervicales." },
+              "1": { "title": "Respiration synchronisée", "description": "Maîtriser la coordination entre mouvements et respiration pour optimiser la détente musculaire." },
+              "2": { "title": "Posture et équilibre", "description": "Maintenir une bonne posture pendant les exercices pour éviter les tensions inutiles." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces exercices dans son quotidien pour prévenir les raideurs et améliorer la mobilité." }
+            },
+            "skills": {
+              "0": "Réaliser des étirements progressifs pour assouplir les épaules et le haut du dos.",
+              "1": "Coordonner la respiration et les mouvements pour détendre les muscles efficacement.",
+              "2": "Identifier les tensions corporelles et appliquer des exercices adaptés pour les soulager."
+            }
+          },
+          "1": {
+            "title": "Poignées mobiles",
+            "objectives": {
+              "0": { "title": "Renforcement et souplesse", "description": "Apprendre des exercices pour assouplir et renforcer les poignets et les avant-bras." },
+              "1": { "title": "Respiration synchronisée", "description": "Intégrer une respiration profonde pour maximiser la détente et l'efficacité des mouvements." },
+              "2": { "title": "Posture et mobilité", "description": "Améliorer la fluidité des mouvements et prévenir les tensions au niveau des poignets et des coudes." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces exercices dans le quotidien pour éviter les douleurs liées aux gestes répétitifs." }
+            },
+            "skills": {
+              "0": "Exécuter des mouvements fluides et progressifs pour assouplir et renforcer les poignets.",
+              "1": "Coordonner la respiration et les mouvements pour améliorer la souplesse.",
+              "2": "Identifier les tensions et appliquer les exercices appropriés pour les soulager."
+            }
+          },
+          "2": {
+            "title": "Dos et bras solides",
+            "objectives": {
+              "0": { "title": "Renforcement et posture", "description": "Apprendre des exercices pour renforcer le dos et les bras tout en maintenant une posture équilibrée." },
+              "1": { "title": "Mobilité et équilibre", "description": "Travailler l'alignement du corps et la stabilité." },
+              "2": { "title": "Respiration synchronisée", "description": "Intégrer une respiration fluide pour maximiser l'efficacité des mouvements." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces exercices dans le quotidien pour prévenir les tensions et améliorer la souplesse du dos." }
+            },
+            "skills": {
+              "0": "Exécuter des mouvements de renforcement et d'étirement du dos et des bras.",
+              "1": "Coordonner la respiration et les exercices pour améliorer la posture et la stabilité.",
+              "2": "Identifier les tensions corporelles et appliquer des exercices adaptés pour les soulager."
+            }
+          },
+          "3": {
+            "title": "Détendre son dos",
+            "objectives": {
+              "0": { "title": "Étirements et relaxation", "description": "Apprendre des exercices pour relâcher les tensions dans les épaules, le dos et les mollets." },
+              "1": { "title": "Mobilité et posture", "description": "Travailler la souplesse et l'alignement du corps." },
+              "2": { "title": "Respiration synchronisée", "description": "Associer la respiration aux mouvements pour maximiser la détente." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces exercices dans le quotidien pour réduire le stress et améliorer le bien-être." }
+            },
+            "skills": {
+              "0": "Réaliser des exercices d'étirement progressifs pour améliorer la mobilité du dos et des épaules.",
+              "1": "Coordonner respiration et mouvements pour favoriser la détente musculaire.",
+              "2": "Identifier les tensions corporelles et appliquer les exercices adaptés pour les soulager."
+            }
+          },
+          "4": {
+            "title": "Routine haute du corps",
+            "objectives": {
+              "0": { "title": "Renforcement et posture", "description": "Apprendre des exercices pour renforcer les épaules, les bras et le haut du dos tout en maintenant un bon alignement corporel." },
+              "1": { "title": "Mobilité et équilibre", "description": "Améliorer la fluidité des mouvements et stabiliser la posture." },
+              "2": { "title": "Respiration synchronisée", "description": "Intégrer la respiration abdominale pour optimiser les bienfaits des exercices." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces exercices dans le quotidien pour prévenir les tensions et améliorer la souplesse du haut du corps." }
+            },
+            "skills": {
+              "0": "Exécuter des mouvements de renforcement et d'étirement des épaules, des bras et du dos.",
+              "1": "Coordonner la respiration avec les exercices pour favoriser la fluidité des mouvements et la stabilité.",
+              "2": "Identifier les tensions corporelles et appliquer les exercices adaptés pour les soulager."
+            }
+          }
+        }
+      },
+      "sitting": {
+        "label": "Posture assise prolongée",
+        "videos": {
+          "0": {
+            "title": "Relâcher ses cervicales",
+            "objectives": {
+              "0": { "title": "Assouplir et détendre les cervicales", "description": "Apprendre des exercices pour relâcher les tensions dans le cou et améliorer la mobilité." },
+              "1": { "title": "Améliorer la posture", "description": "Prévenir les douleurs liées aux postures prolongées en maintenant un bon alignement cervical." },
+              "2": { "title": "Respiration synchronisée", "description": "Intégrer la respiration pour accompagner les mouvements et favoriser la relaxation." },
+              "3": { "title": "Autonomie", "description": "Pouvoir reproduire ces exercices au quotidien pour prévenir les raideurs et soulager les tensions." }
+            },
+            "skills": {
+              "0": "Exécuter des exercices progressifs pour mobiliser et étirer les cervicales en douceur.",
+              "1": "Coordonner les mouvements avec la respiration pour maximiser la détente musculaire.",
+              "2": "Identifier les tensions cervicales et appliquer les exercices adaptés pour les soulager."
+            }
+          },
+          "1": {
+            "title": "Mobiliser le haut du dos",
+            "objectives": {
+              "0": { "title": "Mobilité et posture", "description": "Améliorer l'amplitude des mouvements du haut du dos et des épaules." },
+              "1": { "title": "Assouplissement et renforcement", "description": "Renforcer les muscles posturaux et assouplir les structures thoraciques." },
+              "2": { "title": "Respiration synchronisée", "description": "Coordonner les exercices avec une respiration fluide pour maximiser la détente musculaire." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces mouvements dans le quotidien pour améliorer le confort postural et éviter les douleurs dorsales." }
+            },
+            "skills": {
+              "0": "Exécuter des exercices de mobilisation et d'ouverture du haut du dos.",
+              "1": "Coordonner la respiration et les mouvements pour optimiser la fluidité articulaire.",
+              "2": "Identifier les tensions dans la région thoracique et appliquer les exercices adaptés pour les soulager."
+            }
+          },
+          "2": {
+            "title": "Postures tonique",
+            "objectives": {
+              "0": { "title": "Stabilité et posture", "description": "Renforcer les muscles stabilisateurs du dos et améliorer l'alignement corporel." },
+              "1": { "title": "Mobilité et équilibre", "description": "Développer la coordination et la proprioception pour un meilleur maintien." },
+              "2": { "title": "Respiration synchronisée", "description": "Associer la respiration aux exercices pour optimiser le relâchement musculaire et la fluidité des mouvements." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces exercices dans le quotidien pour prévenir les douleurs posturales et améliorer la posture sur le long terme." }
+            },
+            "skills": {
+              "0": "Exécuter des exercices de renforcement postural ciblés pour le haut du corps.",
+              "1": "Coordonner les mouvements et la respiration pour stabiliser la posture.",
+              "2": "Identifier les tensions musculaires et appliquer les exercices adaptés pour les relâcher."
+            }
+          },
+          "3": {
+            "title": "Stretching complet",
+            "objectives": {
+              "0": { "title": "Assouplissement global", "description": "Apprendre des exercices pour améliorer la mobilité du cou, du dos, des hanches et des jambes." },
+              "1": { "title": "Renforcement de la posture", "description": "Travailler l'alignement corporel à travers des étirements contrôlés." },
+              "2": { "title": "Respiration synchronisée", "description": "Associer la respiration aux mouvements pour maximiser la relaxation et l'efficacité des exercices." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces exercices dans le quotidien pour réduire les tensions et favoriser une meilleure posture." }
+            },
+            "skills": {
+              "0": "Exécuter des étirements progressifs pour mobiliser l'ensemble du corps.",
+              "1": "Coordonner la respiration avec les exercices pour optimiser l'assouplissement.",
+              "2": "Identifier les tensions musculaires et appliquer les exercices adaptés pour les soulager."
+            }
+          },
+          "4": {
+            "title": "Routine anti-raideurs",
+            "objectives": {
+              "0": { "title": "Libération des tensions", "description": "Apprendre des exercices pour réduire la raideur musculaire et améliorer la souplesse." },
+              "1": { "title": "Équilibre et proprioception", "description": "Renforcer la stabilité et la coordination du corps." },
+              "2": { "title": "Respiration synchronisée", "description": "Associer la respiration aux mouvements pour favoriser la détente et l'efficacité des exercices." },
+              "3": { "title": "Autonomie", "description": "Intégrer ces exercices dans son quotidien pour maintenir une posture saine et éviter les douleurs articulaires." }
+            },
+            "skills": {
+              "0": "Réaliser des étirements actifs pour améliorer la mobilité articulaire et musculaire.",
+              "1": "Développer l'équilibre et la coordination grâce à des postures stabilisatrices.",
+              "2": "Identifier les zones de tension et appliquer des exercices ciblés pour les relâcher."
+            }
+          }
+        }
+      }
+    }
+  }
+}

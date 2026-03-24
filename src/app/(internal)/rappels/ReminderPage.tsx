@@ -7,8 +7,9 @@ import { FiBell } from 'react-icons/fi';
 import { PiMicrosoftOutlookLogo } from 'react-icons/pi';
 import { openGoogleCalendar } from '@/lib/googleCalendar';
 import { openOutlookCalendar } from '@/lib/outlookCalendar';
-import { getReminderMessageForTime } from '@/lib/reminderMessages';
+import { getReminderMessageKey } from '@/lib/reminderMessages';
 import { updateReminderTime } from './actions';
+import { useTranslations } from 'next-intl';
 
 interface ReminderPageProps {
   initialReminderTime: string | null;
@@ -16,6 +17,8 @@ interface ReminderPageProps {
 }
 
 export default function ReminderPage({ initialReminderTime, calendarUrl }: ReminderPageProps) {
+  const t = useTranslations('reminders')
+  const tReminder = useTranslations('content.reminderMessages')
   const [selectedTime, setSelectedTime] = useState<string | null>(initialReminderTime);
   const [saved, setSaved] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
@@ -38,15 +41,27 @@ export default function ReminderPage({ initialReminderTime, calendarUrl }: Remin
     setSaved(true);
   };
 
+  const getCalendarTexts = () => {
+    if (!selectedTime || !reminderMessageKey) return { title: '', description: '' };
+    const emoji = tReminder(`${reminderMessageKey}.emoji`);
+    const message = tReminder(`${reminderMessageKey}.message`);
+    const title = t('calendarTitle', { emoji });
+    const description = t('calendarDescription', { message, origin: window.location.origin });
+    return { title, description };
+  };
+
   const handleAddToGoogle = async () => {
     if (!selectedTime) return;
-    openGoogleCalendar(selectedTime);
+    const { title, description } = getCalendarTexts();
+    openGoogleCalendar(selectedTime, title, description);
     await handleSaveReminderTime();
   };
 
   const handleAddToOutlook = async () => {
     if (!selectedTime) return;
-    openOutlookCalendar(selectedTime);
+    const { title, description } = getCalendarTexts();
+    const outlookDescription = description + '\n\n' + t('calendarOutlookRecurrence');
+    openOutlookCalendar(selectedTime, title, outlookDescription);
     await handleSaveReminderTime();
   };
 
@@ -58,32 +73,32 @@ export default function ReminderPage({ initialReminderTime, calendarUrl }: Remin
     setTimeout(() => setCopiedLink(false), 3000);
   };
 
-  const reminderMessage = selectedTime ? getReminderMessageForTime(selectedTime) : null;
+  const reminderMessageKey = selectedTime ? getReminderMessageKey(selectedTime) : null;
 
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-6">
         <h1 className="text-3xl font-bold flex items-center gap-3 mb-2">
           <FiBell className="text-gray-600" />
-          Mes rappels quotidiens
+          {t('title')}
         </h1>
         <p className="text-gray-600">
-          Configurez un rappel quotidien pour ne jamais manquer votre routine bien-être
+          {t('subtitle')}
         </p>
       </div>
 
       <div className="bg-white rounded-3xl shadow-sm border p-4 sm:p-6 mb-4 sm:mb-6">
-        <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">Choisissez votre heure de rappel</h2>
+        <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">{t('chooseTime')}</h2>
         <p className="text-sm sm:text-base text-gray-600 mb-4">
-          Sélectionnez l'heure précise à laquelle vous souhaitez recevoir votre rappel quotidien
+          {t('selectTime')}
         </p>
 
         <div className="space-y-4">
           <div className="flex flex-col gap-3">
             <label htmlFor="reminderTime" className="text-base font-medium text-gray-700">
-              Heure du rappel
+              {t('reminderTime')}
             </label>
-            <div 
+            <div
               onClick={handleContainerClick}
               className="cursor-pointer rounded-2xl border-2 border-gray-300 hover:border-gray-400 transition-colors"
             >
@@ -98,12 +113,12 @@ export default function ReminderPage({ initialReminderTime, calendarUrl }: Remin
                 required
               />
             </div>
-            
-            {reminderMessage && (
+
+            {reminderMessageKey && (
               <div className="bg-gradient-to-br from-deepmobility-50 to-deepmobility-100 rounded-2xl p-3 border border-deepmobility-200">
                 <div className="flex gap-2 items-start">
-                  <span className="text-2xl">{reminderMessage.emoji}</span>
-                  <p className="text-sm text-gray-700 flex-1">{reminderMessage.message}</p>
+                  <span className="text-2xl">{tReminder(`${reminderMessageKey}.emoji`)}</span>
+                  <p className="text-sm text-gray-700 flex-1" dangerouslySetInnerHTML={{ __html: tReminder.markup(`${reminderMessageKey}.message`, { b: (chunks) => `<b>${chunks}</b>` }) }} />
                 </div>
               </div>
             )}
@@ -111,9 +126,8 @@ export default function ReminderPage({ initialReminderTime, calendarUrl }: Remin
 
           {selectedTime && (
             <div className="pt-4 border-t space-y-3">
-              <p className="text-sm font-medium text-gray-700 mb-2">Ajouter au calendrier :</p>
-              
-              {/* Google and Outlook buttons on same line */}
+              <p className="text-sm font-medium text-gray-700 mb-2">{t('addToCalendar')}</p>
+
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
@@ -134,14 +148,13 @@ export default function ReminderPage({ initialReminderTime, calendarUrl }: Remin
                 </button>
               </div>
 
-              {/* iCal link option */}
               {calendarUrl && (
                 <div className="bg-gray-50 rounded-2xl p-4 border-2 border-gray-200">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2 min-w-0 flex-1">
                       <MdLink size={20} className="text-gray-500 flex-shrink-0" />
                       <div className="min-w-0">
-                        <p className="font-medium text-gray-700 text-sm">Lien iCal dynamique</p>
+                        <p className="font-medium text-gray-700 text-sm">{t('icalLink')}</p>
                         <p className="text-xs text-gray-500 truncate">
                           {calendarUrl}
                         </p>
@@ -159,18 +172,18 @@ export default function ReminderPage({ initialReminderTime, calendarUrl }: Remin
                       {copiedLink ? (
                         <>
                           <MdCheck size={18} />
-                          <span>Copié !</span>
+                          <span>{t('copied')}</span>
                         </>
                       ) : (
                         <>
                           <MdContentCopy size={18} />
-                          <span>Copier</span>
+                          <span>{t('copy')}</span>
                         </>
                       )}
                     </button>
                   </div>
                   <p className="text-xs text-gray-500 mt-2">
-                    Abonnez-vous avec Apple Calendar, Thunderbird ou tout autre calendrier. Les modifications seront synchronisées automatiquement.
+                    {t('icalDescription')}
                   </p>
                 </div>
               )}
@@ -187,12 +200,11 @@ export default function ReminderPage({ initialReminderTime, calendarUrl }: Remin
             </div>
             <div className="flex-1">
               <h3 className="text-lg sm:text-xl font-semibold mb-2 text-green-800">
-                Rappel configuré avec succès !
+                {t('successTitle')}
               </h3>
-              <p className="text-sm sm:text-base text-gray-700">
-                Votre rappel quotidien a été enregistré pour <strong>{selectedTime}</strong>. 
-                L'événement récurrent a été ajouté à votre calendrier. Vous recevrez maintenant une notification chaque jour à cette heure.
-              </p>
+              <p className="text-sm sm:text-base text-gray-700"
+                dangerouslySetInnerHTML={{ __html: t.markup('successMessage', { time: selectedTime, strong: (chunks) => `<strong>${chunks}</strong>` }) }}
+              />
             </div>
           </div>
         </div>
@@ -201,9 +213,9 @@ export default function ReminderPage({ initialReminderTime, calendarUrl }: Remin
       {!selectedTime && (
         <div className="bg-gray-50 rounded-3xl border border-gray-200 p-8 text-center">
           <div className="text-6xl mb-4">🔔</div>
-          <h3 className="text-xl font-semibold mb-2">Aucun rappel configuré</h3>
+          <h3 className="text-xl font-semibold mb-2">{t('noReminder')}</h3>
           <p className="text-gray-600">
-            Sélectionnez un moment de la journée ci-dessus pour commencer
+            {t('noReminderHint')}
           </p>
         </div>
       )}

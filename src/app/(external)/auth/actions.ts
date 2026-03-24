@@ -3,6 +3,11 @@
 import cookieOptions from '@/lib/cookieOptions';
 import { cookies } from 'next/headers';
  
+export async function setAccountSlugCookie(slug: string) {
+  const cookieStore = await cookies()
+  cookieStore.set('accountSlug', slug, cookieOptions)
+}
+
 export async function setAuthCookies(user: any) {
   const cookieStore = await cookies()
 
@@ -11,4 +16,7 @@ export async function setAuthCookies(user: any) {
   cookieStore.set('userJobType', user.jobType, cookieOptions)
   cookieStore.set('userPainfulBodyParts', JSON.stringify(user.painfulBodyParts), cookieOptions)
   cookieStore.set('userOtherThematicInterests', JSON.stringify(user.otherThematicInterests), cookieOptions)
+  if (user.accountSlug) {
+    cookieStore.set('accountSlug', user.accountSlug, cookieOptions)
+  }
 }

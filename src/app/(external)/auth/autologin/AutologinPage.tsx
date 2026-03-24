@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react'
 import { autologin } from './actions'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function AutologinPage({ token }: { token: string }) {
+  const t = useTranslations('auth')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [success, setSuccess] = useState(false)
@@ -21,11 +23,11 @@ export default function AutologinPage({ token }: { token: string }) {
           if (result && result.success) {
             setSuccess(true)
             setLoading(false)
-            
+
             if (result.purpose === 'registration') {
-              setSuccessMessage('Votre compte a été confirmé avec succès.')
+              setSuccessMessage(t('autologinAccountConfirmed'))
             } else {
-              setSuccessMessage('Connexion réussie !')
+              setSuccessMessage(t('autologinSuccess'))
             }
 
             if (result.redirectUrl) {
@@ -34,17 +36,17 @@ export default function AutologinPage({ token }: { token: string }) {
               }, 1250)
             }
           } else if (result && !result.success) {
-            setError(result.errorMessage || "Une erreur est survenue")
+            setError(result.errorMessage ? t(result.errorMessage) : t('autologinError'))
             setLoading(false)
           }
         })
         .catch((error) => {
           console.error('Autologin error:', error)
-          setError("Une erreur est survenue lors de la connexion automatique.")
+          setError(t('autologinAutoError'))
           setLoading(false)
         })
     } else {
-      setError("Aucun token fourni")
+      setError(t('autologinNoToken'))
       setLoading(false)
     }
   }, [token, router])
@@ -52,42 +54,42 @@ export default function AutologinPage({ token }: { token: string }) {
   const getLoadingMessage = () => {
     switch (purpose) {
       case 'registration':
-        return 'Confirmation de votre inscription en cours...'
+        return t('autologinLoadingRegistration')
       case 'password-reset':
-        return 'Vérification en cours...'
+        return t('autologinLoadingPasswordReset')
       default:
-        return 'Connexion en cours...'
+        return t('autologinLoadingDefault')
     }
   }
 
   const getErrorTitle = () => {
     switch (purpose) {
       case 'registration':
-        return 'Erreur de confirmation'
+        return t('autologinErrorRegistration')
       case 'password-reset':
-        return 'Lien invalide'
+        return t('autologinErrorPasswordReset')
       default:
-        return 'Erreur de connexion'
+        return t('autologinErrorDefault')
     }
   }
 
   const getErrorDetails = () => {
     switch (purpose) {
       case 'registration':
-        return 'Le lien de confirmation peut avoir expiré ou être invalide.'
+        return t('autologinErrorDetailsRegistration')
       case 'password-reset':
-        return 'Le lien de réinitialisation peut avoir expiré.'
+        return t('autologinErrorDetailsPasswordReset')
       default:
-        return 'Le lien de connexion peut avoir expiré ou être invalide.'
+        return t('autologinErrorDetailsDefault')
     }
   }
 
   if (success) {
     return (
       <div className='flex flex-col items-center justify-center min-h-[400px]'>
-        <h2 className='text-2xl font-semibold mb-4'>✅ Connexion réussie !</h2>
+        <h2 className='text-2xl font-semibold mb-4'>{t('autologinSuccessTitle')}</h2>
         <p className='text-center max-w-md'>{successMessage}</p>
-        <p className='mt-4 text-sm'>Redirection en cours...</p>
+        <p className='mt-4 text-sm'>{t('autologinRedirecting')}</p>
       </div>
     )
   }
@@ -112,11 +114,11 @@ export default function AutologinPage({ token }: { token: string }) {
         <div className='mt-6 flex gap-4'>
           {purpose === 'registration' && (
             <Link href="/auth/inscription" className='underline hover:no-underline'>
-              Créer un nouveau compte
+              {t('createNewAccount')}
             </Link>
           )}
           <Link href="/auth/login" className='underline hover:no-underline'>
-            Se connecter avec email et mot de passe
+            {t('connectWithEmailPassword')}
           </Link>
         </div>
       </div>
@@ -125,4 +127,3 @@ export default function AutologinPage({ token }: { token: string }) {
 
   return null
 }
-

@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslations, useFormatter } from 'next-intl'
+
 interface WebinarBannerProps {
   webinar: {
     id: string
@@ -12,20 +14,16 @@ interface WebinarBannerProps {
 }
 
 export default function WebinarBanner({ webinar }: WebinarBannerProps) {
+  const t = useTranslations('webinar')
+  const format = useFormatter()
   const scheduledDate = new Date(webinar.scheduledAt)
-  
+
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-    })
+    return format.dateTime(date, { day: '2-digit', month: '2-digit' })
   }
-  
+
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('fr-FR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }).replace(':', 'h')
+    return format.dateTime(date, { hour: '2-digit', minute: '2-digit' }).replace(':', 'h')
   }
 
   // Webinar is ongoing or starting soon - show join button
@@ -33,7 +31,7 @@ export default function WebinarBanner({ webinar }: WebinarBannerProps) {
     return (
       <div className="w-full bg-deepmobility-100 border border-deepmobility-200 rounded-3xl p-4 flex flex-col items-center gap-2">
         <div className="text-deepmobility-700 font-medium text-center">
-          🟢 🎬 Un webinaire est en cours.
+          🟢 🎬 {t('ongoing')}
         </div>
         <a
           href={webinar.teamsLink}
@@ -41,7 +39,7 @@ export default function WebinarBanner({ webinar }: WebinarBannerProps) {
           rel="noopener noreferrer"
           className="bg-deepmobility-500 hover:bg-deepmobility-600 text-white py-2 px-6 rounded-xl transition-colors font-medium"
         >
-          Rejoindre le webinaire
+          {t('joinWebinar')}
         </a>
       </div>
     )
@@ -53,14 +51,14 @@ export default function WebinarBanner({ webinar }: WebinarBannerProps) {
     return (
       <div className="w-full bg-deepmobility-50 border border-deepmobility-200 rounded-3xl p-4 flex items-center justify-center">
         <div className="text-deepmobility-700 text-center">
-          🎬 Un webinaire <strong>{webinar.title}</strong> est prévu le <strong>{formatDate(scheduledDate)}</strong> à <strong>{formatTime(scheduledDate)}</strong>
+          <span dangerouslySetInnerHTML={{ __html: '🎬 ' + t.markup('upcomingWithRegistration', { title: webinar.title, date: formatDate(scheduledDate), time: formatTime(scheduledDate), strong: (chunks) => `<strong>${chunks}</strong>` }) }} />
           <a
             href={webinar.registrationLink}
             target="_blank"
             rel="noopener noreferrer"
             className="block w-fit mx-auto mt-2 font-semibold bg-deepmobility-700 text-white py-1 px-5 rounded-2xl hover:bg-deepmobility-600 transition-colors text-sm"
           >
-            Je m'inscrirs
+            {t('registerWebinar')}
           </a>
         </div>
       </div>
@@ -70,9 +68,9 @@ export default function WebinarBanner({ webinar }: WebinarBannerProps) {
   // No registration link - just announce the webinar
   return (
     <div className="w-full bg-deepmobility-50 border border-deepmobility-200 rounded-3xl p-4 flex items-center justify-center">
-      <div className="text-deepmobility-700 text-center">
-        🎬 Un webinaire <strong>{webinar.title}</strong> est prévu le <strong>{formatDate(scheduledDate)}</strong> à <strong>{formatTime(scheduledDate)}</strong>.
-      </div>
+      <div className="text-deepmobility-700 text-center"
+        dangerouslySetInnerHTML={{ __html: '🎬 ' + t.markup('upcoming', { title: webinar.title, date: formatDate(scheduledDate), time: formatTime(scheduledDate), strong: (chunks) => `<strong>${chunks}</strong>` }) }}
+      />
     </div>
   )
 }

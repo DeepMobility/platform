@@ -6,8 +6,11 @@ import "react-circular-progressbar/dist/styles.css"
 import { MdEmojiEvents, MdFavorite, MdStar, MdCheckCircle, MdPeople, MdArrowForward, MdWorkspacePremium, MdOutlineTimer } from "react-icons/md"
 import Confetti from "react-confetti"
 import FullScreenModal from "@/components/FullScreenModal"
+import { useTranslations, useFormatter } from 'next-intl'
 
 export default function ChallengeWidget({ challenge }: { challenge: Challenge }) {
+  const t = useTranslations('challenge')
+  const format = useFormatter()
   const [showConfetti, setShowConfetti] = useState(challenge.status === 'completed')
   const [windowDimensions, setWindowDimensions] = useState({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
@@ -29,7 +32,7 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
   }
 
   const formatPoints = (points: number) => {
-    return `${points} points`
+    return t('points', { count: points })
   }
 
   useEffect(() => {
@@ -80,30 +83,31 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
             </div>
             <div>
               <span className="font-bold text-sm flex items-center">
-                Défi Réussi! <MdCheckCircle className="ml-1 h-3.5 w-3.5 text-green-300" />
+                {t('challengeCompleted')} <MdCheckCircle className="ml-1 h-3.5 w-3.5 text-green-300" />
               </span>
-              <span className="text-xs text-white/90">Terminé le {endDate.toLocaleDateString()}</span>
+              <span className="text-xs text-white/90">{t('completedOn', { date: format.dateTime(endDate, { day: '2-digit', month: '2-digit', year: 'numeric' }) })}</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="bg-white/20 hover:bg-white/30 text-white border-0 text-xs py-0 px-2 rounded-full">
-              {challenge.progress.participantsCount} participants
+              {t('participants', { count: challenge.progress.participantsCount })}
             </span>
           </div>
         </div>
 
         <div className="px-3 py-1.5 text-center border-b border-purple-100">
           <p className="text-xs text-[#7e5d3b] font-medium">
-            Bravo pour votre mobilisation ! Grâce à vos routines,{" "}
-            <span className="font-medium text-violet-800">{formatEuros(challenge.progress.totalPoints)}</span> ont été récoltés pour
-            soutenir <span className="font-medium text-violet-800">{challenge.associationName}</span>.
+            {t.rich('bravoMessage', {
+              amount: (chunks) => <span className="font-medium text-violet-800">{formatEuros(challenge.progress.totalPoints)}</span>,
+              association: (chunks) => <span className="font-medium text-violet-800">{challenge.associationName}</span>,
+            })}
           </p>
         </div>
         </>
       ) : (
         <div className="flex items-center gap-1 text-[#7e5d3b] bg-transparent px-3 py-1 text-xs font-normal mb-1">
           <MdOutlineTimer className="h-3.5 w-3.5 mr-1 opacity-70" />
-          <span>Encore <span className="font-semibold">{remainingDays} jour{remainingDays > 1 ? 's' : ''}</span> pour participer</span>
+          <span dangerouslySetInnerHTML={{ __html: t.markup('remainingDays', { count: remainingDays, strong: (chunks) => `<strong>${chunks}</strong>` }) }} />
         </div>
       )}
 
@@ -134,7 +138,7 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
 
             <p className="text-xs flex items-center justify-center text-[#5a493e] font-medium">
               <MdFavorite className="h-3 w-3 text-rose-400 mr-1" />
-              Pour <span className="ml-1 text-[#5a493e] font-semibold">{challenge.associationName}</span>
+              {t('forAssociation', { name: challenge.associationName })}
             </p>
 
             <p className="text-xl font-extrabold text-[#7e5d3b] mt-1">
@@ -145,7 +149,9 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
             {goalExceeded && (
               <p className="text-xs text-green-700 font-semibold mt-0.5 flex items-center justify-center">
                 <MdStar className="h-3 w-3 mr-1 fill-green-700 text-green-700" />
-                Objectif dépassé de <span className="text-[#a78bfa] font-bold ml-1">{formatEuros(challenge.progress.totalPoints - challenge.progress.goalAmount)}</span> !
+                {t.rich('goalExceeded', {
+                  amount: (chunks) => <span className="text-[#a78bfa] font-bold ml-1">{formatEuros(challenge.progress.totalPoints - challenge.progress.goalAmount)}</span>,
+                })}
               </p>
             )}
           </div>
@@ -154,10 +160,10 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
         {isTeam ? (
           <div className="bg-white rounded-md border border-[#e7e3e1] p-2">
             <div className="flex justify-between items-center mb-1.5">
-              <h4 className="text-sm font-bold text-[#7e5d3b] tracking-tight">Classement des équipes</h4>
+              <h4 className="text-sm font-bold text-[#7e5d3b] tracking-tight">{t('teamRanking')}</h4>
               <span className="bg-[#ebe5e0ab] text-[#887161] text-xs py-0.5 px-1.5 rounded-full inline-flex items-center font-semibold">
                 <MdWorkspacePremium className="h-3 w-3 mr-1 text-[#887161]" />
-                Mon équipe: #{challenge.progress.currentUserTeamInfo.rank}
+                {t('myTeamRank', { rank: challenge.progress.currentUserTeamInfo.rank })}
               </span>
             </div>
             <div className="space-y-1 max-h-[180px] overflow-y-auto pr-1">
@@ -190,7 +196,7 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
                     {team.name === challenge.progress.currentUserTeamInfo.name && team.rank !== 1 && (
                       <div className="ml-1.5 inline-flex">
                         <span className="h-4 px-1 text-[10px] bg-white text-[#5a493e] border-[#a89b93] whitespace-nowrap rounded-full">
-                          Mon équipe
+                          {t('myTeam')}
                         </span>
                       </div>
                     )}
@@ -212,10 +218,10 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
         ) : (
           <div className="bg-white rounded-md border border-[#e7e3e1] p-2">
             <div className="flex justify-between items-center mb-1.5">
-              <h4 className="text-sm font-bold text-[#7e5d3b] tracking-tight">Classement des participants</h4>
+              <h4 className="text-sm font-bold text-[#7e5d3b] tracking-tight">{t('participantRanking')}</h4>
               <span className="bg-[#ede9fe] text-[#7e5d3b] border-[#a89b93] text-xs py-0 px-2 rounded-full inline-flex items-center font-semibold">
                 <MdWorkspacePremium className="h-3 w-3 mr-1 text-[#a78bfa]" />
-                Mon rang: #{challenge.progress.currentUserInfo.rank}
+                {t('myRank', { rank: challenge.progress.currentUserInfo.rank })}
               </span>
             </div>
             <div className="space-y-1 max-h-[180px] overflow-y-auto pr-1">
@@ -248,7 +254,7 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
                     {user.name === challenge.progress.currentUserInfo.name && user.rank !== 1 && (
                       <div className="ml-1.5 inline-flex">
                         <span className="h-4 px-1 text-[10px] bg-white text-[#5a493e] border-[#a89b93] whitespace-nowrap rounded-full">
-                          Moi
+                          {t('me')}
                         </span>
                       </div>
                     )}
@@ -270,7 +276,7 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
 
         <div className="flex flex-col">
           <div className="bg-[#f7f3f0] rounded-md p-2 mb-2 border border-[#e7e3e1]">
-            <h4 className="text-sm font-bold text-[#7e5d3b] mb-1.5">{isTeam ? "Notre équipe" : "Ma participation"}</h4>
+            <h4 className="text-sm font-bold text-[#7e5d3b] mb-1.5">{isTeam ? t('ourTeam') : t('myParticipation')}</h4>
 
             <div className="flex items-center justify-between mb-1.5">
               <div className="text-xl font-extrabold text-[#7e5d3b]">
@@ -281,11 +287,17 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
             <div className="text-xs text-[#5a493e]">
               {isTeam ? (
                 <>
-                  <span className="font-semibold text-[#5a493e]">{challenge.progress.currentUserTeamInfo.name}</span> a contribué à hauteur de <span className="font-semibold text-[#a78bfa]">{teamContribution}%</span> du montant total récolté à ce jour.
+                  {t.rich('contributedPercentage', {
+                    name: (chunks) => <span className="font-semibold text-[#5a493e]">{challenge.progress.currentUserTeamInfo.name}</span>,
+                    percentage: (chunks) => <span className="font-semibold text-[#a78bfa]">{teamContribution}%</span>,
+                  })}
                 </>
               ) : (
                 <>
-                  <span className="font-semibold text-[#5a493e]">{challenge.progress.currentUserInfo.name}</span> a contribué à hauteur de <span className="font-semibold text-[#a78bfa]">{userContribution}%</span> du montant total récolté à ce jour.
+                  {t.rich('contributedPercentage', {
+                    name: (chunks) => <span className="font-semibold text-[#5a493e]">{challenge.progress.currentUserInfo.name}</span>,
+                    percentage: (chunks) => <span className="font-semibold text-[#a78bfa]">{userContribution}%</span>,
+                  })}
                 </>
               )}
             </div>
@@ -295,28 +307,28 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
                 <>
                   <div className="flex items-center">
                     <MdPeople className="h-3 w-3 mr-1 text-[#a78bfa]" />
-                    <span className="font-semibold text-[#5a493e] mr-0.5">{challenge.progress.currentUserTeamInfo.membersCount}</span> membre(s)
+                    {t('members', { count: challenge.progress.currentUserTeamInfo.membersCount })}
                   </div>
                   <div className="text-xs">
-                    Ma contribution: <span className="font-semibold text-[#a78bfa]">{formatPoints(challenge.progress.currentUserInfo.points)}</span>
+                    {t('myContribution')} <span className="font-semibold text-[#a78bfa]">{formatPoints(challenge.progress.currentUserInfo.points)}</span>
                   </div>
                 </>
               ) : (
                 <div className="text-xs">
-                  Ma contribution: <span className="font-semibold text-[#a78bfa]">{formatPoints(challenge.progress.currentUserInfo.points)}</span>
+                  {t('myContribution')} <span className="font-semibold text-[#a78bfa]">{formatPoints(challenge.progress.currentUserInfo.points)}</span>
                 </div>
               )}
             </div>
           </div>
 
           <div className="bg-white rounded-md border border-[#e7e3e1] p-2">
-            <h4 className="text-sm font-bold text-[#7e5d3b] mb-1.5">Actions</h4>
+            <h4 className="text-sm font-bold text-[#7e5d3b] mb-1.5">{t('actions')}</h4>
             <button
               className="btn-ghost w-full text-[#a78bfa] hover:bg-[#ede9fe] hover:text-[#a78bfa] justify-start text-sm h-7 flex items-center font-semibold"
               onClick={() => setModalOpen(true)}
             >
               <MdArrowForward className="h-3.5 w-3.5 mr-2" />
-              Voir tous les détails
+              {t('viewDetails')}
             </button>
           </div>
         </div>
@@ -331,35 +343,35 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
               </span>
               <div>
                 <h2 className="text-2xl font-extrabold text-[#5a493e] leading-tight">{challenge.title}</h2>
-                <div className="text-xs text-[#5a493e] font-medium">Pour <span className="font-semibold">{challenge.associationName}</span></div>
+                <div className="text-xs text-[#5a493e] font-medium">{t('forAssociation', { name: challenge.associationName })}</div>
               </div>
             </div>
             <p className="mb-4 text-sm text-[#5a493e] italic border-l-4 border-[#ebe5e0] pl-3">{challenge.description}</p>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="bg-[#f7f3f0] rounded-xl shadow p-3 flex flex-col items-center">
-                <span className="text-xs text-[#5a493e]">Montant collecté</span>
+                <span className="text-xs text-[#5a493e]">{t('amountCollected')}</span>
                 <div className="flex items-center gap-1">
                   <span className="text-lg font-bold text-[#7e22ce]">{formatEuros(challenge.progress.totalPoints)}</span>
                   <span className="text-xs text-[#5a493e]">/ {formatEuros(challenge.progress.goalAmount)}</span>
                 </div>
               </div>
               <div className="bg-[#f7f3f0] rounded-xl shadow p-3 flex flex-col items-center">
-                <span className="text-xs text-[#5a493e]">Participants</span>
+                <span className="text-xs text-[#5a493e]">{t('participants', { count: challenge.progress.participantsCount })}</span>
                 <span className="text-lg font-bold text-[#7e22ce]">{challenge.progress.participantsCount}</span>
               </div>
               <div className="bg-[#f7f3f0] rounded-xl shadow p-3 flex flex-col items-center">
-                <span className="text-xs text-[#5a493e]">Fin du défi</span>
-                <span className="text-lg font-bold text-[#7e22ce]">{endDate.toLocaleDateString()}</span>
+                <span className="text-xs text-[#5a493e]">{t('endOfChallenge')}</span>
+                <span className="text-lg font-bold text-[#7e22ce]">{format.dateTime(endDate, { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
               </div>
               {isTeam && (
                 <div className="bg-[#f7f3f0] rounded-xl shadow p-3 flex flex-col items-center">
-                  <span className="text-xs text-[#5a493e]">Rang de mon équipe</span>
+                  <span className="text-xs text-[#5a493e]">{t('teamRankLabel')}</span>
                   <span className="text-lg font-bold text-[#7e22ce]">#{challenge.progress.currentUserTeamInfo.rank}</span>
                 </div>
               )}
               {!isTeam && (
                 <div className="bg-[#f7f3f0] rounded-xl shadow p-3 flex flex-col items-center">
-                  <span className="text-xs text-[#5a493e]">Mon rang</span>
+                  <span className="text-xs text-[#5a493e]">{t('myRankLabel')}</span>
                   <span className="text-lg font-bold text-[#7e22ce]">#{challenge.progress.currentUserInfo.rank}</span>
                 </div>
               )}
@@ -369,21 +381,21 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
                 <>
                   <div className="mb-2 flex items-center gap-2">
                     <MdWorkspacePremium className="h-5 w-5 text-[#5a493e]" />
-                    <span className="text-sm text-[#5a493e]">Points de mon équipe: <span className="font-bold text-[#7e22ce]">{formatPoints(challenge.progress.currentUserTeamInfo.points)}</span></span>
+                    <span className="text-sm text-[#5a493e]">{t('teamPoints')} <span className="font-bold text-[#7e22ce]">{formatPoints(challenge.progress.currentUserTeamInfo.points)}</span></span>
                   </div>
                   <div className="mb-2 flex items-center gap-2">
                     <MdPeople className="h-5 w-5 text-[#5a493e]" />
-                    <span className="text-sm text-[#5a493e]">Membres de l'équipe: <span className="font-bold text-[#7e22ce]">{challenge.progress.currentUserTeamInfo.membersCount}</span></span>
+                    <span className="text-sm text-[#5a493e]">{t('teamMembers')} <span className="font-bold text-[#7e22ce]">{challenge.progress.currentUserTeamInfo.membersCount}</span></span>
                   </div>
                   <div className="mb-2 flex items-center gap-2">
                     <MdStar className="h-5 w-5 text-[#5a493e]" />
-                    <span className="text-sm text-[#5a493e]">Ma contribution: <span className="font-bold text-[#7e22ce]">{formatPoints(challenge.progress.currentUserInfo.points)}</span></span>
+                    <span className="text-sm text-[#5a493e]">{t('myContribution')} <span className="font-bold text-[#7e22ce]">{formatPoints(challenge.progress.currentUserInfo.points)}</span></span>
                   </div>
                   <div className="mb-2 flex items-center gap-2">
                     <MdWorkspacePremium className="h-5 w-5 text-[#5a493e]" />
-                    <span className="text-sm text-[#5a493e]">Mon rang dans l'équipe: <span className="font-bold text-[#7e22ce]">#{challenge.progress.currentUserInfo.rank}</span></span>
+                    <span className="text-sm text-[#5a493e]">{t('myTeamRankDetail')} <span className="font-bold text-[#7e22ce]">#{challenge.progress.currentUserInfo.rank}</span></span>
                   </div>
-                  <div className="mb-2 text-xs text-[#5a493e] font-semibold mt-3">Classement des équipes</div>
+                  <div className="mb-2 text-xs text-[#5a493e] font-semibold mt-3">{t('teamRanking')}</div>
                   <ul className="mb-2 text-xs text-[#5a493e] max-h-32 overflow-y-auto rounded-lg border border-[#ebe5e0] bg-[#faf5ff]">
                     {Object.values(challenge.progress.teamsInfo).sort((a, b) => a.rank - b.rank).map(team => (
                       <li key={team.name + team.rank} className={`flex justify-between px-3 py-1 ${team.name === challenge.progress.currentUserTeamInfo.name ? 'bg-[#f9f5e7]' : team.rank === 1 ? 'bg-[#ede9fe]' : ''}`}>
@@ -399,9 +411,9 @@ export default function ChallengeWidget({ challenge }: { challenge: Challenge })
                 <>
                   <div className="mb-2 flex items-center gap-2">
                     <MdStar className="h-5 w-5 text-[#5a493e]" />
-                    <span className="text-sm text-[#5a493e]">Ma contribution: <span className="font-bold text-[#7e22ce]">{formatPoints(challenge.progress.currentUserInfo.points)}</span></span>
+                    <span className="text-sm text-[#5a493e]">{t('myContribution')} <span className="font-bold text-[#7e22ce]">{formatPoints(challenge.progress.currentUserInfo.points)}</span></span>
                   </div>
-                  <div className="mb-2 text-xs text-[#5a493e] font-semibold mt-3">Classement des participants</div>
+                  <div className="mb-2 text-xs text-[#5a493e] font-semibold mt-3">{t('participantRanking')}</div>
                   <ul className="mb-2 text-xs text-[#5a493e] max-h-32 overflow-y-auto rounded-lg border border-[#ebe5e0] bg-[#faf5ff]">
                     {Object.values(challenge.progress.usersInfo).sort((a, b) => a.rank - b.rank).map(user => (
                       <li key={user.name + user.rank} className={`flex justify-between px-3 py-1 ${user.name === challenge.progress.currentUserInfo.name ? 'bg-[#f9f5e7]' : user.rank === 1 ? 'bg-[#ede9fe]' : ''}`}>

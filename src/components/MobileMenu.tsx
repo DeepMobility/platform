@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FiMenu, FiX, FiLogOut } from 'react-icons/fi'
 import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function MobileMenu() {
+  const t = useTranslations('common')
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
@@ -49,7 +51,7 @@ export default function MobileMenu() {
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex justify-between items-center p-4 border-b">
-            <h2 className="text-lg font-semibold text-gray-800">Menu</h2>
+            <h2 className="text-lg font-semibold text-gray-800">{t('menu')}</h2>
             <button
               onClick={() => setIsOpen(false)}
               className="p-2 text-gray-600 hover:text-gray-800 transition-colors"
@@ -81,7 +83,7 @@ export default function MobileMenu() {
                       d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                     />
                   </svg>
-                  Rappels
+                  {t('reminders')}
                 </Link>
               </li>
               <li>
@@ -104,7 +106,7 @@ export default function MobileMenu() {
                       d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  FAQ
+                  {t('faq')}
                 </Link>
               </li>
             </ul>
@@ -117,7 +119,7 @@ export default function MobileMenu() {
               className="flex items-center px-6 py-4 text-red-600 hover:bg-red-50 transition-colors"
             >
               <FiLogOut className="mr-3" size={20} />
-              <span className="font-medium">Déconnexion</span>
+              <span className="font-medium">{t('logout')}</span>
             </Link>
           </div>
         </div>
@@ -125,4 +127,3 @@ export default function MobileMenu() {
     </>
   )
 }
-

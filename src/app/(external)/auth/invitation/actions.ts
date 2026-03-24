@@ -23,7 +23,7 @@ export async function completeInvitation(
     return {
       isComplete: false,
       redirectUrl: "",
-      errorMessage: "Le lien d'invitation est invalide ou a expiré"
+      errorMessage: "invitationExpired"
     }
   }
 
@@ -31,7 +31,7 @@ export async function completeInvitation(
     return {
       isComplete: false,
       redirectUrl: "",
-      errorMessage: "Une erreur est survenue lors de la finalisation de votre inscription"
+      errorMessage: "invitationError"
     }
   }
 
@@ -46,7 +46,6 @@ export async function completeInvitation(
   return {
     isComplete: false,
     redirectUrl: "",
-    errorMessage: "Une erreur est survenue"
+    errorMessage: "unknownError"
   }
 }
-

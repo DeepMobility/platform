@@ -2,7 +2,7 @@
 
 import { post } from '@/lib/httpMethods';
 import { headers } from 'next/headers';
- 
+
 export async function register(
   _state: {
     isComplete: boolean,
@@ -27,7 +27,7 @@ export async function register(
     return {
       isComplete: false,
       emailSent: false,
-      errorMessage: "Ce compte existe déjà"
+      errorMessage: "userAlreadyExists"
     }
   }
 
@@ -35,7 +35,7 @@ export async function register(
     return {
       isComplete: false,
       emailSent: false,
-      errorMessage: "Vous n'êtes pas autorisé à accéder à cette plateforme. Veuillez contacter votre administrateur."
+      errorMessage: "userNotAllowed"
     }
   }
 
@@ -50,6 +50,6 @@ export async function register(
   return {
     isComplete: false,
     emailSent: false,
-    errorMessage: "Une erreur est survenue lors de l'inscription"
+    errorMessage: "registrationError"
   }
 }

@@ -1,17 +1,20 @@
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 export default async function TokenSent() {
+  const t = await getTranslations('auth')
+
   return (
     <div className="flex flex-col">
       <span>
-        Un email pour modifier votre mot de passe vous a été envoyé à l'adresse renseignée.
+        {t('tokenSentMessage')}
       </span>
 
       <Link
         href="/auth/login"
         className='mt-4 mx-auto underline'
       >
-        Retour au login
+        {t('backToLoginLink')}
       </Link>
     </div>
   )
